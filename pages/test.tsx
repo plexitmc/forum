@@ -1,4 +1,6 @@
 import useUser from '../components/api/swr/useUser';
+import Error from '../components/elements/Error';
+
 
 export default function Test() {
 
@@ -7,6 +9,7 @@ export default function Test() {
     });
 
     if(isLoading) return "Loading..."
+    if(isError) return <Error />
 
     return (
         <>{user.avatar}</>

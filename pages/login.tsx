@@ -1,12 +1,13 @@
-import tw from 'twin.macro'
-import { BsDiscord } from 'react-icons/bs'
-import Image from 'next/image'
-import config from '../config.json';
-import { useRouter } from 'next/router'
-import useUser from '../components/api/swr/useUser';
+import Image from 'next/image';
 import Link from 'next/link';
-import login from '../components/api/auth/login';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { BsDiscord } from 'react-icons/bs';
+import tw from 'twin.macro';
+
+import login from '../components/api/auth/login';
+import useUser from '../components/api/swr/useUser';
+import config from '../config.json';
 
 export default function Login() {
 
@@ -37,6 +38,8 @@ export default function Login() {
         console.log(user, isLoading, isError)
         return "Loading..."
     }
+    if(isError) return "Error..."
+
     return (
         <div css={tw`flex flex-col justify-center items-center h-screen`}>
             <div css={tw`flex flex-col w-full max-w-xs`}>
