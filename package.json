@@ -3,7 +3,7 @@
   "description": "Centox® — The free game community forum software. Built with Next.js and Express.",
   "version": "0.0.1",
   "main": "index.js",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
