@@ -56,7 +56,6 @@ module.exports = (db) => {
             }
             db.users.insertOne(user, async (err, res) => {
                 if (err) console.log(err);
-                console.log(res)
             });
         }
     }
