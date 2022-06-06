@@ -7,11 +7,11 @@ const DiscordOauth2 = require("discord-oauth2");
 module.exports = (db) => {
     
     // Utils
-    const users = require('../../utils/users')(db);
-    const auth = require('../../utils/auth')(db);
+    const users = require('../../server/users')(db);
+    const auth = require('../../server/auth')(db);
 
     // Create rate limiter
-    const rateLimiter = require('../../utils/rateLimiter')(2 * 60 * 1000, 5, "Too many requests. Try again later.")
+    const rateLimiter = require('../../server/rateLimiter')(2 * 60 * 1000, 5, "Too many requests. Try again later.")
 
     // Create OAuth2
     const oauth = new DiscordOauth2({
