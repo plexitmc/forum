@@ -1,8 +1,8 @@
 // Imports
 const config = require('../../config.json');
 const router = require('express').Router();
-const axios = require('axios');
 const DiscordOauth2 = require("discord-oauth2");
+
 // Export route
 module.exports = (db) => {
     
@@ -24,7 +24,6 @@ module.exports = (db) => {
     router.get('/', rateLimiter, auth.forwardAuthentication, async (req, res) => {
         // https://discord.com/oauth2/authorize?client_id=982719567690350633&redirect_uri=http://localhost:80/login&response_type=code&scope=identify&prompt=none
         if(!req.query.code) return res.status(401).json({
-            status: 401,
             message: 'No code.'
         });
 
@@ -42,11 +41,11 @@ module.exports = (db) => {
                         username: `${response.username}#${response.discriminator}`,
                         avatar: `https://cdn.discordapp.com/avatars/${response.id}/${response.avatar}.png`,
                     }).then(async () => await users.loginToUser(response.id, req, (response) => {
-                        return res.status(response.status).json({
-                            status: response.status,
-                            message: response.message,
-                            data: response.data
-                        });
+                        return res.status(response.status).cookie("access_token", response.data.token, {
+                            maxAge: 3600*24*7,
+                            httpOnly: true,
+                            secure: config.env === "production"
+                        }).json({ message: response.message })    
                     }));
                 } else {
                     await users.createNew({
@@ -54,11 +53,11 @@ module.exports = (db) => {
                         username: `${response.username}#${response.discriminator}`,
                         avatar: `https://cdn.discordapp.com/avatars/${response.id}/${response.avatar}.png`,
                     }).then(async () => await users.loginToUser(response.id, req, (response) => {
-                        return res.status(response.status).json({
-                            status: response.status,
-                            message: response.message,
-                            data: response.data
-                        })        
+                        return res.status(response.status).cookie("access_token", response.data.token, {
+                            maxAge: 3600*24*7,
+                            httpOnly: true,
+                            secure: config.env === "production"
+                        }).json({ message: response.message })        
                     }))
                 }
             })

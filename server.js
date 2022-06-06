@@ -2,6 +2,7 @@
 const express = require('express');
 const next = require('next');
 const bodyParser = require('body-parser');
+const cookieParser = require("cookie-parser");
 const path = require('path');
 
 // Local imports
@@ -18,6 +19,7 @@ const http = require('http').Server(server);
 // Middleware
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json());
+server.use(cookieParser());
 
 // CORS
 server.use((req, res, next) => {

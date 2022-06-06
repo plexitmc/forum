@@ -32,8 +32,11 @@ module.exports = (db) => {
      * @returns {String} token
      */
     obj.getTokenFromHeader = (req) => {
-        const authHeader = req.headers['authorization']
-        const token = authHeader && authHeader.split(' ')[1]
+        /*const authHeader = req.headers['authorization']
+        const token = authHeader && authHeader.split(' ')[1]*/
+
+        const token = req.cookies.access_token;
+
         return token;
     }
 
@@ -48,28 +51,25 @@ module.exports = (db) => {
         const token = obj.getTokenFromHeader(req);
 
         if(token == null) return res.status(401).json({
-            status: 401,
             message: 'Authorization failed.'
         });
 
-        jwt.verify(token, config.jwt_secret, async (err, user) => {
+        jwt.verify(token, config.jwt_secret, async (err, data) => {
         
             if (err) {
                 return res.status(401).json({
-                    status: 401,
                     message: 'Access token expired.'
                 });
             }
 
             var dbRes = await obj.isAccessTokenValid(token);
+
             if (!dbRes) return res.status(401).json({
-                status: 401,
                 message: 'Access token expired.'
             });
             
-            req.userId = user.userId;
-        
-            next();
+            req.userId = data.userId;
+            return next();
         });
     }
 
