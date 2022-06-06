@@ -6,6 +6,8 @@ const express = require('express');
 module.exports = (db) => {
     const obj = {};
 
+    const users = require('./users')(db);
+
     /**
      * Generate a new access token for a given user
      * @param {String} userId
@@ -51,7 +53,7 @@ module.exports = (db) => {
         const token = obj.getTokenFromHeader(req);
 
         if(token == null) return res.status(401).json({
-            message: 'Authorization failed.'
+            message: 'Authentication failed.'
         });
 
         jwt.verify(token, config.jwt_secret, async (err, data) => {
@@ -72,6 +74,44 @@ module.exports = (db) => {
             return next();
         });
     }
+
+    /**
+     * Middleware for authenticating a user by the access token (quering the database for the user object)
+     * @param {express.Request} req 
+     * @param {express.Response} res 
+     * @param {express.NextFunction} next 
+     * @returns 
+    */
+    obj.ensureAuthenticationWithUser = async (req, res, next) => {
+        const token = obj.getTokenFromHeader(req);
+
+        if(token == null) return res.status(401).json({
+            message: 'Authentication failed.'
+        });
+
+        jwt.verify(token, config.jwt_secret, async (err, data) => {
+        
+            if (err) {
+                return res.status(401).json({
+                    message: 'Access token expired.'
+                });
+            }
+
+            var dbRes = await obj.isAccessTokenValid(token);
+
+            if (!dbRes) return res.status(401).json({
+                message: 'Access token expired.'
+            });
+
+
+            var user = await users.getUserById(data.userId);
+            
+            req.userId = data.userId;
+            req.user = user;
+            return next();
+        });
+    }
+
 
     /**
      * Middleware for forwarding a user if authenticated
