@@ -15,7 +15,7 @@ export default function Login({ props }: { props: any }) {
                     <div css={tw`my-6`}>
                         <Image src="/logo.svg" alt="logo" width={170*2} height={41*2}/>
                     </div>
-                    <a href={discordOauth} css={tw`flex transition leading-none duration-300 border border-white bg-[#5865F2] text-white hover:bg-white hover:text-[#5865F2] hover:border-[#5865F2] font-semibold py-3 px-4 rounded `}>
+                    <a href={discordOauth} css={tw`flex transition leading-none duration-300 border border-white bg-[#5865F2] text-white hover:text-[#5865F2] hover:border-[#5865F2] hover:bg-opacity-10 font-semibold py-3 px-4 rounded `}>
                         <span css={tw`pr-3`}><BsDiscord/></span> Login with Discord
                     </a>
                 </div>
