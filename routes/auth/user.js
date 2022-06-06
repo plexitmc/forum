@@ -9,11 +9,13 @@ module.exports = (db) => {
     const auth = require('../../server/auth')(db);
 
     // Create rate limiter
-    const rateLimiter = require('../../server/rateLimiter')(60 * 1000, 5, "Too many requests. Try again later.")
+    const rateLimiter = require('../../server/rateLimiter')(60 * 1000, 20, "Too many requests. Try again later.")
 
-    router.get('/', rateLimiter, auth.ensureAuthentication, async (req, res) => {
+    router.get('/', rateLimiter, auth.ensureAuthenticationWithUser, async (req, res) => {
         // Tutorial: https://circlertech.com/working-with-discord-oauth2
-        
+        return res.json({
+            user: req.user
+        });
     })
 
     return router;

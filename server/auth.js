@@ -2,11 +2,11 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config.json');
 const express = require('express');
+// Imports
+const { ObjectId } = require('mongodb');
 
 module.exports = (db) => {
     const obj = {};
-
-    const users = require('./users')(db);
 
     /**
      * Generate a new access token for a given user
@@ -53,21 +53,24 @@ module.exports = (db) => {
         const token = obj.getTokenFromHeader(req);
 
         if(token == null) return res.status(401).json({
-            message: 'Authentication failed.'
+            message: 'Authentication failed.',
+            isLoggedIn: false
         });
 
         jwt.verify(token, config.jwt_secret, async (err, data) => {
         
             if (err) {
                 return res.status(401).json({
-                    message: 'Access token expired.'
+                    message: 'Access token expired.',
+                    isLoggedIn: false
                 });
             }
 
             var dbRes = await obj.isAccessTokenValid(token);
 
             if (!dbRes) return res.status(401).json({
-                message: 'Access token expired.'
+                message: 'Access token expired.',
+                isLoggedIn: false
             });
             
             req.userId = data.userId;
@@ -103,9 +106,9 @@ module.exports = (db) => {
                 message: 'Access token expired.'
             });
 
-
-            var user = await users.getUserById(data.userId);
             
+            var user = await obj.getUserFromId(data.userId);
+
             req.userId = data.userId;
             req.user = user;
             return next();
@@ -134,6 +137,17 @@ module.exports = (db) => {
             return res.redirect("/")
         });
     }
+
+    /**
+     * Get user data from access token
+     * @param {String} accessToken 
+     */
+     obj.getUserFromId = async (id) => {
+        var user = await db.users.findOne({_id: new ObjectId(id)});
+        if (!user) return null;
+        return user;
+    }
+
 
     return obj;
 }
