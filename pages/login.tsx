@@ -7,6 +7,7 @@ import tw from 'twin.macro';
 
 import login from '../components/api/auth/login';
 import useUser from '../components/api/swr/useUser';
+import Loading from '../components/elements/Loading';
 import config from '../config.json';
 
 export default function Login() {
@@ -34,11 +35,7 @@ export default function Login() {
 
     const discordOauth = `https://discord.com/oauth2/authorize?client_id=${config.discord.client_id}&redirect_uri=${config.discord.redirect_uri}&response_type=code&scope=identify&prompt=none`;
     
-    if(isLoading) {
-        console.log(user, isLoading, isError)
-        return "Loading..."
-    }
-    if(isError) return "Error..."
+    if(isLoading || !isLoading) return <Loading/>
 
     return (
         <div css={tw`flex flex-col justify-center items-center h-screen`}>

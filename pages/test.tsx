@@ -1,5 +1,6 @@
 import useUser from '../components/api/swr/useUser';
 import Error from '../components/elements/Error';
+import Loading from '../components/elements/Loading';
 
 
 export default function Test() {
@@ -8,7 +9,7 @@ export default function Test() {
         redirectTo: "/login"
     });
 
-    if(isLoading) return "Loading..."
+    if(isLoading) return <Loading/>
     if(isError) return <Error />
 
     return (
