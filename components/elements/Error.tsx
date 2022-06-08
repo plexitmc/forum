@@ -1,11 +1,16 @@
-import tw from 'twin.macro';
+import { Box, Center, Text } from '@mantine/core';
 
 const Error = ({ title, error}: { title: string, error: string }) => {
     return (
-        <div css={tw`flex flex-col justify-center items-center h-screen bg-red-500 bg-opacity-10`}>
-            {title && <h1 css={tw`text-center text-red-500 font-bold`}>{title}</h1>}
-            {error && <p css={tw`text-center text-red-500 font-normal`}>{error}</p>}
-        </div>
+        <Box 
+            sx={{
+                backgroundColor: "rgba(240, 62, 62, 0.3)"
+            }}>
+            <Center style={{height: '100vh'}} sx={{ flexDirection: 'column' }}>
+                {title && <Text color='red' weight='bold'>{title}</Text>}
+                {error && <Text color='red'>{error}</Text>}
+            </Center>
+        </Box>
     )
 }
 

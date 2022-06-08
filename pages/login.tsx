@@ -1,13 +1,13 @@
+import { Anchor, Box, Center } from '@mantine/core';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { BsDiscord } from 'react-icons/bs';
-import tw from 'twin.macro';
 
 import login from '../components/api/auth/login';
 import useUser from '../components/api/swr/useUser';
-import Loading from '../components/elements/Loading';
+import Error from '../components/elements/Error';
+import Loading from '../components/elements/LoadingScreen';
+import DiscordLoginButton from '../components/pages/login/DiscordLoginButton';
 import config from '../config.json';
 
 export default function Login() {
@@ -33,28 +33,22 @@ export default function Login() {
         }
     }, [router, code]);
 
-    const discordOauth = `https://discord.com/oauth2/authorize?client_id=${config.discord.client_id}&redirect_uri=${config.discord.redirect_uri}&response_type=code&scope=identify&prompt=none`;
-    
-    if(isLoading || !isLoading) return <Loading/>
+    if(isError) return <Error />
+    if(isLoading) return <Loading/>
 
     return (
-        <div css={tw`flex flex-col justify-center items-center h-screen`}>
-            <div css={tw`flex flex-col w-full max-w-xs`}>
-                <div css={tw`flex flex-col items-center bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4`}>
-                    <div css={tw`my-6`}>
-                        <Image src="/logo.svg" alt="logo" width={170*2} height={41*2}/>
-                    </div>
-                    <a href={discordOauth} css={tw`flex transition leading-none duration-300 border border-white bg-[#5865F2] text-white hover:text-[#5865F2] hover:border-[#5865F2] hover:bg-opacity-10 font-semibold py-3 px-4 rounded `}>
-                        <span css={tw`pr-3`}><BsDiscord/></span> Login with Discord
-                    </a>
-                </div>
-                <div css={tw`flex justify-center`}>
-                    <a href="https://plexhost.dk" css={tw`text-gray-500 text-xs`}>
-                        © 2022 Centox - A Open Source Project.
-                    </a>
-                </div>
-                <Link href="/test">test</Link>
-            </div>
-        </div>
+        <Center style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', borderRadius: '0.25rem', padding: '1.5rem 2rem 2rem 2rem', marginBottom: '1rem' }}>
+                <Box sx={{ padding: '1.5rem 0' }}>
+                    <Image src="/logo.svg" alt="logo" width={170*2} height={41*2}/>
+                </Box>
+                <DiscordLoginButton clientId={config.discord.client_id} redirectUri={config.discord.redirect_uri}/>
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Anchor href="https://plexhost.dk" target='_blank' color='gray' size='xs'>
+                    © {new Date().getFullYear()} Centox - A Open Source Project.
+                </Anchor>
+            </Box>
+        </Center>
     )
 }

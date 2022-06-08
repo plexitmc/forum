@@ -1,15 +1,17 @@
-import '../styles/globals.css';
+import { MantineProvider } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
 
-import { GlobalStyles } from 'twin.macro';
+import '../styles/globals.css';
 
 import type { AppProps } from 'next/app'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
-      <GlobalStyles/>
-      <Component {...pageProps} />
-    </>
+    <MantineProvider withNormalizeCSS>
+      <NotificationsProvider>
+        <Component {...pageProps} />
+      </NotificationsProvider>
+    </MantineProvider>
     )
 }
 

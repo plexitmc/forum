@@ -8,7 +8,7 @@ export default function useUser({
   redirectTo = "",
   redirectIfFound = false,
 } = {}) {
-  const { data, error } = useSWR("/api/auth/user", fetcher);
+  const { data, error } = useSWR('/api/auth/user', fetcher);
 
   useEffect(() => {
     // if no redirect needed, just return (example: already on /dashboard)
