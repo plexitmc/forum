@@ -99,7 +99,7 @@ export default function Sidebar({ isExtended, admin }: { isExtended?: boolean, a
                         </Box>
                         <Box>
                             <Divider mb={3}/>
-                            <UserButton image={user?.avatar} name={user?.username} />
+                            <UserButton user={user} />
                         </Box>
                     </Box>
                 </Box>
