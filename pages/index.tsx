@@ -11,6 +11,7 @@ export default function Test() {
 
     if(isLoading) return <Loading/>
     if(isError) return <Error />
+
     return (
         <PageContent title="Forside">
         </PageContent>

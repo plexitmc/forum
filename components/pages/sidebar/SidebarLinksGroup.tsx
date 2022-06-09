@@ -29,6 +29,7 @@ const useStyles = createStyles((theme) => ({
     fontSize: theme.fontSizes.sm,
     color: theme.colors.gray[7],
     borderLeft: `1px solid ${theme.colors.gray[3]}`,
+    cursor: 'pointer',
 
     '&:hover': {
       backgroundColor: theme.colors.gray[0],
@@ -54,15 +55,11 @@ export default function LinksGroup({ icon: Icon, label, link, links }: LinksGrou
     const [opened, setOpened] = useState(false);
     const ChevronIcon = theme.dir === 'ltr' ? FaChevronRight : FaChevronLeft;
     const items = (hasLinks ? links : []).map((link) => (
-        <Text<'a'>
-            component="a"
-            className={classes.link}
-            href={link.link}
-            key={link.label}
-            onClick={(event) => event.preventDefault()}
-        >
-            {link.label}
-        </Text>
+        <Link key={link.label} href={link.link}>
+            <Text className={classes.link}>
+                {link.label}
+            </Text>
+        </Link>
     ));
 
     return (

@@ -1,14 +1,13 @@
 import Meta from "./Meta";
-import Sidebar from '../pages/sidebar/Sidebar'
+import Appshell from "../pages/appshell/Appshell";
 
-export default function PageContent({ title, children }: { title?: string, children: any}) {
+export default function PageContent({ title, admin, children }: { title?: string, admin?: boolean, children: any}) {
     return (
         <>
             {title && <Meta title={title} />}
-            <div className="container">
-                <Sidebar/>
+            <Appshell admin={admin}>
                 {children}
-            </div>
+            </Appshell>
         </>
     )
 }
