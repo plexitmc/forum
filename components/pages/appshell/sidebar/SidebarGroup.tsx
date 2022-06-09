@@ -19,10 +19,10 @@ interface SidebarGroupProps {
 
 export default function SidebarGroup({ group }: SidebarGroupProps) {
 
-    const links = group.links.map((item: any) => <LinksGroup {...item} key={item.label} />);
+    const links = group.links.map((item: any, index: number) => <LinksGroup {...item} key={index} />);
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: '2rem' }}>
+        <Box key={group.group} sx={{ display: 'flex', flexDirection: 'column', marginBottom: '2rem' }}>
             {group.group && <Text sx={(theme) => ({ padding: `0 ${theme.spacing.xs}px` })} weight={600}>{group.group}</Text>}
             {links}
         </Box>

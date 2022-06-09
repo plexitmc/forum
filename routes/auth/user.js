@@ -5,7 +5,6 @@ const router = require('express').Router();
 module.exports = (db) => {
     
     // Utils
-    const users = require('../../server/users')(db);
     const auth = require('../../server/auth')(db);
 
     // Create rate limiter

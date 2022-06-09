@@ -3,9 +3,9 @@ import { useMediaQuery } from '@mantine/hooks';
 import { SegmentedControl, Box, MediaQuery, Burger, Image, Divider, ScrollArea, Anchor } from '@mantine/core';
 import { FaUsers, FaDatabase, FaYoutube, FaListUl, FaHammer, FaHandshake, FaRegQuestionCircle } from "react-icons/fa";
 import SidebarGroup from './SidebarGroup';
-import Loading from '../../elements/Loading';
-import Error from '../../elements/Error';
-import useUser from '../../../components/api/swr/useUser';
+import Loading from '../../../elements/Loading';
+import Error from '../../../elements/Error';
+import useUser from '../../../api/swr/useUser';
 import { UserButton } from './UserButton';
 import Link from 'next/link';
 
@@ -92,7 +92,7 @@ export default function Sidebar({ isExtended, admin }: { isExtended?: boolean, a
                             <ScrollArea>
                                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                     {
-                                        tabs[section].map((item: any) => <SidebarGroup group={item} key={item.group?.group} />)
+                                        tabs[section].map((item: any, index: number) => <SidebarGroup group={item} key={index} />)
                                     }
                                 </Box>
                             </ScrollArea>

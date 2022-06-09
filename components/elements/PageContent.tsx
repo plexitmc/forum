@@ -4,8 +4,8 @@ import Appshell from "../pages/appshell/Appshell";
 export default function PageContent({ title, admin, children }: { title?: string, admin?: boolean, children: any}) {
     return (
         <>
-            {title && <Meta title={title} />}
             <Appshell admin={admin}>
+                {title && <Meta title={title} />}
                 {children}
             </Appshell>
         </>

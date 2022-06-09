@@ -7,7 +7,7 @@ const DiscordOauth2 = require("discord-oauth2");
 module.exports = (db) => {
     
     // Utils
-    const users = require('../../server/users')(db);
+    const user = require('../../server/user')(db);
     const auth = require('../../server/auth')(db);
 
     // Create rate limiter
@@ -36,11 +36,11 @@ module.exports = (db) => {
             oauth.getUser(response.access_token)
             .then(async (response) => {
                 // Check if user exists and create if not.
-                if(await users.exists(response.id)){
-                    await users.updateDiscord(response.id, {
+                if(await user.exists(response.id)){
+                    await user.updateDiscord(response.id, {
                         username: `${response.username}#${response.discriminator}`,
                         avatar: `https://cdn.discordapp.com/avatars/${response.id}/${response.avatar}.png`,
-                    }).then(async () => await users.loginToUser(response.id, req, (response) => {
+                    }).then(async () => await user.loginToUser(response.id, req, (response) => {
                         return res.status(response.status).cookie("access_token", response.data.token, {
                             maxAge: 3600*24*7,
                             httpOnly: true,
@@ -48,11 +48,11 @@ module.exports = (db) => {
                         }).json({ message: response.message })    
                     }));
                 } else {
-                    await users.createNew({
+                    await user.createNew({
                         id: response.id,
                         username: `${response.username}#${response.discriminator}`,
                         avatar: `https://cdn.discordapp.com/avatars/${response.id}/${response.avatar}.png`,
-                    }).then(async () => await users.loginToUser(response.id, req, (response) => {
+                    }).then(async () => await user.loginToUser(response.id, req, (response) => {
                         return res.status(response.status).cookie("access_token", response.data.token, {
                             maxAge: 3600*24*7,
                             httpOnly: true,

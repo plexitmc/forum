@@ -15,7 +15,7 @@ export default function Login() {
     const router = useRouter();
     var { code, logout } = router.query;
 
-    const { user, isLoading, isError } = useUser({
+    const { user, mutate, isLoading, isError } = useUser({
         redirectTo: "/",
         redirectIfFound: true,
     });
@@ -25,13 +25,14 @@ export default function Login() {
             login({ code: Array.isArray(code) ? code[0] : code })
             .then((response) => {
                 console.log(response)
+                mutate(response)
                 router.push("/");
             })
             .catch((error) => {
                 console.log(error)
             })
         }
-    }, [router, code]);
+    }, [router, code, mutate]);
 
     if(isError) return <Error />
     if(isLoading) return <Loading/>

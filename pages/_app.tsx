@@ -11,15 +11,30 @@ var relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
 dayjs.locale('en')
 
+
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools'
+
+// Query client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false
+    }
+  }
+})
+
 function MyApp({ Component, pageProps }: AppProps) {
 
-
   return (
-    <MantineProvider withNormalizeCSS>
-      <NotificationsProvider>
-        <Component {...pageProps} />
-      </NotificationsProvider>
-    </MantineProvider>
+    <QueryClientProvider client={queryClient}>
+      <MantineProvider withNormalizeCSS>
+        <NotificationsProvider>
+          <Component {...pageProps} />
+        </NotificationsProvider>
+      </MantineProvider>
+      <ReactQueryDevtools/>
+    </QueryClientProvider>
     )
 }
 

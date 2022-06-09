@@ -44,7 +44,7 @@ app.prepare().then(() => {
         const database = client.db(config.mongodb.database);
     
         console.log('Connected to --- MongoDB ---');
-        var collections = ['users', 'logins']
+        var collections = ['users', 'logins', 'roles']
         var db = {}
     
         for(let i = 0; i < collections.length; i++){
