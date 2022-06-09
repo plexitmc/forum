@@ -8,7 +8,7 @@ export default function Users(){
     return (
         <PageContent admin={true} title="Admin - Users">
             <Container size={'lg'}>
-                <UserList sx={{ marginTop: 50 }}/>
+                <UserList sx={{ marginTop: 75 }}/>
             </Container>
         </PageContent>
     )
