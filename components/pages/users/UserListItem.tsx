@@ -3,16 +3,10 @@ import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import { FaCrown } from "react-icons/fa";
 import RoleBadge from "../../elements/RoleBadge";
+import User from "../../types/user";
 
 interface UserListItemProps {
-    user: {
-        id: string;
-        username: string;
-        avatar: string;
-        createdAt: number,
-        role?: string;
-        owner?: boolean;      
-    }
+    user: User
 }
 
 export default function UserListItem({ user }: UserListItemProps){

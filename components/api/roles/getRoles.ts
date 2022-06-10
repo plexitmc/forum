@@ -1,12 +1,8 @@
+import Role from '../../types/role';
 import http from '../http';
 
 export interface IRolesResponse {
-    [key: string]: {
-        id: string,
-        color: string,
-        label: string,
-        deletable?: boolean
-    }
+    [key: string]: Role
 }
 
 
