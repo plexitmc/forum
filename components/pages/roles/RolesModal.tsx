@@ -1,4 +1,4 @@
-import { Button, Group, Modal, Select, TextInput } from "@mantine/core";
+import { Button, Group, Modal, Select, Text, TextInput } from "@mantine/core";
 
 import Role from "../../types/role"
 import * as Yup from 'yup';
@@ -78,7 +78,7 @@ export default function RolesModal({ role, setVisible, setAlert }: IRolesModalPr
     }
     
     return (
-        <Modal opened={true} onClose={() => setVisible(false)} title={role ? `Editing '${role.label}'` : "Creating new role"}>
+        <Modal opened={true} onClose={() => setVisible(false)} title={<Text weight={600}>{role ? `Editing '${role.label}'` : "Creating new role"}</Text>}>
             <form onSubmit={form.onSubmit(async (values) => await onSubmit(values))}>
                 <TextInput
                     required
@@ -92,11 +92,19 @@ export default function RolesModal({ role, setVisible, setAlert }: IRolesModalPr
                     placeholder="The color of the role"
                     {...form.getInputProps('color')}
                     data={[
+                        { label: 'Gray', value: 'gray' },
                         { label: 'Red', value: 'red' },
-                        { label: 'Green', value: 'green' },
+                        { label: 'Pink', value: 'pink' },
+                        { label: 'Grape', value: 'grape' },
+                        { label: 'Violet', value: 'violet' },
+                        { label: 'Indigo', value: 'indigo' },
                         { label: 'Blue', value: 'blue' },
+                        { label: 'Cyan', value: 'cyan' },
+                        { label: 'Green', value: 'green' },
+                        { label: 'Lime', value: 'lime' },
                         { label: 'Yellow', value: 'yellow' },
                         { label: 'Orange', value: 'orange' },
+                        { label: 'Teal', value: 'teal' },
                     ]}
                 />
                 <Group position="right" mt="xl">

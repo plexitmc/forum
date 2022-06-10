@@ -35,11 +35,11 @@ export default function RolesList({ setAlert }: { setAlert: (alert: { text: stri
                     </thead>
                     <tbody>
                         {Object.keys(roles).map((key, index) => (
-                            <tr key={index} onClick={() => openRoleModal(roles[key])}>
+                            <Box component="tr" key={index} onClick={() => openRoleModal(roles[key])} sx={{ cursor: 'pointer' }}>
                                 <td>{roles[key].label}</td>
                                 <td><RoleBadge role={key}/></td>
                                 <td>0</td>
-                            </tr>
+                            </Box>
                         ))}
                     </tbody>
                 </Table>

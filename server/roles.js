@@ -86,11 +86,19 @@ module.exports = (db) => {
     obj.isValidColor = (color) => {
         // Create function to check though a list of allowed colors
         const allowedColors = [
-            'Red',
-            'Green',
-            'Blue',
-            'Yellow',
-            'Orange',
+            'gray',
+            'red',
+            'pink',
+            'grape',
+            'violet',
+            'indigo',
+            'blue',
+            'cyan',
+            'green',
+            'lime',
+            'yellow',
+            'orange',
+            'teal'
         ];
         return allowedColors.includes(color.toLowerCase());
     }
