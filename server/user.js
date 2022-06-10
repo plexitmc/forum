@@ -51,7 +51,7 @@ module.exports = (db) => {
                 id: data.id,
                 username: data.username,
                 avatar: data.avatar,
-                role: null,
+                role: 'default',
                 createdAt: new Date().getTime(),
             }
             db.users.insertOne(user, async (err, res) => {
