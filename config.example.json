@@ -1,0 +1,18 @@
+{
+    "env": "production",
+    "mongodb": {
+        "username": "username",
+        "password": "password",
+        "host": "host",
+        "port": 30000,
+        "database": "centox"
+      },
+    "discord": {
+      "client_id": "discord client id",
+      "client_secret": "discord client secret",
+      "redirect_uri": "callback url"
+    },
+    "port": 80,
+    "jwt_secret": "a very long jwt secret so no one can hack it!"
+  }
+  
