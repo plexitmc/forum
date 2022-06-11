@@ -42,7 +42,7 @@ module.exports = (db) => {
                         avatar: `https://cdn.discordapp.com/avatars/${response.id}/${response.avatar}.png`,
                     }).then(async () => await user.loginToUser(response.id, req, (response) => {
                         return res.status(response.status).cookie("access_token", response.data.token, {
-                            maxAge: 3600*24*7,
+                            maxAge: 1000*3600*24*7,
                             httpOnly: true,
                             secure: config.env === "production"
                         }).json({ message: response.message })    
@@ -54,7 +54,7 @@ module.exports = (db) => {
                         avatar: `https://cdn.discordapp.com/avatars/${response.id}/${response.avatar}.png`,
                     }).then(async () => await user.loginToUser(response.id, req, (response) => {
                         return res.status(response.status).cookie("access_token", response.data.token, {
-                            maxAge: 3600*24*7,
+                            maxAge: 1000*3600*24*7,
                             httpOnly: true,
                             secure: config.env === "production"
                         }).json({ message: response.message })        

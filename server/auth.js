@@ -14,7 +14,7 @@ module.exports = (db) => {
      * @returns 
      */
     obj.generateAccessToken = (userId) => {
-        return jwt.sign({userId: userId}, config.jwt_secret, { expiresIn: 1800 });
+        return jwt.sign({userId: userId}, config.jwt_secret, { expiresIn: 3600*24*7 });
     }
 
     /**

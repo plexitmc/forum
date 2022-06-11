@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import login from '../components/api/auth/login';
 import useUser from '../components/api/swr/useUser';
 import Error from '../components/elements/Error';
-import Loading from '../components/elements/LoadingScreen';
+import LoadingScreen from '../components/elements/LoadingScreen';
 import Meta from '../components/elements/Meta';
 import DiscordLoginButton from '../components/pages/login/DiscordLoginButton';
 import config from '../config.json';
@@ -36,7 +36,7 @@ export default function Login() {
     }, [router, code, mutate]);
 
     if(isError) return <Error />
-    if(isLoading) return <Loading/>
+    if(isLoading) return <LoadingScreen/>
 
     return (
         <>

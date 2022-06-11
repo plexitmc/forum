@@ -3,11 +3,11 @@ import { useMediaQuery } from '@mantine/hooks';
 import { SegmentedControl, Box, MediaQuery, Burger, Image, Divider, ScrollArea, Anchor } from '@mantine/core';
 import { FaUsers, FaDatabase, FaYoutube, FaListUl, FaHammer, FaHandshake, FaRegQuestionCircle } from "react-icons/fa";
 import SidebarGroup from './SidebarGroup';
-import Loading from '../../../elements/Loading';
 import Error from '../../../elements/Error';
 import useUser from '../../../api/swr/useUser';
 import { UserButton } from './UserButton';
 import Link from 'next/link';
+import LoadingScreen from '../../../elements/LoadingScreen';
 
 const tabs: any = {
     default: [
@@ -58,14 +58,15 @@ export default function Sidebar({ isExtended, admin }: { isExtended?: boolean, a
         redirectTo: "/login"
     });
 
-    if(isLoading) return <></>
-    if(!user) return <Loading/>
-    if(isError) return <Error />
-
     return ( 
         <>
         {(matches || isExtended) && 
             <MediaQuery query="(max-width: 750px)" styles={{ width: '100%' }}>
+            { isError 
+            ? <Error /> 
+            : ((!user || isLoading) 
+                ? <></> 
+                : 
                 <Box sx={{ backgroundColor: '#fff', height: '100vh', transition: 'all 0.3s', width: 300, padding: '1rem', zIndex: 1, position: (isExtended && !matches ? "fixed" : "static")}}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -103,7 +104,8 @@ export default function Sidebar({ isExtended, admin }: { isExtended?: boolean, a
                         </Box>
                     </Box>
                 </Box>
-            </MediaQuery>  
+                )}
+            </MediaQuery>
         }
         </>
     )
