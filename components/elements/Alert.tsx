@@ -5,7 +5,7 @@ import { BsCheckCircle, BsQuestionCircle } from 'react-icons/bs';
 export interface AlertProps{
     text: string;
     type: string;
-    sx: Sx;
+    sx?: Sx;
 }
 
 function getColorFromType(type: string){

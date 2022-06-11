@@ -1,1 +1,1 @@
-// Create tables and default collections
+// Create tables and default collections and create indexes
