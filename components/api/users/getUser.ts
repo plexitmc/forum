@@ -1,15 +1,14 @@
 import User from '../../types/user';
 import http from '../http';
 
-export interface IUsersResponse {
-    users: [User];
-    total: number;
-    pages: number;
+export interface IUserResponse {
+    user?: User;
+    message?: string;
 }
 
-export default (page: string | number): Promise<IUsersResponse> => {
+export default (id: string | undefined | string[]): Promise<IUserResponse> => {
     return new Promise((resolve, reject) => {
-        http.get(`/api/user/list/${page}`)
+        http.get(`/api/user/${id}`)
             .then(response => resolve(response.data))
             .catch((error) => reject(error.response.data));
     });

@@ -26,7 +26,7 @@ export default function UserList({ sx }: UserListProps) {
                 </Box>
                 <tbody>
                     {
-                        isError ? <Error/> : (isLoading || !data ? <></> : 
+                        isError ? <tr><td colSpan={3}><Error height={'25vh'}/></td></tr> : (isLoading || !data ? <></> : 
                         data.users.map((user, index) => <UserListItem key={index} user={user}/>))
                     }
                 </tbody>

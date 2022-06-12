@@ -14,7 +14,7 @@ export default function UserListItem({ user }: UserListItemProps){
     const router = useRouter()
 
     return (
-        <Box component='tr' sx={{ cursor: 'pointer'}} onClick={() => router.push(`/admin/user/${user.id}`)}>
+        <Box component='tr' sx={{ cursor: 'pointer'}} onClick={() => router.push(`/admin/users/${user.id}`)}>
             <Box component='td' sx={{ display: 'flex', alignItems: 'center', gap: '1rem'}}>
                 <Avatar src={user.avatar} radius="xl" />
                 <Text weight={500}>{user.username}</Text>

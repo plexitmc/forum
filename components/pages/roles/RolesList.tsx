@@ -34,13 +34,16 @@ export default function RolesList({ setAlert }: { setAlert: (alert: { text: stri
                         </tr>
                     </thead>
                     <tbody>
-                        {Object.keys(roles).map((key, index) => (
-                            <Box component="tr" key={index} onClick={() => openRoleModal(roles[key])} sx={{ cursor: 'pointer' }}>
-                                <td>{roles[key].label}</td>
-                                <td><RoleBadge role={key}/></td>
-                                <td>0</td>
-                            </Box>
-                        ))}
+                        {
+                            isError ? <tr><td colSpan={3}><Error height={'25vh'}/></td></tr> : (isLoading || !roles ? <></> : 
+                            Object.keys(roles).map((key, index) => (
+                                <Box component="tr" key={index} onClick={() => openRoleModal(roles[key])} sx={{ cursor: 'pointer' }}>
+                                    <td>{roles[key].label}</td>
+                                    <td><RoleBadge role={key}/></td>
+                                    <td>0</td>
+                                </Box>
+                            )))
+                        }
                     </tbody>
                 </Table>
                 <Box sx={{ margin: '1rem'}}>
