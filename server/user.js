@@ -158,5 +158,24 @@ module.exports = (db) => {
         return user;
     }
 
+
+    /** 
+     * Get list of users from mongodb based upon page number
+     * @param {Number} page
+     * @param {Number} limit
+     * @returns {Array} list of users
+     */
+    obj.getUsers = async (page, limit) => {
+        return await db.users.find({}).skip((page-1) * limit).limit(limit).toArray();
+    }
+
+    /**
+     * Get total amount of documents in collection
+     * @returns {Number} total amount of documents
+     */
+    obj.getTotalUsers = async () => {
+        return await db.users.count();
+    }
+
     return obj;
 }

@@ -2,6 +2,9 @@
 module.exports = (db) => {
     const obj = {};
 
+    const user = require('./user')(db);
+
+
     /**
      * Gets an array of created roles.
      * @returns {Array} Array of roles
@@ -77,10 +80,13 @@ module.exports = (db) => {
         if(!role) return cb({ status: 400, message: `The role '${id}' doesn't exists.` });
         if(role.deletable === false) return cb({ status: 400, message: `The role '${id}' cannot be deleted.` });
         
-        else await db.roles.deleteOne({id: id}, (err, res) => {
-            if(err) return cb({ status: 500, message: `Error occurred when deleting role '${id}'` });
-            return cb({ status: 200, message: `Role '${id}' has been deleted.` });
-        });
+        else {
+            await obj.resetRole(id);
+            await db.roles.deleteOne({id: id}, (err, res) => {
+                if(err) return cb({ status: 500, message: `Error occurred when deleting role '${id}'` });
+                return cb({ status: 200, message: `Role '${id}' has been deleted.` });
+            });
+        }
     }
 
     obj.isValidColor = (color) => {
@@ -101,6 +107,15 @@ module.exports = (db) => {
             'teal'
         ];
         return allowedColors.includes(color.toLowerCase());
+    }
+
+    /**
+     * Create function where users with a specific role is being reset to 'default' role.
+     * @param {String} role - Role id
+     * @returns {Function} Callback function
+     */
+    obj.resetRole = async (role) => {
+        await db.users.updateMany({role: role.toLowerCase()}, {$set: {role: 'default'}});
     }
 
     return obj;

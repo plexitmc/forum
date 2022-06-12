@@ -6,7 +6,6 @@ export interface IRolesResponse {
 }
 
 
-
 export default (): Promise<IRolesResponse> => {
     return new Promise((resolve, reject) => {
         http.get(`/api/roles`)

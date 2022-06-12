@@ -1,6 +1,8 @@
-import { Box, Paper, Sx, Table, Text, Pagination, TextInput } from "@mantine/core";
+import { Box, Paper, Sx, Table, Text, Pagination } from "@mantine/core";
 import React, { useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { useQuery } from "react-query";
+import getUsers from "../../api/users/getUsers";
+import Error from "../../elements/Error";
 import UserListItem from "./UserListItem";
 
 interface UserListProps {
@@ -10,6 +12,7 @@ interface UserListProps {
 export default function UserList({ sx }: UserListProps) {
 
     const [page, setPage] = useState(1);
+    const { isLoading, isError, data } = useQuery(['users', page], () => getUsers(page), { keepPreviousData: true })
 
     return (
         <Paper sx={[sx]}>
@@ -22,18 +25,14 @@ export default function UserList({ sx }: UserListProps) {
                     </Box>
                 </Box>
                 <tbody>
-                    <UserListItem user={{
-                        id: "261195644314714113",
-                        username: "SIMON#1386",
-                        avatar: "https://cdn.discordapp.com/avatars/261195644314714113/6bb612580d6b15b78c9d723eb620ed7e.png",
-                        role: "admin",
-                        createdAt: 1654518531144,
-                        owner: true
-                    }}/>
+                    {
+                        isError ? <Error/> : (isLoading || !data ? <></> : 
+                        data.users.map((user, index) => <UserListItem key={index} user={user}/>))
+                    }
                 </tbody>
             </Table>
             <Box sx={{ display: 'flex', justifyContent: 'center', padding: '1rem'}}>
-                <Pagination page={page} onChange={setPage} total={10} />
+                <Pagination page={page} onChange={setPage} total={data?.pages || 1} />
             </Box>
         </Paper>    
     )
