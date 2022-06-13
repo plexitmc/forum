@@ -62,10 +62,10 @@ module.exports = (db) => {
 
     /**
      * Login to user
-     * @param {String} id 
+     * @param {String} userId
      */
-     obj.loginToUser = async (id, req, callback) => {
-        var user = await db.users.findOne({ id });
+     obj.loginToUser = async (userId, req, callback) => {
+        var user = await db.users.findOne({ _id: new ObjectId(userId) });
         if (!user) callback({status: 404, message: 'User not found.'});
         else {
             var token = auth.generateAccessToken(user._id.toString());
@@ -89,7 +89,7 @@ module.exports = (db) => {
      * @param {String} token 
      */ 
     obj.logout = async (token, callback) => {
-        db.logins.updateOne({token: token}, {$unset: {token: 1}}, (err, result) => {
+        db.logins.updateOne({ token: token }, { $unset: { token: 1 } }, (err, result) => {
             if (err) {
                 console.error(err);
                 callback({
@@ -177,5 +177,26 @@ module.exports = (db) => {
         return await db.users.count();
     }
 
+
+    /**
+     * Update the role field of a user
+     * @param {String} userId
+     * @param {String} role
+     * @returns {Boolean} if the role was changed or not
+     */
+    obj.changeRole = async (userId, role) => {
+        var user = await db.users.findOne({ _id: new ObjectId(userId) });
+        if (!user) return false;
+        user.role = role;
+        db.users.updateOne({ _id: new ObjectId(userId) }, {$set: user}, (err, res) => {
+            if (err) {
+                console.error(err);
+                return false;
+            } else {
+                return true;
+            }
+        });
+    }
+    
     return obj;
 }

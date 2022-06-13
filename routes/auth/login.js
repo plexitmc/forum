@@ -40,7 +40,7 @@ module.exports = (db) => {
                     await user.updateDiscord(response.id, {
                         username: `${response.username}#${response.discriminator}`,
                         avatar: `https://cdn.discordapp.com/avatars/${response.id}/${response.avatar}.png`,
-                    }).then(async () => await user.loginToUser(response.id, req, (response) => {
+                    }).then(async () => await user.loginToUser(response._id, req, (response) => {
                         return res.status(response.status).cookie("access_token", response.data.token, {
                             maxAge: 1000*3600*24*7,
                             httpOnly: true,
@@ -52,7 +52,7 @@ module.exports = (db) => {
                         id: response.id,
                         username: `${response.username}#${response.discriminator}`,
                         avatar: `https://cdn.discordapp.com/avatars/${response.id}/${response.avatar}.png`,
-                    }).then(async () => await user.loginToUser(response.id, req, (response) => {
+                    }).then(async () => await user.loginToUser(response._id, req, (response) => {
                         return res.status(response.status).cookie("access_token", response.data.token, {
                             maxAge: 1000*3600*24*7,
                             httpOnly: true,
