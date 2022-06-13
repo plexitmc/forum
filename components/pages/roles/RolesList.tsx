@@ -47,7 +47,7 @@ export default function RolesList({ setAlert }: { setAlert: (alert: { text: stri
                     </tbody>
                 </Table>
                 <Box sx={{ margin: '1rem'}}>
-                    <Button variant="outline" radius='xl' onClick={() => openRoleModal(undefined)}><FaPlus/></Button>
+                    <Button variant="outline" radius='xl' onClick={() => openRoleModal(undefined)} leftIcon={<FaPlus/>}>Create role</Button>
                 </Box>
             </Box>
             }

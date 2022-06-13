@@ -43,7 +43,7 @@ const tabs: any = {
             links: [
                 { link: '/admin/users', label: 'Users', icon: FaUsers },
                 { link: '/admin/roles', label: 'Roles', icon: FaListUl },
-                { link: '/admin/applications', label: 'Applications', icon: FaDatabase },
+                { link: '/admin/forms', label: 'Forms', icon: FaDatabase },
             ]
         }
     ],

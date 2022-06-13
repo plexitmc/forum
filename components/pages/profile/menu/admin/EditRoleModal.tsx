@@ -65,7 +65,7 @@ export default function RolesModal({ user, isVisible, setVisible, setAlert }: IE
     }
     
     return (
-        <Modal opened={isVisible} onClose={() => setVisible(false)} title={<Text weight={600}>Change {user.username}&apos;s role</Text>}>
+        <Modal opened={isVisible} onClose={() => setVisible(false)} title={<Text weight={600}>{`Change ${user.username}'s role`}</Text>}>
             <form onSubmit={form.onSubmit(async (values) => await onSubmit(values))}>
                 <Select
                     required
