@@ -6,10 +6,11 @@ import { useQuery } from "react-query"
 import createForm from "../../api/forms/createForm"
 import getForms from "../../api/forms/getForms"
 import Error from "../../elements/Error"
-import LoadingScreen from "../../elements/LoadingScreen"
+import { useRouter } from "next/router";
 
 export default function AppFormList({ setAlert }: { setAlert: (alert: { text: string, type: string }) => void }) {
-    
+    const router = useRouter()
+
     const { isLoading, isError, data } = useQuery('forms', getForms)
 
     const [isSubmitting, setSubmitting] = useState(false);
@@ -45,7 +46,7 @@ export default function AppFormList({ setAlert }: { setAlert: (alert: { text: st
                         {
                             isError ? <tr><td colSpan={3}><Error height={'25vh'}/></td></tr> : (isLoading || !data ? <></> : 
                             data.forms?.map((form, index) => (
-                                <Box component="tr" key={index} sx={{ cursor: 'pointer' }}>
+                                <Box component="tr" key={index} sx={{ cursor: 'pointer' }} onClick={() => router.push(`/admin/forms/${form._id}`)}>
                                     <td>{form.name}</td>
                                     <Box component='td'>
                                         <Tooltip withArrow label={dayjs(form.createdAt).format('HH:mm, DD/MM/YYYY')} transition='fade' transitionDuration={200}>
