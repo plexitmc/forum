@@ -6,6 +6,7 @@ module.exports = (db) => {
     
     // Utils
     const user = require('../../server/user')(db);
+    const roles = require('../../server/roles')(db);
     const auth = require('../../server/auth')(db);
 
     // Create rate limiter
@@ -17,21 +18,15 @@ module.exports = (db) => {
         return res.status(200).json({ user: userObj });
     })
 
-    router.get('/list/:page', rateLimiter, auth.ensureAuthenticationWithUser, async (req, res) => {
-        if(req.user.role !== "admin") return res.status(401).json({ message: 'Unauthorized' });
-        if(!req.params.page) return res.status(400).json({ message: 'Missing page parameter.' });
-        
-        var users = await user.getUsers(req.params.page, 10);
-        var totalusers = await user.getTotalUsers();
-
-        return res.status(200).json({
-            users: users,
-            total: totalusers,
-            pages: Math.ceil(totalusers / 10)
-        });
+    router.post('/:_id', rateLimiter, auth.ensureAuthenticationWithUser, async (req, res) => {
+        var userObj = await user.getUserById(req.params._id);
+        if(!userObj) return res.status(404).json({ message: "User not found" });
+        if(await user.canEditUser(req.user._id, userObj._id)){
+            if(await roles.roleExists(req.body.roleId)){
+                await user.updateRole(userObj._id, req.body.roleId, (response) => res.status(response.status).json({ message: response.message }));
+            } else return res.status(404).json({ message: "Role not found" });
+        } else return res.status(400).json({ message: "You do not have permission to edit this user." });
     })
-
-
 
     return router;
 }

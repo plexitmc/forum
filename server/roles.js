@@ -35,7 +35,7 @@ module.exports = (db) => {
      * @returns {Boolean} Whether the role exists or not
      */
     obj.roleExists = async (id) => {
-        var res = await db.roles.findOne({id: id.toLowerCase()});
+        var res = await db.roles.findOne({id: id?.toLowerCase()});
         return res ? true : false;
     }
 

@@ -108,6 +108,7 @@ module.exports = (db) => {
     /**
      * Logout all logged in sessions
      * @param {String} userId 
+     * @param {Function} callback
      */ 
     obj.logoutFromAllSessions = async (userId, callback) => {
         db.logins.updateMany({user: new ObjectId(userId)}, {$unset: {token: 1}}, (err, result) => {
@@ -177,25 +178,53 @@ module.exports = (db) => {
         return await db.users.count();
     }
 
-
     /**
-     * Update the role field of a user
+     * Check if user can edit another user
      * @param {String} userId
-     * @param {String} role
-     * @returns {Boolean} if the role was changed or not
+     * @param {String} targetId
+     * @returns {Boolean} if the user can edit the user or not
      */
-    obj.changeRole = async (userId, role) => {
+    obj.canEditUser = async (userId, targetId) => {
+
+        // check if user and target is the same user.
+        if(userId == targetId) return false;
+
         var user = await db.users.findOne({ _id: new ObjectId(userId) });
         if (!user) return false;
-        user.role = role;
-        db.users.updateOne({ _id: new ObjectId(userId) }, {$set: user}, (err, res) => {
-            if (err) {
-                console.error(err);
-                return false;
-            } else {
-                return true;
-            }
-        });
+
+        // if the user is the owner, he can edit anyone.
+        if(user.owner) return true;
+
+        // only admins can edit users.
+        if(user.role == 'admin') {
+            var target = await db.users.findOne({ _id: new ObjectId(targetId) });
+            if (!target) return false;
+            // if the target is an admin only the owner can edit him.
+            if(target.role == 'admin') return false;
+            return true;
+        } else return false;
+    }
+
+    /**
+     * Update a users role
+     * @param {String} userId
+     * @param {String} Role
+     * @param {Function} callback
+     */
+    obj.updateRole = async (userId, role, callback) => {
+        var user = await db.users.findOne({ _id: new ObjectId(userId) });
+        if (!user) callback({status: 404, message: 'User not found.'});
+        else {
+            user.role = role;
+            db.users.updateOne({ _id: new ObjectId(userId) }, {$set: user}, (err, res) => {
+                if (err) {
+                    console.error(err);
+                    callback({status: 404, message: 'Something went wrong.'});
+                } else {
+                    callback({status: 200, message: 'Role updated.'});
+                }
+            });
+        }
     }
     
     return obj;
