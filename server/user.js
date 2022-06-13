@@ -187,7 +187,7 @@ module.exports = (db) => {
     obj.canEditUser = async (userId, targetId) => {
 
         // check if user and target is the same user.
-        if(userId == targetId) return false;
+        if(userId.toString() === targetId.toString()) return false;
 
         var user = await db.users.findOne({ _id: new ObjectId(userId) });
         if (!user) return false;
