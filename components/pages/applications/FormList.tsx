@@ -31,7 +31,6 @@ export default function AppFormList({ setAlert }: { setAlert: (alert: { text: st
         setTimeout(() => setSubmitting(false), 500)
     }
 
-    console.log(isLoading, isError, data);
     return (
         <>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
