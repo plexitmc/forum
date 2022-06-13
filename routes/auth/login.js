@@ -40,24 +40,26 @@ module.exports = (db) => {
                     await user.updateDiscord(response.id, {
                         username: `${response.username}#${response.discriminator}`,
                         avatar: `https://cdn.discordapp.com/avatars/${response.id}/${response.avatar}.png`,
-                    }).then(async () => await user.loginToUser(response._id, req, (response) => {
-                        return res.status(response.status).cookie("access_token", response.data.token, {
+                    }).then(async () => await user.loginToUser(response.id, req, (response) => {
+                        if(response.status == 200) return res.status(response.status).cookie("access_token", response.data.token, {
                             maxAge: 1000*3600*24*7,
                             httpOnly: true,
                             secure: config.env === "production"
                         }).json({ message: response.message })    
+                        return res.status(response.status).json({ message: response.message })
                     }));
                 } else {
                     await user.createNew({
                         id: response.id,
                         username: `${response.username}#${response.discriminator}`,
                         avatar: `https://cdn.discordapp.com/avatars/${response.id}/${response.avatar}.png`,
-                    }).then(async () => await user.loginToUser(response._id, req, (response) => {
-                        return res.status(response.status).cookie("access_token", response.data.token, {
+                    }).then(async () => await user.loginToUser(response.id, req, (response) => {
+                        if(response.status == 200) return res.status(response.status).cookie("access_token", response.data.token, {
                             maxAge: 1000*3600*24*7,
                             httpOnly: true,
                             secure: config.env === "production"
-                        }).json({ message: response.message })        
+                        }).json({ message: response.message })    
+                        return res.status(response.status).json({ message: response.message })     
                     }))
                 }
             })

@@ -64,8 +64,8 @@ module.exports = (db) => {
      * Login to user
      * @param {String} userId
      */
-     obj.loginToUser = async (userId, req, callback) => {
-        var user = await db.users.findOne({ _id: new ObjectId(userId) });
+     obj.loginToUser = async (discordId, req, callback) => {
+        var user = await db.users.findOne({ id: discordId });
         if (!user) callback({status: 404, message: 'User not found.'});
         else {
             var token = auth.generateAccessToken(user._id.toString());
