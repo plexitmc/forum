@@ -2,7 +2,7 @@ import { Box, Button, Table, Tooltip } from "@mantine/core"
 import dayjs from "dayjs"
 import { useState } from "react"
 import { FaPlus } from "react-icons/fa"
-import { useQuery } from "react-query"
+import { useQuery, useQueryClient } from "react-query"
 import createForm from "../../api/forms/createForm"
 import getForms from "../../api/forms/getForms"
 import Error from "../../elements/Error"
@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 
 export default function AppFormList({ setAlert }: { setAlert: (alert: { text: string, type: string }) => void }) {
     const router = useRouter()
+    const queryClient = useQueryClient()
 
     const { isLoading, isError, data } = useQuery('forms', getForms)
 
@@ -22,7 +23,7 @@ export default function AppFormList({ setAlert }: { setAlert: (alert: { text: st
         createForm()
             .then((response) => {
                 setAlert({text: response.message, type: 'success'})
-                //queryClient.invalidateQueries('roles')
+                queryClient.invalidateQueries('forms')
             })
             .catch((error) => {
                 setAlert({text: error.message, type: 'error'})
