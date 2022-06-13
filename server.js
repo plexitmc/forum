@@ -9,6 +9,8 @@ const path = require('path');
 const config = require('./config.json');
 const connectToDatabase = require('./server/utils/database');
 const getFileLocations = require('./server/utils/getFileLocations');
+const morgan = require('./server/utils/morgan');
+const logger = require('./server/utils/logger');
 
 // Creating the app
 const server = express();
@@ -59,6 +61,10 @@ app.prepare().then(() => {
     
         server.use(express.static(path.join(__dirname, './public')))
         server.use('/_next', express.static(path.join(__dirname, './.next')))
+
+        // Instantiate after static and '_next' to ensure it doesn't log all static content.
+        // https://stackoverflow.com/questions/26943213/expressjs-morgan-log-only-route-request
+        server.use(morgan)
     
         console.log('Loading base routes..');
         for (let i = 0; i < baseRoutes.length; i++) {
@@ -73,15 +79,6 @@ app.prepare().then(() => {
             server.use(`/api${baseName}`, route);
             console.log(` - /api${baseName}`);
         }
-    
-        
-    
-        // Logger
-        server.use((req, res, next) => {
-            console.log(`${req.method} ${req.url} - ${JSON.stringify(req.body)}`);
-            next();
-        });
-
 
         // Handle all other requests (next pages)
         server.get('*', (req, res) => {
@@ -92,7 +89,7 @@ app.prepare().then(() => {
         // Start API Server
         const port = config.port || 3000
         http.listen(port, () => {
-            console.log(`Server running in --- ${process.env.NODE_ENV || "development"} --- on port ${port}`)
+            logger.info(`Server running in --- ${process.env.NODE_ENV || "development"} --- on port ${port}`)
         });
     });
 });
