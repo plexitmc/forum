@@ -7,8 +7,8 @@ const path = require('path');
 
 // Local imports
 const config = require('./config.json');
-const connectToDatabase = require('./server/database');
-const getFileLocations = require('./server/getFileLocations');
+const connectToDatabase = require('./server/utils/database');
+const getFileLocations = require('./server/utils/getFileLocations');
 
 // Creating the app
 const server = express();

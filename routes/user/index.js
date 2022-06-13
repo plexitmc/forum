@@ -10,7 +10,7 @@ module.exports = (db) => {
     const auth = require('../../server/auth')(db);
 
     // Create rate limiter
-    const rateLimiter = require('../../server/rateLimiter')(2 * 60 * 1000, 30, "Too many requests. Try again later.")
+    const rateLimiter = require('../../server/utils/rateLimiter')(2 * 60 * 1000, 30, "Too many requests. Try again later.")
 
     router.get('/:id', rateLimiter, auth.ensureAuthentication, async (req, res) => {
         var userObj = await user.getUser(req.params.id);
