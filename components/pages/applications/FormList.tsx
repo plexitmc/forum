@@ -30,7 +30,7 @@ export default function AppFormList({ setAlert }: { setAlert: (alert: { text: st
             })
         setTimeout(() => setSubmitting(false), 500)
     }
-
+    
     return (
         <>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
