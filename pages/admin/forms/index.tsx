@@ -11,7 +11,7 @@ export default function Applications(){
             <Container size={'md'}>
                 <Box mt={30}>
                     {alert.text != '' && <Alert text={alert?.text} type={alert?.type} sx={{ marginBottom: 10}} />}
-                    <Paper>
+                    <Paper withBorder>
                         <AppFormList setAlert={setAlert}/>
                     </Paper>
                 </Box>

@@ -15,7 +15,7 @@ export default function UserList({ sx }: UserListProps) {
     const { isLoading, isError, data } = useQuery(['users', page], () => getUsers(page), { keepPreviousData: true })
 
     return (
-        <Paper sx={[sx]}>
+        <Paper sx={[sx]} withBorder>
             <Table highlightOnHover verticalSpacing={'md'} horizontalSpacing='xl'>
                 <Box component='thead'>
                     <Box component='tr'>

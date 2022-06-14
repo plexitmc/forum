@@ -12,7 +12,7 @@ export default function Roles(){
             <Container size={'md'}>
                 <Box mt={30}>
                     {alert.text != '' && <Alert text={alert?.text} type={alert?.type} sx={{ marginBottom: 10}} />}
-                    <Paper>
+                    <Paper withBorder>
                         <RolesList setAlert={setAlert}/>
                     </Paper>
                 </Box>
