@@ -1,7 +1,8 @@
-import { Paper, Box, Text, TextInput, Table, Badge, Checkbox, Group, Button } from "@mantine/core";
+import { Paper, Text, Group, Button } from "@mantine/core";
 import { useState } from "react";
 import updateForm from "../../api/forms/updateForm";
 import Form from "../../types/form";
+import DeleteFormButton from "./DeleteFormButton";
 import FormFields from "./sections/FormFields";
 import FormInfo from "./sections/FormInfo";
 import FormPermissions from "./sections/FormPermissions";
@@ -31,10 +32,10 @@ export default function FormBox({ form: startForm, setAlert }: { form: Form, set
             <Text weight={600} sx={{ fontSize: 35 }} color='dark'>Editing form</Text>
             <FormInfo form={form} setForm={setForm}/>
             <FormPermissions form={form} setForm={setForm}/>
-            <FormFields fields={form.fields}/>
+            {/*<FormFields fields={form.fields}/>*/}
             <Group position="right" mt="xl">
-                <Button color='red' variant="outline" disabled={isSubmitting}>Delete form</Button>
-                <Button type="submit" loading={false} variant='outline' disabled={isSubmitting} onClick={() => saveChanges()}>Save</Button>
+                <DeleteFormButton isSubmitting={isSubmitting} setAlert={setAlert} form={form}/>
+                <Button loading={isSubmitting} variant='outline' onClick={() => saveChanges()}>Save</Button>
             </Group>
         </Paper>
     )

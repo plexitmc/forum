@@ -6,7 +6,6 @@ import Form from "../../../types/form";
 
 export default function FormPermissions({ form, setForm }: { form: Form, setForm: (form: Form) => void }) {
 
-    
     const { isLoading, isError, data } = useQuery('roles', getRoles)
     if(isLoading || isError || !data) return <Box/>
 

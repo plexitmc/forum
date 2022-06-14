@@ -15,7 +15,7 @@ module.exports = (db) => {
         await db.forms.insertOne({
             name: 'Newly created form',
             fields: [],
-            permission: {
+            permissions: {
                 admin: {
                     create: true,
                     viewOthers: true,
@@ -75,13 +75,37 @@ module.exports = (db) => {
             await db.forms.replaceOne({ _id: new ObjectId(formId) }, { ...form, updatedAt: new Date().getTime() }, async (err, res) => {
                 if(err) {
                     console.log(err);
-                    callback({ status: 400, message: 'Form could not be updated' });
-                } else callback({ status: 200, message: 'Form updated' });
+                    callback({ status: 400, message: 'Form could not be saved' });
+                } else callback({ status: 200, message: 'The form has been saved' });
             })
         } catch(err) {
             console.log(err)
-            callback({ status: 400, message: 'Form could not be updated' });
+            callback({ status: 400, message: 'Form could not be saved' });
         }
+    }
+
+    /**
+     * Delete a form and any associated applications.
+     * @param {String} formId
+     * @param {Function} callback
+     */
+    obj.deleteForm = async (formId, callback) => {
+        var form = await obj.getForm(formId);
+        if(!form) return callback({ status: 404, message: 'Form not found' });
+        await db.forms.deleteOne({ _id: new ObjectId(form._id) }, async (err, res) => {
+            if(err) {
+                console.log(err);
+                callback({ status: 400, message: 'Form could not be deleted' });
+            } else {
+                // Delete all applications associated with this form
+                await db.applications.deleteMany({ form: new ObjectId(form._id)}, async (err, res) => {
+                    if(err) {
+                        console.log(err);
+                        callback({ status: 400, message: 'Form could not be deleted' });
+                    } else callback({ status: 200, message: 'The form has been deleted.' });
+                });
+            }
+        })
     }
 
     return obj;

@@ -28,6 +28,13 @@ module.exports = (db) => {
     })
 
 
+    router.delete('/:id', rateLimiter, auth.ensureAuthenticationWithUser, async (req, res) => {
+        if(req.user.role !== "admin") return res.status(401).json({ message: "Forbidden." });
+        await forms.deleteForm(req.params.id, (response) => res.status(response.status).json({ message: response.message }));
+    })
+
+
+
     router.post('/:id', rateLimiter, auth.ensureAuthenticationWithUser, async (req, res) => {
         if(req.user.role !== "admin") return res.status(401).json({ message: "Forbidden." });
 
@@ -40,6 +47,7 @@ module.exports = (db) => {
 
         await forms.updateForm(req.params.id, form, (response) => res.status(response.status).json({ message: response.message }));
     })
+
 
 
     return router;
