@@ -1,7 +1,8 @@
 export default interface FormField {
     _id: string;
-    type: string;
+    type: 'text' | 'heading' | 'shorttext' | 'longtext' | 'select' | 'checkbox';
     label: string;
-    description: string;
-    required: boolean;
+    description?: string;
+    required?: boolean;
+    options?: string[]
 }
