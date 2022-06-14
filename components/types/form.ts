@@ -7,8 +7,8 @@ export default interface Form {
     icon?: string;
     createdAt: number;
     updatedAt: number;
-    fields?: [FormField];
-    permissions?: [FormPermission]
+    fields: [FormField];
+    permissions: { [key: string]: FormPermission };
 }
 
 

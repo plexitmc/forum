@@ -20,5 +20,27 @@ module.exports = (db) => {
         });
     })
 
+
+    router.get('/:id', rateLimiter, auth.ensureAuthentication, async (req, res) => {
+        var form = await forms.getForm(req.params.id);
+        if(!form) return res.status(404).json({ message: "Form not found" });
+        return res.status(200).json({ form: form });
+    })
+
+
+    router.post('/:id', rateLimiter, auth.ensureAuthenticationWithUser, async (req, res) => {
+        if(req.user.role !== "admin") return res.status(401).json({ message: "Forbidden." });
+
+        const { form } = req.body;
+        console.log(form)
+        if(!form) return res.status(400).json({ message: "Form not provided." });
+
+        var dbForm = await forms.getForm(req.params.id);
+        if(!dbForm) return res.status(404).json({ message: "Form not found" });
+
+        await forms.updateForm(req.params.id, form, (response) => res.status(response.status).json({ message: response.message }));
+    })
+
+
     return router;
 }

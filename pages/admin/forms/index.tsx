@@ -2,7 +2,7 @@ import { Box, Container, Paper } from "@mantine/core";
 import React, { useState } from "react";
 import Alert from "../../../components/elements/Alert";
 import PageContent from "../../../components/elements/PageContent";
-import AppFormList from "../../../components/pages/applications/FormList";
+import AppFormList from "../../../components/pages/forms/FormList";
 
 export default function Applications(){
     const [alert, setAlert] = useState({text: '', type: 'info'});
