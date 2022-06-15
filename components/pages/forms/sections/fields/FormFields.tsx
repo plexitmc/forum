@@ -7,6 +7,7 @@ import FormField from '../../../../types/formField';
 import AddFieldButton from "./AddFieldButton";
 import Field from "./Field";
 import { v4 as uuidv4 } from 'uuid';
+import { MdDeleteForever } from "react-icons/md";
 
 export default function FormFields({ form, setForm }: { form: Form, setForm: (form: Form) => void }) {
 
@@ -47,6 +48,17 @@ export default function FormFields({ form, setForm }: { form: Form, setForm: (fo
         setForm({...form, fields: newFields})
     }
 
+    function handleDeleteField(field: FormField){
+        const newFields: FormField[] = []
+        const fieldList: FormField[] = [...fields]
+        fieldList.forEach(f => {
+            if (f.id !== field.id) newFields.push(f);
+        })
+
+        setFields(newFields)
+        setForm({...form, fields: newFields})
+    }
+
     return (
         <Group position="center" direction="column" mt='xl'>
             <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -78,6 +90,13 @@ export default function FormFields({ form, setForm }: { form: Form, setForm: (fo
                                                     <Text size={'xs'} weight={700} sx={{ color: '#495057', marginBottom: '-1rem', paddingLeft: '2px', textTransform: 'uppercase'}}>{field.type}</Text>
                                                     <Field handleUpdateField={handleUpdateField} field={field}/>
                                                 </Box>
+                                                <Box component={MdDeleteForever} size={18} sx={{
+                                                    color: '#ff5555',
+                                                    cursor: 'pointer',
+                                                    '&:hover': {
+                                                        opacity: 0.9
+                                                    }
+                                                }} onClick={() => handleDeleteField(field)}/>
                                             </Box>
                                         )}
                                     </Draggable>
