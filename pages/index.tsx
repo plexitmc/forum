@@ -1,9 +1,23 @@
-import PageContent from '../components/elements/PageContent';
+import useUser from "../components/api/swr/useUser";
+import Error from "../components/elements/Error";
+import PageContent from "../components/elements/PageContent";
+import ProfileBox from "../components/pages/profile/ProfileBox";
 
 export default function Page() {
 
+    const { user, isLoading, isError } = useUser({
+        redirectTo: "/login"
+    });
+
     return (
-        <PageContent title="Forside">
+        <PageContent title="Your Profile">
+            { isError 
+            ? <Error /> 
+            : (isLoading 
+                ? <></> 
+                : 
+                <ProfileBox user={user}/>
+            )}
         </PageContent>
     )
 }
