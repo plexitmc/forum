@@ -39,7 +39,31 @@ module.exports = (db) => {
         if(req.user.role !== "admin") return res.status(401).json({ message: "Forbidden." });
 
         const { form } = req.body;
-        console.log(form)
+
+        // check if the form contains a name
+        if(!form.name) return res.status(400).json({ message: "Form must have a name." });
+        if(!form.updatedAt || !form.createdAt) return res.status(400).json({ message: 'Form cannot change its creation or update date.' });
+        if(!form.permissions) return res.status(400).json({ message: 'Form must have a permissions object.' });
+        
+        // loop though the permissions object and check if they are valid
+        for(let role in form.permissions)
+            for(let permission in form.permissions[role])
+                if(form.permissions[role][permission] !== true && form.permissions[role][permission] !== false) 
+                    return res.status(400).json({ message: 'Form permission object must be a boolean.' });
+        
+        // loop though the fields and check if they are valid
+        let i = 0; // count the fields?
+        for(let field of form.fields){
+            if(!field.id) return res.status(400).json({ message: `Form field ${i} must have an id.` });
+            if(!field.type || !['text', 'heading', 'shorttext', 'longtext', 'select', 'checkbox'].includes(field.type)) 
+                return res.status(400).json({ message: `Form field ${i} must have a type.` });
+            if(field.type == 'text' && !field.description)
+                return res.status(400).json({ message: `Form field ${i} must have text.` });
+            if(field.type != 'text' && !field.label)
+                return res.status(400).json({ message: `Form field ${i} must have a heading/question.` });            
+            i++;
+        }
+
         if(!form) return res.status(400).json({ message: "Form not provided." });
 
         var dbForm = await forms.getForm(req.params.id);

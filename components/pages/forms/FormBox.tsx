@@ -1,4 +1,5 @@
 import { Paper, Text, Group, Button } from "@mantine/core";
+import { useWindowScroll } from "@mantine/hooks";
 import { useState } from "react";
 import updateForm from "../../api/forms/updateForm";
 import Form from "../../types/form";
@@ -11,6 +12,7 @@ export default function FormBox({ form: startForm, setAlert }: { form: Form, set
 
     const [form, setForm] = useState(startForm);
     const [isSubmitting, setSubmitting] = useState(false);
+    const [scroll, scrollTo] = useWindowScroll();
 
     async function saveChanges() {
         if(isSubmitting) return;
@@ -25,6 +27,7 @@ export default function FormBox({ form: startForm, setAlert }: { form: Form, set
                 setAlert({text: error.message, type: 'error'})
             })
         setTimeout(() => setSubmitting(false), 500)
+        scrollTo({y: 0})
     }
 
     return (
