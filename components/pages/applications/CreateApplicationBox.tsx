@@ -1,8 +1,16 @@
 import { Box, Checkbox, Divider, Group, Paper, Text, Textarea, TextInput } from "@mantine/core";
+import { useState } from "react";
 import Form from "../../types/form";
 import CreateApplicationButton from "./CreateApplicationButton";
 
 export default function CreateApplicationBox({ form, setAlert }: { form: Form, setAlert: (alert: { text: string, type: string }) => void }) {
+
+    const [answers, setAnswers] = useState<{[key: string]: string | boolean}>({});
+
+    function updateAnswers(fieldId: string, value: string | boolean) {
+        setAnswers({...answers, [fieldId]: value});
+    }
+
     return (
         <Paper p='md' withBorder sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
             {form.fields.map((field, index) => 
@@ -14,18 +22,34 @@ export default function CreateApplicationBox({ form, setAlert }: { form: Form, s
                         )
                     }
                     {field.type == 'shorttext' && 
-                        <TextInput label={field.label} description={field.description} required={field.required}/>
+                        <TextInput 
+                            label={field.label} 
+                            description={field.description} 
+                            required={field.required}
+                            onChange={(event) => updateAnswers(field.id, event.target.value)}
+                        />
                     }
                     {field.type == 'longtext' &&
-                        <Textarea label={field.label} description={field.description} required={field.required} autosize minRows={5}/>
+                        <Textarea 
+                            label={field.label} 
+                            description={field.description} 
+                            required={field.required} 
+                            autosize 
+                            minRows={5}
+                            onChange={(event) => updateAnswers(field.id, event.target.value)}
+                        />
                     }
                     {field.type == 'checkbox' &&
-                        <Checkbox label={field.label}/>
+                        <Checkbox 
+                            label={field.label} 
+                            checked={answers[`${field.id}`] === true} 
+                            onChange={(event) => updateAnswers(field.id, event.target.checked)}
+                        />
                     }
                 </Box>
             )}    
             <Group position="right" mt="xl">
-                <CreateApplicationButton/>
+                <CreateApplicationButton form={form} answers={answers} setAlert={setAlert}/>
             </Group>
         </Paper>
     )
