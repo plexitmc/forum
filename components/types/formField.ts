@@ -1,5 +1,5 @@
 export default interface FormField {
-    _id: string;
+    id: string;
     type: 'text' | 'heading' | 'shorttext' | 'longtext' | 'select' | 'checkbox';
     label: string;
     description?: string;

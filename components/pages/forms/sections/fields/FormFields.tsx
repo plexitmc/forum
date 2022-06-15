@@ -1,18 +1,17 @@
-import { Paper, Box, Text, TextInput, Table, Badge, Checkbox, Group, Textarea, Switch, Menu, Button } from "@mantine/core";
+import { Box, Group, Text } from "@mantine/core";
 import { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { BiHeading } from "react-icons/bi";
-import { BsParagraph } from "react-icons/bs";
-import { FaPlus } from "react-icons/fa";
-import { GrTextAlignLeft } from "react-icons/gr";
-import { MdShortText, MdOutlineArrowDropDownCircle } from "react-icons/md";
-import { TbGripVertical, TbSelect } from "react-icons/tb";
-import FormField from "../../../types/formField"
+import { TbGripVertical } from "react-icons/tb";
+import Form from "../../../../types/form"
+import FormField from '../../../../types/formField';
+import AddFieldButton from "./AddFieldButton";
+import Field from "./Field";
+import { v4 as uuidv4 } from 'uuid';
 
-export default function FormFields({ fields: startFields }: { fields: FormField[] | undefined }) {
+export default function FormFields({ form, setForm }: { form: Form, setForm: (form: Form) => void }) {
 
 
-    const [fields, updateFields] = useState(startFields || []);
+    const [fields, setFields] = useState(form.fields || []);
 
     function handleOnDragEnd(result: any) {
       if (!result.destination) return;
@@ -21,7 +20,31 @@ export default function FormFields({ fields: startFields }: { fields: FormField[
       const [reorderedItem] = items.splice(result.source.index, 1);
       items.splice(result.destination.index, 0, reorderedItem);
   
-      updateFields(items);
+      setFields(items);
+      setForm({...form, fields: items})
+    }
+
+    function handleAddField(type: FormField['type']) {
+        const newField = {
+            id: uuidv4().toString(),
+            type: type,
+            label: ''
+        }
+
+        setFields([...fields, newField])
+        setForm({...form, fields: [...fields, newField]})
+    }
+
+    function handleUpdateField(field: FormField) {
+        const newFields: FormField[] = []
+        const fieldList: FormField[] = [...fields]
+        fieldList.forEach(f => {
+            if (f.id === field.id) newFields.push(field);
+            else newFields.push(f);
+        })
+
+        setFields(newFields)
+        setForm({...form, fields: newFields})
     }
 
     return (
@@ -32,7 +55,7 @@ export default function FormFields({ fields: startFields }: { fields: FormField[
                         <div {...provided.droppableProps} ref={provided.innerRef}>
                             {fields.map((field, index) => {
                                 return (
-                                    <Draggable key={field._id} draggableId={field._id} index={index}>
+                                    <Draggable key={field.id} draggableId={field.id} index={index}>
                                         {(provided) => (
                                             <Box ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} sx={{
                                                 display: 'flex',
@@ -51,10 +74,9 @@ export default function FormFields({ fields: startFields }: { fields: FormField[
                                                         opacity: 0.9
                                                     }
                                                 }}/>
-                                                <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, gap: '0.1rem'}}>
-                                                    <TextInput placeholder='Enter a heading' variant='unstyled' size='xl' required sx={{ height: '40px !important' }} defaultValue={field.label || ''}/>
-                                                    <Textarea placeholder='Enter a description' variant='unstyled' size='sm' autosize defaultValue={field.description || ''} />
-                                                    <Switch label='Required'/>
+                                                <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
+                                                    <Text size={'xs'} weight={700} sx={{ color: '#495057', marginBottom: '-1rem', paddingLeft: '2px', textTransform: 'uppercase'}}>{field.type}</Text>
+                                                    <Field handleUpdateField={handleUpdateField} field={field}/>
                                                 </Box>
                                             </Box>
                                         )}
@@ -65,29 +87,7 @@ export default function FormFields({ fields: startFields }: { fields: FormField[
                     )}
                 </Droppable>
             </DragDropContext>
-            <Menu control={<Button color='primary' leftIcon={<FaPlus/>}>Add field</Button>} position='top'>
-                <Menu.Label>Content</Menu.Label>
-                <Menu.Item icon={<BsParagraph/>}>
-                    <Text weight={600}>Text</Text>
-                </Menu.Item>
-                <Menu.Item icon={<BiHeading/>}>
-                    <Text weight={600}>Heading</Text>
-                </Menu.Item>
-
-                <Menu.Label>Input</Menu.Label>
-                <Menu.Item icon={<MdShortText/>}>
-                    <Text weight={600}>Short Text</Text>
-                </Menu.Item>
-                <Menu.Item icon={<GrTextAlignLeft/>}>
-                    <Text weight={600}>Long Text</Text>
-                </Menu.Item>
-                <Menu.Item icon={<MdOutlineArrowDropDownCircle/>}>
-                    <Text weight={600}>Select</Text>
-                </Menu.Item>
-                <Menu.Item icon={<TbSelect/>}>
-                    <Text weight={600}>Checkbox</Text>
-                </Menu.Item>
-            </Menu>            
+            <AddFieldButton handleAddField={handleAddField}/>
         </Group>
     )
 }
