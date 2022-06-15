@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Group, Box, Collapse, ThemeIcon, Text, UnstyledButton, createStyles, Anchor } from '@mantine/core';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Link from 'next/link';
+import { IconType } from 'react-icons/lib';
 
 const useStyles = createStyles((theme) => ({
   control: {
@@ -43,7 +44,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface LinksGroupProps {
-  icon: any;
+  icon?: IconType | string;
   label: string;
   link?: string,
   links?: { label: string; link: string }[];
@@ -70,9 +71,15 @@ export default function LinksGroup({ icon: Icon, label, link, links }: LinksGrou
                         <Anchor component={Link} href={link}>
                             <Group position="apart" spacing={0}>
                                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <ThemeIcon variant="light" size={30}>
-                                        <Icon size={18} />
-                                    </ThemeIcon>
+                                    {Icon &&
+                                        <ThemeIcon variant="light" size={30}>
+                                            {typeof Icon === 'string' || Icon instanceof String ?
+                                                <i className={`${Icon}`} style={{fontSize: '18px'}}/>
+                                                :
+                                                <Icon size={18} />   
+                                            }
+                                        </ThemeIcon>
+                                    }
                                     <Box ml="md">{label}</Box>
                                 </Box>
                             </Group>
@@ -84,9 +91,15 @@ export default function LinksGroup({ icon: Icon, label, link, links }: LinksGrou
                     <UnstyledButton onClick={() => setOpened((o) => !o)} className={classes.control}>
                         <Group position="apart" spacing={0}>
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <ThemeIcon variant="light" size={30}>
-                                    <Icon size={18} />
-                                </ThemeIcon>
+                                {Icon &&
+                                    <ThemeIcon variant="light" size={30}>
+                                        {typeof Icon === 'string' || Icon instanceof String ?
+                                            <i className={`${Icon}`} style={{fontSize: '18px'}}/>
+                                            :
+                                            <Icon size={18} />
+                                        }
+                                    </ThemeIcon>
+                                }
                                 <Box ml="md">{label}</Box>
                             </Box>
                             {hasLinks && (
