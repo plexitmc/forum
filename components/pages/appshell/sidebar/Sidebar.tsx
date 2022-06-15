@@ -36,7 +36,7 @@ export default function Sidebar({ isExtended, admin }: { isExtended?: boolean, a
     const { user, isLoading: isUserLoading, isError: isUserError } = useUser({ redirectTo: '/login' });
 
     const { isLoading: isFormLoading, isError: isFormError, data } = useQuery('forms', getForms)
-    if(isFormLoading || !data?.forms) return <LoadingScreen />
+    if(isFormLoading || !data?.forms) return <></>
     if(isFormError) return <Error/>
 
 

@@ -12,7 +12,7 @@ export default function Appshell({ admin, children }: { admin?: boolean, childre
     
     const { user, isLoading, isError } = useUser({ redirectTo: '/login' });
 
-    if(isLoading || !user) return <LoadingScreen/>
+    if(isLoading || !user) return <></>
     if(isError) return <Error />
 
     return (
