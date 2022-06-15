@@ -5,6 +5,7 @@ export default interface Application {
     form: Form['_id'];
     user: string;
     createdAt: number;
+    statusUpdatedAt: number;
     status: "pending" | "approved" | "rejected";
     comments: Comment[];
     answers: {

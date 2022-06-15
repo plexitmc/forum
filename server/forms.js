@@ -53,13 +53,32 @@ module.exports = (db) => {
      * @param {Function} callback
      */
     obj.getForms = async (callback) => {
-        await db.forms.find({}, { fields: 0 }).toArray(async (err, res) => {
+        await db.forms.find({}, { projection: { fields: 0 }}).toArray(async (err, res) => {
             if(err) {
                 console.log(err);
                 callback({ status: 400, message: 'Forms could not be retrieved' });
             } else callback({ status: 200, message: 'Forms retrieved', data: res });
         })
     }
+
+    /**
+     * Get all forms from database
+     */
+    obj.getAllFormPermissions = async () => {
+        try {
+            var forms = await db.forms.find({}, { projection: { _id: 1, permissions: 1 }}).toArray();
+            var formPermissions = {}
+            // loop though forms and get permissions
+            for(var i = 0; i < forms.length; i++) {
+                var form = forms[i];
+                formPermissions[form._id] = form.permissions;
+            }
+            return formPermissions;
+        } catch(err) {
+            return [];
+        }
+    }
+
     
     /** 
      * Update form by id.

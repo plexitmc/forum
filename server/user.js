@@ -131,8 +131,8 @@ module.exports = (db) => {
      * Get user data
      * @param {String} id discord id
      */
-    obj.getUser = async (id) => {
-        var user = await db.users.findOne({ id: id });
+    obj.getUser = async (discordId) => {
+        var user = await db.users.findOne({ id: discordId });
         if (!user) return null;
         return user;
     }
