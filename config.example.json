@@ -4,15 +4,15 @@
         "username": "username",
         "password": "password",
         "host": "host",
-        "port": 30000,
+        "port": 27017,
         "database": "centox"
       },
     "discord": {
       "client_id": "discord client id",
       "client_secret": "discord client secret",
-      "redirect_uri": "callback url"
+      "redirect_uri": "https://apply.example.com/login"
     },
-    "port": 80,
+    "port": 4200,
     "jwt_secret": "a very long jwt secret so no one can hack it!"
   }
   
