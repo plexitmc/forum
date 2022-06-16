@@ -10,7 +10,8 @@
     <img src="https://img.shields.io/github/v/release/simonmaribo/centox"/>
 </a>
 
-It is a self-hosted form management website, where users can login with Discord.
+It is a self-hosted solution for creating/managing forms and applications. Users can login using their Discord Account. It is created to be used on Gaming/Discord communities, where as I couldn't find an alternative.
+
 <img src="https://raw.githubusercontent.com/Simonmaribo/centox/master/public/github-images/application.png" width="1080" alt="" />
 
 ## Installation
