@@ -39,7 +39,7 @@ It is a self-hosted solution for creating/managing forms and applications. Users
 ## Changes to the userinterface / frontend
 
 Everytime you have changed the frontend (`/styles`, `/public`, `/pages` and `/components`),  
-you wiil need to run `yarn build` for the changes to take effect.
+you will need to run `yarn build` for the changes to take effect.
 
 ## Images
 
