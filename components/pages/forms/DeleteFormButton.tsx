@@ -1,11 +1,12 @@
 import { Button } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import deleteForm from "../../api/forms/deleteForm";
 import ConfirmationModal from "../../elements/ConfirmationModal";
 import Form from "../../types/form";
 
-export default function DeleteFormButton({ isSubmitting, form, setAlert }: { isSubmitting: boolean, form: Form, setAlert: (alert: { text: string, type: string }) => void }) {
+export default function DeleteFormButton({ isSubmitting, form }: { isSubmitting: boolean, form: Form }) {
     
     const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
     const router = useRouter();
@@ -13,11 +14,21 @@ export default function DeleteFormButton({ isSubmitting, form, setAlert }: { isS
     async function handleDeleteForm() {
         await deleteForm(form._id)
         .then((response) => {
-            setAlert({text: response.message, type: 'success'});
+            showNotification({
+                message: response.message,
+                title: 'Success',
+                color: 'teal',
+                radius: 'md'
+            })
             setTimeout(() => router.push('/admin/forms'), 2000);
         })
         .catch((error) => {
-            setAlert({text: error.message, type: 'error'});
+            showNotification({
+                message: error.message,
+                title: 'Error',
+                color: 'red',
+                radius: 'md'
+            })
         })
     }
 

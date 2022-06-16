@@ -7,8 +7,9 @@ import createForm from "../../api/forms/createForm"
 import getForms from "../../api/forms/getForms"
 import Error from "../../elements/Error"
 import { useRouter } from "next/router";
+import { showNotification } from "@mantine/notifications"
 
-export default function AppFormList({ setAlert }: { setAlert: (alert: { text: string, type: string }) => void }) {
+export default function AppFormList() {
     const router = useRouter()
     const queryClient = useQueryClient()
 
@@ -22,11 +23,21 @@ export default function AppFormList({ setAlert }: { setAlert: (alert: { text: st
 
         createForm()
             .then((response) => {
-                setAlert({text: response.message, type: 'success'})
+                showNotification({
+                    message: response.message,
+                    title: 'Success',
+                    color: 'teal',
+                    radius: 'md'
+                })
                 queryClient.invalidateQueries('forms')
             })
             .catch((error) => {
-                setAlert({text: error.message, type: 'error'})
+                showNotification({
+                    message: error.message,
+                    title: 'Error',
+                    color: 'red',
+                    radius: 'md'
+                })
             })
         setTimeout(() => setSubmitting(false), 500)
     }

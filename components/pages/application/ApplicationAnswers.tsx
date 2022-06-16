@@ -11,6 +11,7 @@ export default function ApplicationAnswers({ form, application}: {form: Form, ap
                         <Box key={index}>
                             {field.type == 'shorttext' && 
                                 <TextInput 
+                                    id={field.id}
                                     label={field.label} 
                                     description={field.description} 
                                     required={field.required}
@@ -21,6 +22,7 @@ export default function ApplicationAnswers({ form, application}: {form: Form, ap
                             }
                             {field.type == 'longtext' &&
                                 <Textarea 
+                                    id={field.id}
                                     label={field.label} 
                                     description={field.description} 
                                     required={field.required} 
@@ -33,6 +35,7 @@ export default function ApplicationAnswers({ form, application}: {form: Form, ap
                             }
                             {field.type == 'checkbox' &&
                                 <Checkbox 
+                                    id={field.id}
                                     label={field.label} 
                                     checked={`${application.answers[field.id]}` === 'true'}
                                     disabled

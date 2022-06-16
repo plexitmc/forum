@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Table } from "@mantine/core";
+import { Box, Button, Table } from "@mantine/core";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { useQuery } from "react-query";
@@ -9,7 +9,7 @@ import RoleBadge from "../../elements/RoleBadge";
 import Role from "../../types/role";
 import RolesModal from "./RolesModal";
 
-export default function RolesList({ setAlert }: { setAlert: (alert: { text: string, type: string }) => void }) {
+export default function RolesList() {
 
     const { isLoading, isError, data: roles } = useQuery('roles', getRoles)
     const [selectedRole, setSelectedRole] = useState<Role | undefined>(undefined)
@@ -51,7 +51,7 @@ export default function RolesList({ setAlert }: { setAlert: (alert: { text: stri
                 </Box>
             </Box>
             }
-            {isVisible && <RolesModal setAlert={setAlert} role={selectedRole} setVisible={setVisible} />}
+            {isVisible && <RolesModal role={selectedRole} setVisible={setVisible} />}
         </>
     )
 }

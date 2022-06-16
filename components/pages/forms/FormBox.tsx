@@ -1,4 +1,5 @@
 import { Paper, Text, Group, Button } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import { useRef, useState } from "react";
 import updateForm from "../../api/forms/updateForm";
 import Form from "../../types/form";
@@ -7,7 +8,7 @@ import FormFields from "./sections/fields/FormFields";
 import FormInfo from "./sections/FormInfo";
 import FormPermissions from "./sections/FormPermissions";
 
-export default function FormBox({ form: startForm, setAlert }: { form: Form, setAlert: (alert: { text: string, type: string }) => void }){
+export default function FormBox({ form: startForm }: { form: Form }){
 
     const [form, setForm] = useState(startForm);
     const [isSubmitting, setSubmitting] = useState(false);
@@ -18,11 +19,21 @@ export default function FormBox({ form: startForm, setAlert }: { form: Form, set
 
         updateForm(form)
             .then((response) => {
-                setAlert({text: response.message, type: 'success'})
+                showNotification({
+                    message: response.message,
+                    title: 'Success',
+                    color: 'teal',
+                    radius: 'md'
+                })                
                 //queryClient.invalidateQueries(['form', form._id])
             })
             .catch((error) => {
-                setAlert({text: error.message, type: 'error'})
+                showNotification({
+                    message: error.message,
+                    title: 'Error',
+                    color: 'red',
+                    radius: 'md'
+                })
             })
         setTimeout(() => setSubmitting(false), 500)
     }
@@ -34,7 +45,7 @@ export default function FormBox({ form: startForm, setAlert }: { form: Form, set
             <FormPermissions form={form} setForm={setForm}/>
             <FormFields form={form} setForm={setForm}/>
             <Group position="right" mt="xl">
-                <DeleteFormButton isSubmitting={isSubmitting} setAlert={setAlert} form={form}/>
+                <DeleteFormButton isSubmitting={isSubmitting} form={form}/>
                 <Button loading={isSubmitting} variant='outline' onClick={() => saveChanges()}>Save</Button>
             </Group>
         </Paper>

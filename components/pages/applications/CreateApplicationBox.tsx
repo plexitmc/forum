@@ -3,7 +3,7 @@ import { useState } from "react";
 import Form from "../../types/form";
 import CreateApplicationButton from "./CreateApplicationButton";
 
-export default function CreateApplicationBox({ form, setAlert }: { form: Form, setAlert: (alert: { text: string, type: string }) => void }) {
+export default function CreateApplicationBox({ form }: { form: Form }) {
 
     const [answers, setAnswers] = useState<{[key: string]: string | boolean}>({});
 
@@ -23,6 +23,7 @@ export default function CreateApplicationBox({ form, setAlert }: { form: Form, s
                     }
                     {field.type == 'shorttext' && 
                         <TextInput 
+                            id={field.id}
                             label={field.label} 
                             description={field.description} 
                             required={field.required}
@@ -31,6 +32,7 @@ export default function CreateApplicationBox({ form, setAlert }: { form: Form, s
                     }
                     {field.type == 'longtext' &&
                         <Textarea 
+                            id={field.id}
                             label={field.label} 
                             description={field.description} 
                             required={field.required} 
@@ -41,6 +43,7 @@ export default function CreateApplicationBox({ form, setAlert }: { form: Form, s
                     }
                     {field.type == 'checkbox' &&
                         <Checkbox 
+                            id={field.id}
                             label={field.label} 
                             checked={answers[`${field.id}`] === true} 
                             onChange={(event) => updateAnswers(field.id, event.target.checked)}
@@ -49,7 +52,7 @@ export default function CreateApplicationBox({ form, setAlert }: { form: Form, s
                 </Box>
             )}    
             <Group position="right" mt="xl">
-                <CreateApplicationButton form={form} answers={answers} setAlert={setAlert}/>
+                <CreateApplicationButton form={form} answers={answers} />
             </Group>
         </Paper>
     )

@@ -7,13 +7,13 @@ import { useQuery, useQueryClient } from "react-query";
 import User from "../../../../types/user";
 import updateUser from "../../../../api/users/updateUser";
 import getRoles from "../../../../api/roles/getRoles";
+import { showNotification } from '@mantine/notifications';
 
 
 interface IEditRoleProps {
     user: User;
     isVisible: boolean;
     setVisible: (visible: boolean) => void;
-    setAlert: (alert: { text: string, type: string }) => void;
 }
 
 interface EditRoleValues {
@@ -25,7 +25,7 @@ const schema = Yup.object().shape({
 });
 
 
-export default function RolesModal({ user, isVisible, setVisible, setAlert }: IEditRoleProps){
+export default function RolesModal({ user, isVisible, setVisible }: IEditRoleProps){
 
     // Hacky fix to ensure the form object is recreated each rerender.
 
@@ -53,11 +53,21 @@ export default function RolesModal({ user, isVisible, setVisible, setAlert }: IE
 
         updateUser({ user, roleId: role })
             .then((response) => {
-                setAlert({text: response.message, type: 'success'})
+                showNotification({
+                    message: response.message,
+                    title: 'Success',
+                    color: 'teal',
+                    radius: 'md'
+                })
                 queryClient.invalidateQueries(['user', user.id])
             })
             .catch((error) => {
-                setAlert({text: error.message, type: 'error'})
+                showNotification({
+                    message: error.message,
+                    title: 'Error',
+                    color: 'red',
+                    radius: 'md'
+                })
             })
 
         setVisible(false)

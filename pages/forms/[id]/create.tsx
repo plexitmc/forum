@@ -3,14 +3,12 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import getForm from "../../../components/api/forms/getForm";
-import Alert from "../../../components/elements/Alert";
 import Error from "../../../components/elements/Error";
 import LoadingScreen from "../../../components/elements/LoadingScreen";
 import PageContent from "../../../components/elements/PageContent";
 import CreateApplicationBox from "../../../components/pages/applications/CreateApplicationBox";
 
 export default function CreateForm(){
-    const [alert, setAlert] = useState({text: '', type: 'info'});
 
     const router = useRouter();
     var { id } = router.query;
@@ -28,8 +26,7 @@ export default function CreateForm(){
                 : 
                 <Container size={'md'}>
                     <Box mt={30} mb={30}>
-                        {alert.text != '' && <Alert text={alert?.text} type={alert?.type} sx={{ marginBottom: 10}} />}
-                        <CreateApplicationBox form={data.form} setAlert={setAlert}/>
+                        <CreateApplicationBox form={data.form}/>
                     </Box>
                 </Container>
             )}

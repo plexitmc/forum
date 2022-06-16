@@ -6,7 +6,7 @@ import { FiEdit } from "react-icons/fi";
 import User from "../../../../types/user";
 import EditRoleModal from "./EditRoleModal";
 
-export default function ProfileMenu({ user, setAlert }: { user: User, setAlert: (alert: { text: string, type: string }) => void }) {
+export default function ProfileMenu({ user }: { user: User }) {
 
     const [visibleModal, setVisibleModal] = useState<any>(null);
 
@@ -20,7 +20,7 @@ export default function ProfileMenu({ user, setAlert }: { user: User, setAlert: 
                     <Text weight={500} size="sm">Delete user</Text>
                 </Menu.Item>
             </Menu>
-            <EditRoleModal user={user} isVisible={visibleModal == 'editrole'} setVisible={setVisibleModal} setAlert={setAlert}/>
+            <EditRoleModal user={user} isVisible={visibleModal == 'editrole'} setVisible={setVisibleModal}/>
         </>
     )
 }

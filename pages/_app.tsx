@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider withNormalizeCSS>
-        <NotificationsProvider>
+        <NotificationsProvider position='top-right'>
           <Component {...pageProps} />
         </NotificationsProvider>
       </MantineProvider>

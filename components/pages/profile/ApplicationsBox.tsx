@@ -1,10 +1,10 @@
-import { Divider, Text, Box, ThemeIcon, Tooltip } from "@mantine/core";
+import { Divider, Text, Box, ThemeIcon, Tooltip, Alert } from "@mantine/core";
 import dayjs from "dayjs";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
+import { BsQuestionCircle } from "react-icons/bs";
 import { useQuery } from "react-query";
 import getForms from "../../api/forms/getForms";
 import getApplications from "../../api/users/getApplications";
-import Alert from "../../elements/Alert";
 import Error from "../../elements/Error";
 import StatusBadge from "../../elements/StatusBadge";
 import Form from "../../types/form";
@@ -29,7 +29,7 @@ export default function ApplicationsBox({ isProfile, user }: { isProfile: boolea
         <Box>
             <Divider my='md' color='gray' label={<Text color='dark'>Applications</Text>} labelPosition='center'/>
             { applications.applications.length <= 0 ?
-                <Alert text={isProfile ? "You have not created any applications" : `${user.username} has not created any applications`} type="warning" />
+                <Alert icon={<BsQuestionCircle size={16}/>} color='orange'>{isProfile ? "You have not created any applications" : `${user.username} has not created any applications`}</Alert>
                 :
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                     { applications.applications.map((application, index) => (

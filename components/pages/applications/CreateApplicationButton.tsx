@@ -1,10 +1,11 @@
 import { Button } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import createApplication from "../../api/applications/createApplication";
 import Form from "../../types/form";
 
-export default function CreateApplicationButton({ form, answers, setAlert }: { form: Form, answers: {[key: string]: string | boolean}, setAlert: (alert: { text: string, type: string }) => void }) {
+export default function CreateApplicationButton({ form, answers }: { form: Form, answers: {[key: string]: string | boolean} }) {
 
     const router = useRouter();
     const [isSubmitting, setSubmitting] = useState(false);
@@ -15,11 +16,21 @@ export default function CreateApplicationButton({ form, answers, setAlert }: { f
 
         createApplication({ formId: form._id, answers: answers })
             .then((response) => {
-                setAlert({text: response.message, type: 'success'})
+                showNotification({
+                    message: response.message,
+                    title: 'Success',
+                    color: 'teal',
+                    radius: 'md'
+                })
                 router.push(`/application/${response.applicationId}`)
             })
             .catch((error) => {
-                setAlert({text: error.message, type: 'error'})
+                showNotification({
+                    message: error.message,
+                    title: 'Error',
+                    color: 'red',
+                    radius: 'md'
+                })
                 setTimeout(() => setSubmitting(false), 500)
             })
     }

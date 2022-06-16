@@ -7,12 +7,12 @@ import { useState } from "react";
 import createRole from "../../api/roles/createRole";
 import { useQueryClient } from "react-query";
 import deleteRole from "../../api/roles/deleteRole";
+import { showNotification } from "@mantine/notifications";
 
 
 interface IRolesModalProps {
     role?: Role;
     setVisible: (visible: boolean) => void;
-    setAlert: (alert: { text: string, type: string }) => void;
 }
 
 interface RolesModalValues {
@@ -27,7 +27,7 @@ const schema = Yup.object().shape({
 });
 
 
-export default function RolesModal({ role, setVisible, setAlert }: IRolesModalProps){
+export default function RolesModal({ role, setVisible }: IRolesModalProps){
 
     // Hacky fix to ensure the form object is recreated each rerender.
 
@@ -50,11 +50,21 @@ export default function RolesModal({ role, setVisible, setAlert }: IRolesModalPr
 
         createRole({ label, color, id })
             .then((response) => {
-                setAlert({text: response.message, type: 'success'})
+                showNotification({
+                    message: response.message,
+                    title: 'Success',
+                    color: 'teal',
+                    radius: 'md'
+                })
                 queryClient.invalidateQueries('roles')
             })
             .catch((error) => {
-                setAlert({text: error.message, type: 'error'})
+                showNotification({
+                    message: error.message,
+                    title: 'Error',
+                    color: 'red',
+                    radius: 'md'
+                })
             })
 
         setVisible(false)
@@ -67,11 +77,21 @@ export default function RolesModal({ role, setVisible, setAlert }: IRolesModalPr
 
         deleteRole({ id })
             .then((response) => {
-                setAlert({text: response.message, type: 'success'})
+                showNotification({
+                    message: response.message,
+                    title: 'Success',
+                    color: 'teal',
+                    radius: 'md'
+                })
                 queryClient.invalidateQueries('roles')
             })
             .catch((error) => {
-                setAlert({text: error.message, type: 'error'})
+                showNotification({
+                    message: error.message,
+                    title: 'Error',
+                    color: 'red',
+                    radius: 'md'
+                })
             })
         setVisible(false)
         setTimeout(() => setSubmitting(false), 500)
