@@ -1,6 +1,6 @@
 {
   "name": "centox",
-  "description": "Centox® — The free game community forum software. Built with Next.js and Express.",
+  "description": "Centox® — A self-hosted solution for creating/managing forms and applications. Built with Next.js and Express.",
   "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
