@@ -13,7 +13,13 @@ module.exports = (db) => {
     const rateLimiter = require('../../server/utils/rateLimiter')(2 * 60 * 1000, 30, "Too many requests. Try again later.")
 
     router.get('/:id', rateLimiter, auth.ensureAuthentication, async (req, res) => {
-        var userObj = await user.getUser(req.params.id);
+        if(!req.params.id) return res.status(400).json({message: 'Missing id'});
+
+        var userObj;
+        if(req.params.id.length > 18)
+            userObj = await user.getUserById(req.params.id)
+        else
+            userObj = await user.getUser(req.params.id)
         if(!userObj) return res.status(404).json({ message: "User not found" });
         return res.status(200).json({ user: userObj });
     })

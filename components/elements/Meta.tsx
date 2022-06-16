@@ -14,7 +14,7 @@ const Meta = ({ title, keywords, description, icon }: { title: string, keywords:
 
       <meta charSet='utf-8' />
       <link rel='icon' href={icon} />
-      <title>{title}</title>
+      <title>{title} | Centox</title>
 
 
       <meta property='og:title' content={title}/>
@@ -38,7 +38,7 @@ Meta.defaultProps = {
   title: 'Centox - Free Forum Software',
   keywords: 'Some nice keywords right here.',
   description: 'Descriptive description',
-  icon: '/png/favicon.png'
+  icon: '/favicon.svg'
 }
 
 export default Meta

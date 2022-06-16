@@ -48,8 +48,11 @@ export default function Sidebar({ isExtended, admin }: { isExtended?: boolean, a
             var links: SidebarLink[] = [];
             if(permission.create) links.push({ label: 'Create application', link: `/forms/${form._id}/create` });
             if(permission.viewOthers) {
-                links.push({ label: 'Open applications', link: `/forms/${form._id}/open` });
-                if(permission.changeStatus) links.push({ label: 'Closed applications', link: `/forms/${form._id}/closed` });
+                links.push({ label: 'Pending applications', link: `/forms/${form._id}/pending` });
+                if(permission.changeStatus) {
+                    links.push({ label: 'Accepted applications', link: `/forms/${form._id}/accepted` });
+                    links.push({ label: 'Rejected applications', link: `/forms/${form._id}/rejected` });
+                }
             }
 
             formLinks.push({

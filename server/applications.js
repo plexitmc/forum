@@ -35,10 +35,15 @@ module.exports = (db) => {
      * Get the number of total applications with a specific status and formId
      * @param {String} formId - The form _id
      * @param {String} status - The status
-     * @param {Function} callback - The callback
      */
-    obj.getTotalApplications = async (formId, status, callback) => {
-
+    obj.getTotalApplications = async (formId, status) => {
+        try {
+            var formObject = new ObjectId(formId);
+            var count = await db.applications.count({ form: formObject, status: status });
+            return count;
+        } catch(err) {
+            return 0;
+        }
     }
 
 

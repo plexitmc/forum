@@ -28,7 +28,7 @@ export default function ApplicationInfo({ user, application, form }: { user: Use
                     <ThemeIcon variant="light" size={30}>
                         <ImClock size={18}/>
                     </ThemeIcon>
-                    <Text weight={600}>{dayjs(application.createdAt).format('HH:mm, DD/MM/YYYY')}</Text>
+                    <Text weight={600}>{dayjs(application.createdAt).format('DD/MM/YYYY, HH:mm')}</Text>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
                     <StatusBadge status={application.status}/>

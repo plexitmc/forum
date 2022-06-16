@@ -26,7 +26,7 @@ export default function UserListItem({ user }: UserListItemProps){
             </Box>
             <td><RoleBadge role={user.role}/></td>
             <Box component='td'>
-                <Tooltip withArrow label={dayjs(user.createdAt).format('HH:mm, DD/MM/YYYY')} transition='fade' transitionDuration={200}>
+                <Tooltip withArrow label={dayjs(user.createdAt).format('DD/MM/YYYY, HH:mm')} transition='fade' transitionDuration={200}>
                     {/* @ts-ignore */}
                     {`${dayjs(user.createdAt).fromNow(true)} ago`}
                     {/*new Date().getTime() < user.createdAt + 127800000 ?

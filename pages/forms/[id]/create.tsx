@@ -18,7 +18,7 @@ export default function CreateForm(){
     const { isLoading, isError, data } = useQuery(['form', id], async () => await getForm(id));
 
     return (
-        <PageContent title={(isLoading || isError || !data || !data.form) ? "Creating application" : `Creatating ${data.form.name} application`}>
+        <PageContent title={(isLoading || isError || !data || !data.form) ? "Creating application" : `Creating ${data.form.name} application`}>
             { isError 
             ? <Error error={data?.message || "Form not found"}/> 
             : (isLoading || !data || !data.form 

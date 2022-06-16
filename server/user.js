@@ -142,9 +142,13 @@ module.exports = (db) => {
      * @param {String} userId 
      */
      obj.getUserById = async (userId) => {
-        var user = await db.users.findOne({ _id: new ObjectId(userId) });
-        if (!user) return null;
-        return user;
+        try {
+            var user = await db.users.findOne({ _id: new ObjectId(userId) });
+            if (!user) return null;
+            return user;
+        } catch (err) {
+            return null;
+        }
     }
 
     /**

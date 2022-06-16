@@ -14,7 +14,7 @@ module.exports = (db) => {
 
 
     // Create application
-    router.get('/:id/:status', rateLimiter, auth.ensureAuthenticationWithUser, async (req, res) => {
+    router.get('/:id/:status/:page', rateLimiter, auth.ensureAuthenticationWithUser, async (req, res) => {
         var status = req.params.status;
         if(!status || !["pending", "accepted", "rejected"].includes(status)) return res.status(400).json({ message: 'Missing status parameter.' });
 
@@ -23,11 +23,15 @@ module.exports = (db) => {
 
         if(!form.permissions[req.user?.role] || !form.permissions[req.user?.role].viewOthers) return res.status(401).json({ message: "You do not have permission to view other applications for this type of form." });
 
-        var applicationsArr = await applications.getAllApplications(req.params.id, status, 1, 10);
+        var page = parseInt(req.params.page);
+        var applicationsArr = await applications.getAllApplications(req.params.id, status, page, 10);
+        var totalApplications = await applications.getTotalApplications(req.params.id, status);
         
         //var totalapplications = await applications.getTotalApplications(req.params.id, status);
         return res.status(200).json({
             applications: applicationsArr,
+            total: totalApplications,
+            pages: Math.ceil(totalApplications / 10)
         });
     })
 

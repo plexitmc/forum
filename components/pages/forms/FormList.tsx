@@ -60,13 +60,13 @@ export default function AppFormList() {
                                 <Box component="tr" key={index} sx={{ cursor: 'pointer' }} onClick={() => router.push(`/admin/forms/${form._id}`)}>
                                     <td>{form.name}</td>
                                     <Box component='td'>
-                                        <Tooltip withArrow label={dayjs(form.createdAt).format('HH:mm, DD/MM/YYYY')} transition='fade' transitionDuration={200}>
+                                        <Tooltip withArrow label={dayjs(form.createdAt).format('DD/MM/YYYY, HH:mm')} transition='fade' transitionDuration={200}>
                                             {/* @ts-ignore */}
                                             {`${dayjs(form.createdAt).fromNow(true)} ago`}
                                         </Tooltip>
                                     </Box>
                                     <Box component='td'>
-                                        <Tooltip withArrow label={dayjs(form.updatedAt).format('HH:mm, DD/MM/YYYY')} transition='fade' transitionDuration={200}>
+                                        <Tooltip withArrow label={dayjs(form.updatedAt).format('DD/MM/YYYY, HH:mm')} transition='fade' transitionDuration={200}>
                                             {/* @ts-ignore */}
                                             {`${dayjs(form.updatedAt).fromNow(true)} ago`}
                                         </Tooltip>
