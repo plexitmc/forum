@@ -41,6 +41,25 @@ It is a self-hosted solution for creating/managing forms and applications. Users
 Everytime you have changed the frontend (`/styles`, `/public`, `/pages` and `/components`),  
 you will need to run `yarn build` for the changes to take effect.
 
+# Nginx reverse proxy
+
+The following configuration enables Nginx to act as reverse proxy for a Centox instance that is available at port 4200 on localhost:
+
+```
+server {
+    server_name apply.example.net;
+    listen 80;
+    location / {
+        proxy_pass http://localhost:4200;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+    }
+}
+```
+
+Credit: [Minetrack](https://github.com/Cryptkeeper/Minetrack)
+
 ## Images
 
 <img src="https://raw.githubusercontent.com/Simonmaribo/centox/master/public/github-images/edit.png" width="1080" alt="" />
