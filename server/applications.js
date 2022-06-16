@@ -88,5 +88,50 @@ module.exports = (db) => {
         }
     }
 
+    /**
+     * Delete an application
+     * @param {String} applicationId - The application _id
+     * @param {Function} callback - The callback
+     */
+    obj.deleteApplication = async (applicationId, callback) => {
+        try {
+            var applicationObject = new ObjectId(applicationId);
+            await db.applications.deleteOne({ _id: applicationObject }, (err, res) => {
+                if(err){
+                    console.log(err);
+                    return callback({ status: 500, message: 'An internal error occurred.' });
+                }
+                return callback({ status: 200, message: "Application has been deleted!" })
+            });
+        }
+        catch(err) {
+            return callback({ status: 500, message: 'An internal error occurred.' });
+        }
+    }
+
+    /** 
+     * Change the status of an application
+     * @param {String} applicationId - The application _id
+     * @param {String} userId - the id of the user who updates the status
+     * @param {String} status - The status
+     * @param {Function} callback - The callback
+     */
+    obj.changeStatus = async (applicationId, userId, status, callback) => {
+        try {
+            var applicationObject = new ObjectId(applicationId);
+            var userObject = new ObjectId(userId);
+            await db.applications.updateOne({ _id: applicationObject }, { $set: { status: status, statusUpdatedAt: new Date().getTime(), statusUpdatedBy: userObject } }, (err, res) => {
+                if(err){
+                    console.log(err);
+                    return callback({ status: 500, message: 'An internal error occurred.' });
+                }
+                return callback({ status: 200, message: "Application status has been changed!" })
+            });
+        }
+        catch(err) {
+            return callback({ status: 500, message: 'An internal error occurred.' });
+        }
+    }
+
     return obj;
 }

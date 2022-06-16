@@ -7,7 +7,7 @@ export default interface Application {
     createdAt: number;
     statusUpdatedAt: number;
     statusUpdatedBy: string;
-    status: "pending" | "approved" | "rejected";
+    status: "pending" | "accepted" | "rejected";
     comments: Comment[];
     answers: {
         [key: string]: string;
