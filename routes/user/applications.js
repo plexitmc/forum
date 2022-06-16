@@ -1,5 +1,3 @@
-const { collapseTextChangeRangesAcrossMultipleVersions } = require('typescript');
-
 // Imports
 const router = require('express').Router();
 

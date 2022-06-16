@@ -14,10 +14,17 @@ module.exports = (db) => {
 
 
     // Create application
-    router.get('/:id/:status/:page', rateLimiter, auth.ensureAuthenticationWithUser, async (req, res) => {
-        var status = req.params.status;
-        if(!status || !["pending", "accepted", "rejected"].includes(status)) return res.status(400).json({ message: 'Missing status parameter.' });
+    router.get('/:id/:page', rateLimiter, auth.ensureAuthenticationWithUser, async (req, res) => {
 
+        var status = req.query.status;
+        if(!status) return res.status(400).json({ message: 'Missing status parameter.' });
+        if(Array.isArray(status)){
+            for(var i = 0; i < status.length; i++){
+                if(!["pending", "accepted", "rejected"].includes(status[i]))
+                    return res.status(400).json({ message: 'Invalid status parameter.' });
+            }
+        }
+        
         var form = await forms.getForm(req.params.id);
         if(!form) return res.status(404).send({ status: 404, message: "Form not found." });
 

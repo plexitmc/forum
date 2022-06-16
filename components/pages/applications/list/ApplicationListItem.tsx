@@ -7,7 +7,7 @@ import getUser from "../../../api/users/getUser";
 import StatusBadge from "../../../elements/StatusBadge";
 import Application from "../../../types/application";
 
-export default function ApplicationListItem({ application }: { application: Application }) {
+export default function ApplicationListItem({ application, full }: { application: Application, full?: boolean }) {
     const router = useRouter()
 
     const { isLoading, isError, data } = useQuery(['userByObjectId', application.user], async () => await getUser(application.user));
@@ -31,12 +31,20 @@ export default function ApplicationListItem({ application }: { application: Appl
                 </Box>
             }
             <td><StatusBadge status={application.status}/></td>
-            <Box component='td'>
+            {full && 
+                <td>
+                <Tooltip withArrow label={dayjs(application.statusUpdatedAt).format('DD/MM/YYYY, HH:mm')} transition='fade' transitionDuration={200}>
+                    {/* @ts-ignore */}
+                    {`${dayjs(application.statusUpdatedAt).fromNow(true)} ago`}
+                </Tooltip>
+                </td>
+            }
+            <td>
                 <Tooltip withArrow label={dayjs(application.createdAt).format('DD/MM/YYYY, HH:mm')} transition='fade' transitionDuration={200}>
                     {/* @ts-ignore */}
                     {`${dayjs(application.createdAt).fromNow(true)} ago`}
                 </Tooltip>
-            </Box>
+            </td>
         </Box>
     )
 }

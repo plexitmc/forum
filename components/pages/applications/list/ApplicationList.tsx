@@ -6,7 +6,7 @@ import Error from "../../../elements/Error";
 import Form from "../../../types/form";
 import ApplicationListItem from "./ApplicationListItem";
 
-export default function ApplicationList({ status, form }: { status: string, form: Form }) {
+export default function ApplicationList({ status, form, full }: { status: string[] | string, form: Form, full?: boolean }) {
 
     const [page, setPage] = useState(1);
     const { isLoading, isError, data } = useQuery(['applications', page, form], () => getApplications({ page, status, formId: form._id }), { keepPreviousData: true })
@@ -18,6 +18,7 @@ export default function ApplicationList({ status, form }: { status: string, form
                     <Box component='tr'>
                         <th>Username</th>
                         <th>Status</th> 
+                        { full && <th>Status changed</th> }
                         <th>Created</th>
                     </Box>
                 </Box>
@@ -25,7 +26,7 @@ export default function ApplicationList({ status, form }: { status: string, form
                     {
                         isError ? <tr><td colSpan={3}><Error height={'25vh'}/></td></tr> 
                             : (isLoading || !data ? <></> 
-                                : data.applications?.map((application, index) => <ApplicationListItem key={index} application={application}/>))
+                                : data.applications?.map((application, index) => <ApplicationListItem key={index} application={application} full={full}/>))
                     }
                 </tbody>
             </Table>

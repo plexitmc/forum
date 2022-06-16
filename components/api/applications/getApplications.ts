@@ -10,14 +10,14 @@ export interface IApplicationsResponse {
 
 export interface IApplicationsData {
     page: number;
-    status: string;
+    status: string[] | string;
     formId: string;
 }
 
 
 export default ({ page, status, formId }: IApplicationsData): Promise<IApplicationsResponse> => {
     return new Promise((resolve, reject) => {
-        http.get(`/api/applications/list/${formId}/${status}/${page}`)
+        http.get(`/api/applications/list/${formId}/${page}`, { params: { status } })
             .then(response => {
                 if(response.status != 200) 
                     return reject(response.data)

@@ -34,13 +34,23 @@ module.exports = (db) => {
     /**
      * Get the number of total applications with a specific status and formId
      * @param {String} formId - The form _id
-     * @param {String} status - The status
+     * @param {String[]} status - The status
      */
     obj.getTotalApplications = async (formId, status) => {
         try {
             var formObject = new ObjectId(formId);
-            var count = await db.applications.count({ form: formObject, status: status });
-            return count;
+
+            if(Array.isArray(status)){
+                var statusObject = [];
+                for(var i = 0; i < status.length; i++){
+                    statusObject.push({ status: status[i] });
+                }
+                var count = await db.applications.count({ form: formObject, '$or': statusObject });
+                return count;
+            } else {
+                var count = await db.applications.count({ form: formObject, status: status });
+                return count;
+            }
         } catch(err) {
             return 0;
         }
@@ -57,8 +67,17 @@ module.exports = (db) => {
      */
     obj.getAllApplications = async (formId, status, page, limit) => {
         try {
+
             var formObject = new ObjectId(formId);
-            return db.applications.find({ form: formObject, status: status }, { projection: { answers: 0, comments: 0 }, skip: (page - 1) * limit, limit: limit, sort: { createdAt: -1} }).toArray();
+
+            if(Array.isArray(status)){
+                var statusObject = [];
+                for(var i = 0; i < status.length; i++)
+                    statusObject.push({ status: status[i] });
+                return db.applications.find({ form: formObject, '$or': statusObject }, { projection: { answers: 0, comments: 0 }, skip: (page - 1) * limit, limit: limit, sort: { createdAt: -1} }).toArray();
+            } else {
+                return db.applications.find({ form: formObject, status: status }, { projection: { answers: 0, comments: 0 }, skip: (page - 1) * limit, limit: limit, sort: { createdAt: -1} }).toArray();
+            }
         }
         catch(err) {
             return []
