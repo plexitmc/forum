@@ -45,7 +45,7 @@ export default function ApplicationsBox({ isProfile, user }: { isProfile: boolea
                                 backgroundColor: '#f8f9fa'
                             }
                         }} onClick={() => router.push(`/application/${application._id}`)}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem'}}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                                 {formsObj[application.form].icon &&
                                     <ThemeIcon variant="light" size={50}>
                                         <i className={`${formsObj[application.form].icon}`} style={{fontSize: '18px'}}/>
@@ -56,9 +56,11 @@ export default function ApplicationsBox({ isProfile, user }: { isProfile: boolea
                                     <Text sx={{ fontSize: 18 }} color='blue' weight={400}>{formsObj[application.form].name}</Text>
                                 </Box>
                             </Box>
-                            <Tooltip withArrow label={`Last updated ${dayjs(application.statusUpdatedAt).format('HH:mm, DD/MM/YYYY')}`} transition='fade' transitionDuration={200}>
-                                <StatusBadge status={application.status} sx={{ cursor: 'pointer'}} />
-                            </Tooltip>
+                            <Box sx={{display: 'flex', justifyContent: 'center', flexGrow: 1}}>
+                                <Tooltip withArrow label={`Last updated ${dayjs(application.statusUpdatedAt).format('HH:mm, DD/MM/YYYY')}`} transition='fade' transitionDuration={200}>
+                                    <StatusBadge status={application.status} sx={{ cursor: 'pointer'}} />
+                                </Tooltip>
+                            </Box>
                             <Box>
                                 <Tooltip withArrow label={dayjs(application.createdAt).format('HH:mm, DD/MM/YYYY')} transition='fade' transitionDuration={200}>
                                     {/* @ts-ignore */}

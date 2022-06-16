@@ -25,7 +25,7 @@ module.exports = (db) => {
                 status: "pending",
                 comments: [],
                 answers: answers
-            }, (err, res) => callback({ status: 200, message: "Application has been created!" }));
+            }, (err, res) => callback({ status: 200, message: "Application has been created!", applicationId: res.insertedId }));
         } catch(err) {
             callback({ status: 500, message: 'An internal error occurred.' });
         }

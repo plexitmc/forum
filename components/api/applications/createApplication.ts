@@ -2,6 +2,7 @@ import http from '../http';
 
 export interface ICreateApplicationResponse {
     message: string;
+    applicationId?: string;
 }
 
 export interface ICreateApplicationData {

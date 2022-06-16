@@ -5,6 +5,7 @@ const router = require('express').Router();
 module.exports = (db) => {
     
     // Utils
+    const user = require('../../server/user')(db);
     const forms = require('../../server/forms')(db);
     const auth = require('../../server/auth')(db);
     const applications = require('../../server/applications')(db);
@@ -31,10 +32,25 @@ module.exports = (db) => {
             }
         
         await applications.createApplication(form._id, req.user._id, answers, (response) => {
-            return res.status(response.status).json({ message: response.message });
+            return res.status(response.status).json({ message: response.message, applicationId: response.applicationId });
         });
-
     })
+
+    // Get application by id
+    router.get('/:id', auth.ensureAuthenticationWithUser, async (req, res) => {
+        var application = await applications.getApplication(req.params.id);
+        if(!application) return res.status(404).json({ message: "Application not found" });
+        var form = await forms.getForm(application.form);
+        if(!form) return res.status(404).json({ message: "Form not found" });
+
+        if(req.user._id.toString() !== application.user.toString() && (!form.permissions[req.user?.role] || !form.permissions[req.user?.role].viewOthers)) 
+            return res.status(401).json({ message: "You do not have permission to view this type of application." });
+
+        var userObj = await user.getUserById(application.user);
+        if(!userObj) return res.status(404).json({ message: "User not found" });
+        
+        return res.status(200).json({ application: application, form: form, user: userObj });
+    });
 
     return router;
 }

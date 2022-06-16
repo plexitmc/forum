@@ -2,7 +2,7 @@ import Role from '../../types/role';
 import http from '../http';
 
 export interface IRolesResponse {
-    [key: string]: Role
+    [key: string]: Role;
 }
 
 
