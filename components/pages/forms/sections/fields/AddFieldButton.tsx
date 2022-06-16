@@ -25,7 +25,7 @@ export default function AddFieldButton({ handleAddField }: { handleAddField: (ty
             <Menu.Item icon={<GrTextAlignLeft/>} onClick={() => handleAddField('longtext')}>
                 <Text weight={600}>Long Text</Text>
             </Menu.Item>
-            <Menu.Item icon={<MdOutlineArrowDropDownCircle/>} onClick={() => handleAddField('select')}>
+            <Menu.Item icon={<MdOutlineArrowDropDownCircle/>} disabled>
                 <Text weight={600}>Select</Text>
             </Menu.Item>
             <Menu.Item icon={<TbSelect/>} onClick={() => handleAddField('checkbox')}>
