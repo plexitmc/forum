@@ -6,6 +6,7 @@ export default interface Application {
     user: string;
     createdAt: number;
     statusUpdatedAt: number;
+    statusUpdatedBy: string;
     status: "pending" | "approved" | "rejected";
     comments: Comment[];
     answers: {
