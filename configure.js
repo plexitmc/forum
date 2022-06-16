@@ -62,20 +62,20 @@ const config = require('./config.example.json');
                 const database = client.db(config.mongodb.database);
 
                 console.log('* Creating indexes...');
-                database.collection('logins').createIndex({ loggedIn: 1 }, { expireAfterSeconds: 3600*24*7 })
-                database.collection('applications').createIndex({ status: 1 });
-                database.collection('applications').createIndex({ user: 1 });
-                database.collection('roles').createIndex({ id: 1 }, { unique: true });
+                await database.collection('logins').createIndex({ loggedIn: 1 }, { expireAfterSeconds: 3600*24*7 })
+                await database.collection('applications').createIndex({ status: 1 });
+                await database.collection('applications').createIndex({ user: 1 });
+                await database.collection('roles').createIndex({ id: 1 }, { unique: true });
 
                 console.log('* Creating default roles...');
                 // Creates default roles
-                database.collection('roles').insertOne({
+                await database.collection('roles').insertOne({
                     label: 'admin',
                     id: 'admin',
                     color: 'red',
                     deletable: false
                 });
-                database.collection('roles').insertOne({
+                await database.collection('roles').insertOne({
                     label: 'default',
                     id: 'default',
                     color: 'gray',
@@ -86,12 +86,13 @@ const config = require('./config.example.json');
                 var firstUserId = await prompt('* Enter your Discord ID: ');
                 console.log('* Inserting first user...');
                 // Insert first user
-                database.collection('users').insertOne({
+                await database.collection('users').insertOne({
                     id: firstUserId,
                     role: 'admin',
                     owner: true,
                     createdAt: new Date().getTime()
                 });
+                console.log('* MongoDB configured successfully!');
                 rl.close();
                 process.exit(0)
             }
