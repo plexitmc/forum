@@ -40,7 +40,7 @@ export default function Login() {
 
     return (
         <>
-            <Meta title="Login with Discord"/>
+            <Meta title="Log ind med Discord"/>
             <Center style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', borderRadius: '0.25rem', padding: '1.5rem 2rem 2rem 2rem', marginBottom: '1rem' }}>
                     <Box sx={{ padding: '1.5rem 0' }}>

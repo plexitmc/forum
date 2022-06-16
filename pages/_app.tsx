@@ -5,11 +5,11 @@ import type { AppProps } from 'next/app'
 
 // DaysJS
 import dayjs from 'dayjs';
-require('dayjs/locale/en')
+require('dayjs/locale/da')
 
 var relativeTime = require('dayjs/plugin/relativeTime')
 dayjs.extend(relativeTime)
-dayjs.locale('en')
+dayjs.locale('da')
 
 
 import { QueryClient, QueryClientProvider } from 'react-query';

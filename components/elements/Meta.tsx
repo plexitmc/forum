@@ -14,7 +14,7 @@ const Meta = ({ title, keywords, description, icon }: { title: string, keywords:
 
       <meta charSet='utf-8' />
       <link rel='icon' href={icon} />
-      <title>{title} | Centox</title>
+      <title>{title} | Plexit</title>
 
 
       <meta property='og:title' content={title}/>
