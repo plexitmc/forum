@@ -14,6 +14,13 @@ It is a self-hosted solution for creating/managing forms and applications. Users
 
 <img src="https://raw.githubusercontent.com/Simonmaribo/centox/master/public/github-images/application.png" width="1080" alt="" />
 
+## ⭐ Features
+
+- Create forms which only users with a specific role can see.
+- Create roles for users to be able to use certain commands.
+- Comment applications to be able to give feedback to the user.
+- And much more!
+
 ## Installation
 
 1. Install `Node 12.4.0+` and `Yarn 1.12.17+`
@@ -22,16 +29,17 @@ It is a self-hosted solution for creating/managing forms and applications. Users
    git clone https://github.com/simonmaribo/centox.git
    ```
 3. Install the dependencies
-   ````bash
-   yarn install```
-   ````
+   ```bash
+   yarn install
+   ```
 4. Run `yarn configure` and configure the application.
 5. Run `yarn build`
 6. To start the application run `yarn start`
 
 ## Changes to the userinterface / frontend
 
-Everytime you have changed the frontend (`/styles`, `/public`, `/pages` and `/components`) you need to run `yarn build`
+Everytime you have changed the frontend (`/styles`, `/public`, `/pages` and `/components`),  
+you wiil need to run `yarn build` for the changes to take effect.
 
 ## Images
 
