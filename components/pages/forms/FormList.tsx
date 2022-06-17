@@ -77,7 +77,7 @@ export default function AppFormList() {
                     </tbody>
                 </Table>
                 <Box sx={{ margin: '1rem'}}>
-                    <Button variant="outline" radius='xl' leftIcon={<FaPlus/>} onClick={createNewForm} disabled={isSubmitting}>Create form</Button>
+                    <Button variant="outline" radius='xl' leftIcon={<FaPlus/>} onClick={createNewForm} disabled={isSubmitting}>Opret skema</Button>
                 </Box>
             </Box>
         </>
