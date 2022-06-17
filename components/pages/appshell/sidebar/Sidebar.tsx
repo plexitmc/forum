@@ -95,7 +95,7 @@ export default function Sidebar({ isExtended, admin }: { isExtended?: boolean, a
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <Box sx={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}>
                                 <Anchor component={Link} href="/">
-                                    <Image src="/logo.svg" alt="logo" width={170} height={41}/>
+                                    <Image src="/logo.png" alt="logo" width={1920/10} height={1920/10}/>
                                 </Anchor>
                             </Box>
                             <Box>

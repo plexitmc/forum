@@ -44,7 +44,7 @@ export default function Login() {
             <Center style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', borderRadius: '0.25rem', padding: '1.5rem 2rem 2rem 2rem', marginBottom: '1rem' }}>
                     <Box sx={{ padding: '1.5rem 0' }}>
-                        <Image src="/logo.svg" alt="logo" width={170*2} height={41*2}/>
+                        <Image src="/logo.png" alt="logo" width={1920/6} height={1920/6}/>
                     </Box>
                     <DiscordLoginButton clientId={config.discord.client_id} redirectUri={config.discord.redirect_uri}/>
                 </Box>
