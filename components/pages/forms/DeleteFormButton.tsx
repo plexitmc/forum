@@ -20,7 +20,7 @@ export default function DeleteFormButton({ isSubmitting, form }: { isSubmitting:
                 color: 'teal',
                 radius: 'md'
             })
-            setTimeout(() => router.push('/admin/forms'), 2000);
+            router.push('/admin/forms');
         })
         .catch((error) => {
             showNotification({
