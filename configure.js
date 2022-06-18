@@ -6,7 +6,7 @@ const config = require('./config.example.json');
 
 (async () => {
     console.log("############################################################################");
-    await prompt('* Enter port: (4200) ').then(async (answer) => {
+    await prompt('* Enter port: (8080) ').then(async (answer) => {
         if(answer) config.port = answer;
     })
     config.jwt_secret = await prompt('* Enter JWT secret, a long secret key: ');
