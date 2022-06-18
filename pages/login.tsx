@@ -49,7 +49,7 @@ export default function Login() {
                     <DiscordLoginButton clientId={config.discord.client_id} redirectUri={config.discord.redirect_uri}/>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Anchor href="https://github.com/plexitmc/centox" target='_blank' color='gray' size='xs'>
+                    <Anchor href="https://github.com/Simonmaribo/centox" target='_blank' color='gray' size='xs'>
                         © {new Date().getFullYear()} Centox - A Open Source Project.
                     </Anchor>
                 </Box>
