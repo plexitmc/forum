@@ -43,14 +43,14 @@ you will need to run `yarn build` for the changes to take effect.
 
 # Nginx reverse proxy
 
-The following configuration enables Nginx to act as reverse proxy for a Centox instance that is available at port 4200 on localhost:
+The following configuration enables Nginx to act as reverse proxy for a Centox instance that is available at port 8080 on localhost:
 
 ```
 server {
     server_name apply.example.net;
     listen 80;
     location / {
-        proxy_pass http://localhost:4200;
+        proxy_pass http://localhost:8080;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';

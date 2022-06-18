@@ -12,7 +12,7 @@
       "client_secret": "discord client secret",
       "redirect_uri": "https://apply.example.com/login"
     },
-    "port": 4200,
+    "port": 8080,
     "jwt_secret": "a very long jwt secret so no one can hack it!"
   }
   
