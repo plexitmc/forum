@@ -171,13 +171,13 @@ module.exports = (db) => {
             await db.applications.updateOne({ _id: applicationObject }, { $push: { comments: { user: userObject, text: comment, createdAt: new Date().getTime() } } }, (err, res) => {
                 if(err){
                     console.log(err);
-                    return callback({ status: 500, message: 'An internal error occurred.' });
+                    return callback({ status: 500, message: 'Der opstod en intern fejl.' });
                 }
-                return callback({ status: 200, message: "Comment has been created!" })
+                return callback({ status: 200, message: "Du har tilføjet en kommentar!" })
             });
         }
         catch(err) {
-            return callback({ status: 500, message: 'An internal error occurred.' });
+            return callback({ status: 500, message: 'Der opstod en intern fejl.' });
         }
     }
 

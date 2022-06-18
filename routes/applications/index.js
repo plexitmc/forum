@@ -94,7 +94,7 @@ module.exports = (db) => {
         var form = await forms.getForm(application.form);
         if(!form) return res.status(404).json({ message: "Form not found" });
         if(!form.permissions[req.user?.role] || !form.permissions[req.user?.role].comment)
-            return res.status(401).json({ message: "You do not have permission to comment on this type of application." });
+            return res.status(401).json({ message: "Du har ikke adgang til at kommentere denne ansøgning." });
 
         await applications.addComment(req.params.id, req.user._id, comment, (response) => {
             return res.status(response.status).json({ message: response.message });
