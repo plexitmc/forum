@@ -157,5 +157,29 @@ module.exports = (db) => {
         }
     }
 
+    /**
+     * Add a comment to an application
+     * @param {String} applicationId - The application _id
+     * @param {String} userId - The user _id
+     * @param {String} comment - The comment
+     * @param {Function} callback - The callback
+     */
+    obj.addComment = async (applicationId, userId, comment, callback) => {
+        try {
+            var applicationObject = new ObjectId(applicationId);
+            var userObject = new ObjectId(userId);
+            await db.applications.updateOne({ _id: applicationObject }, { $push: { comments: { user: userObject, text: comment, createdAt: new Date().getTime() } } }, (err, res) => {
+                if(err){
+                    console.log(err);
+                    return callback({ status: 500, message: 'An internal error occurred.' });
+                }
+                return callback({ status: 200, message: "Comment has been created!" })
+            });
+        }
+        catch(err) {
+            return callback({ status: 500, message: 'An internal error occurred.' });
+        }
+    }
+
     return obj;
 }

@@ -83,5 +83,24 @@ module.exports = (db) => {
         });
     });
 
+    // create comment
+    router.post('/:id/comment', auth.ensureAuthenticationWithUser, async (req, res) => {
+        var { comment } = req.body;
+        if(!comment) return res.status(400).json({ message: "No comment provided" });
+
+        var application = await applications.getApplication(req.params.id);
+        if(!application) return res.status(404).json({ message: "Application not found" });
+
+        var form = await forms.getForm(application.form);
+        if(!form) return res.status(404).json({ message: "Form not found" });
+        if(!form.permissions[req.user?.role] || !form.permissions[req.user?.role].comment)
+            return res.status(401).json({ message: "You do not have permission to comment on this type of application." });
+
+        await applications.addComment(req.params.id, req.user._id, comment, (response) => {
+            return res.status(response.status).json({ message: response.message });
+        });
+    });
+
+
     return router;
 }
