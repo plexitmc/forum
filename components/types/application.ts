@@ -1,3 +1,4 @@
+import Comment from "./comment";
 import Form from "./form";
 
 export default interface Application {

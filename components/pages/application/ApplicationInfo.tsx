@@ -7,6 +7,7 @@ import Form from "../../types/form";
 import User from "../../types/user";
 import { ImClock } from 'react-icons/im';
 import AdminMenu from "./admin/AdminMenu";
+import UserBadge from "../../elements/UserBadge";
 
 export default function ApplicationInfo({ user, application, form }: { user: User, application: Application, form: Form }) {
     return (
@@ -17,12 +18,7 @@ export default function ApplicationInfo({ user, application, form }: { user: Use
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: '1rem' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-                    <Anchor component={Link} href={`/user/${user.id}`}>
-                        <Box sx={{ display: 'flex', gap: '0.5rem', cursor: 'pointer' }}>
-                            <Avatar src={user.avatar} radius="xl" size={'sm'}/>
-                            <Text weight={600}>{user.username}</Text>
-                        </Box>
-                    </Anchor>
+                    <UserBadge user={user}/>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
                     <ThemeIcon variant="light" size={30}>
