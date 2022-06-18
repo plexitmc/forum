@@ -19,8 +19,8 @@ export default function ApplicationCreateComment({ form, application }: { form: 
     if(!form.permissions[user.role]?.comment) return <></>
 
     function handleCreateComment(){
-        console.log("hey")
         if(isSubmitting) return;
+        setSubmitting(true)
         createComment({ applicationId: application._id, comment })
         .then((response) => {
             showNotification({
