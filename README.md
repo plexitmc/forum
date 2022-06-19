@@ -19,6 +19,7 @@ It is a self-hosted solution for creating/managing forms and applications. Users
 - Create forms which only users with a specific role can see.
 - Create roles for users to be able to use certain commands.
 - Comment applications to be able to give feedback to the user.
+- Create webhooks to be able to send messages to your own application!
 - And much more!
 
 ## Installation
