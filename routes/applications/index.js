@@ -57,7 +57,7 @@ module.exports = (db) => {
         var application = await applications.getApplication(req.params.id);
         if(!application) return res.status(404).json({ message: "Application not found" });
         
-        if(req.user.role != 'admin' || req.user._id.toString() != application.user.toString()) return res.status(401).json({ message: "You do not have permission to delete this application." });
+        if(req.user.role != 'admin' && req.user._id.toString() != application.user.toString()) return res.status(401).json({ message: "You do not have permission to delete this application." });
         
         await applications.deleteApplication(req.params.id, (response) => {
             return res.status(response.status).json({ message: response.message });
