@@ -18,7 +18,7 @@ export default function ApplicationList({ status, form, full }: { status: string
                     <Box component='tr'>
                         <th>Username</th>
                         <th>Status</th> 
-                        { full && <th>Status changed</th> }
+                        { full && <th>Last interaction</th> }
                         <th>Created</th>
                     </Box>
                 </Box>
