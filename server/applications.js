@@ -143,7 +143,7 @@ module.exports = (db) => {
         try {
             var applicationObject = new ObjectId(applicationId);
             var userObject = new ObjectId(userId);
-            await db.applications.updateOne({ _id: applicationObject }, { $set: { latestInteraction: new Date().getTime() }, $push: { interactions: { type: 'statusUpdate', user: userObject, status: status, timestamp: new Date().getTime() } } }, (err, res) => {
+            await db.applications.updateOne({ _id: applicationObject }, { $set: { latestInteraction: new Date().getTime(), status: status }, $push: { interactions: { type: 'statusUpdate', user: userObject, status: status, timestamp: new Date().getTime() } } }, (err, res) => {
                 if(err){
                     console.log(err);
                     return callback({ status: 500, message: 'An internal error occurred.' });
