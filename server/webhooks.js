@@ -109,9 +109,13 @@ module.exports = (db) => {
      * @param {*} comment - The comment which was created
      */
     obj.onComment = async (application, comment) => {
+
+        var applicationUser = await db.users.findOne({ _id: new ObjectId(application.user) });
+        var commentUser = await db.users.findOne({ _id: new ObjectId(comment.user) });
+
         var data = {
-            application: application,
-            comment: comment
+            application: {...application, user: applicationUser },
+            comment: {...comment, user: commentUser },
         }
         await obj.sendWebhook('onComment', data);
     }
@@ -122,9 +126,13 @@ module.exports = (db) => {
      * @param {*} statusUpdate - The status update object
      */
     obj.onStatusUpdate = async (application, statusUpdate) => {
+
+        var applicationUser = await db.users.findOne({ _id: new ObjectId(application.user) });
+        var statusUpdateUser = await db.users.findOne({ _id: new ObjectId(statusUpdate.user) });
+
         var data = {
-            application: application,
-            statusUpdate: statusUpdate
+            application: {...application, user: applicationUser },
+            statusUpdate: {...statusUpdate, user: statusUpdateUser },
         }
         await obj.sendWebhook('onStatusUpdate', data);
     }
