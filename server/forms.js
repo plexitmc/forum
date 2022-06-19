@@ -1,6 +1,8 @@
 // Imports
 const { ObjectId } = require('mongodb');
 
+const logger = require('./utils/logger');
+
 // Return module
 module.exports = (db) => {
     const obj = {};
@@ -27,7 +29,7 @@ module.exports = (db) => {
             updatedAt: new Date().getTime(),
         }, async (err, res) => {
             if(err) {
-                console.log(err);
+                logger.error(err);
                 callback({ status: 400, message: 'Form could not be created' });
             } else callback({ status: 200, message: 'New form created' });
         })
@@ -55,7 +57,7 @@ module.exports = (db) => {
     obj.getForms = async (callback) => {
         await db.forms.find({}, { projection: { fields: 0 }}).toArray(async (err, res) => {
             if(err) {
-                console.log(err);
+                logger.error(err);
                 callback({ status: 400, message: 'Forms could not be retrieved' });
             } else callback({ status: 200, message: 'Forms retrieved', data: res });
         })
@@ -93,12 +95,12 @@ module.exports = (db) => {
             if(!dbForm) return callback({ status: 404, message: 'Form not found' });
             await db.forms.replaceOne({ _id: new ObjectId(formId) }, { ...form, updatedAt: new Date().getTime() }, async (err, res) => {
                 if(err) {
-                    console.log(err);
+                    logger.error(err);
                     callback({ status: 400, message: 'Form could not be saved' });
                 } else callback({ status: 200, message: 'The form has been saved' });
             })
         } catch(err) {
-            console.log(err)
+            logger.error(err)
             callback({ status: 400, message: 'Form could not be saved' });
         }
     }
@@ -113,13 +115,13 @@ module.exports = (db) => {
         if(!form) return callback({ status: 404, message: 'Form not found' });
         await db.forms.deleteOne({ _id: new ObjectId(form._id) }, async (err, res) => {
             if(err) {
-                console.log(err);
+                logger.error(err);
                 callback({ status: 400, message: 'Form could not be deleted' });
             } else {
                 // Delete all applications associated with this form
                 await db.applications.deleteMany({ form: new ObjectId(form._id)}, async (err, res) => {
                     if(err) {
-                        console.log(err);
+                        logger.error(err);
                         callback({ status: 400, message: 'Form could not be deleted' });
                     } else callback({ status: 200, message: 'The form has been deleted.' });
                 });

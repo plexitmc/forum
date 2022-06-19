@@ -2,6 +2,8 @@ const { ObjectId } = require('mongodb');
 const { uuid } = require('uuidv4');
 const axios = require('axios').default;
 
+const logger = require('./utils/logger');
+
 // Return module
 module.exports = (db) => {
     const obj = {};
@@ -25,13 +27,13 @@ module.exports = (db) => {
                 createdAt: new Date().getTime()
             }, (err, res) => {
                 if(err){
-                    console.log(err);
+                    logger.error(err);
                     return callback({ status: 500, message: 'An internal error occurred.' });
                 }
                 return callback({ status: 200, message: "Webhook has been created.", secret: secretKey })
             });
         } catch(err) {
-            console.log(err);
+            logger.error(err);
             return callback({ status: 500, message: 'An internal error occurred.' });
         }
     }
@@ -45,13 +47,13 @@ module.exports = (db) => {
         try {
             await db.webhooks.deleteOne({ _id: new ObjectId(id) }, (err, res) => {
                 if(err){
-                    console.log(err);
+                    logger.error(err);
                     return callback({ status: 500, message: 'An internal error occurred.' });
                 }
                 return callback({ status: 200, message: "Webhook has been deleted." });
             });
         } catch(err) {
-            console.log(err);
+            logger.error(err);
             return callback({ status: 500, message: 'An internal error occurred.' });
         }
     }
@@ -76,7 +78,7 @@ module.exports = (db) => {
             var webhook = await db.webhooks.findOne({ _id: new ObjectId(id) });
             return webhook;
         } catch(err) {
-            console.log(err);
+            logger.error(err);
             return null;
         }
     }
@@ -93,11 +95,11 @@ module.exports = (db) => {
                 var webhook = webhooks[i];
                 await axios.post(webhook.url, { event: event, secret: webhook.secret, data: data }, { headers: { 'Content-Type': 'application/json' } })
                     .catch(err => {
-                        console.log(err);
+                        logger.error(err);
                     });
             }
         } catch(err) {
-            console.log(err);
+            logger.error(err);
         }
     }
     

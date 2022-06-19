@@ -1,6 +1,8 @@
 // Imports
 const { ObjectId } = require('mongodb');
 
+const logger = require('./utils/logger');
+
 // Return module
 module.exports = (db) => {
     const obj = {};
@@ -55,7 +57,7 @@ module.exports = (db) => {
                 createdAt: new Date().getTime(),
             }
             db.users.insertOne(user, async (err, res) => {
-                if (err) console.log(err);
+                if (err) logger.error(err);
             });
         }
     }

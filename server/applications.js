@@ -1,6 +1,8 @@
 // Imports
 const { ObjectId } = require('mongodb');
 
+const logger = require('./utils/logger');
+
 // Return module
 module.exports = (db) => {
     const obj = {};
@@ -28,7 +30,7 @@ module.exports = (db) => {
                 answers: answers
             }, async (err, res) => {
                 if(err) {
-                    console.log(err);
+                    logger.error(err);
                     return callback({ status: 500, message: 'An internal error occurred.' });
                 }
                 return callback({ status: 200, message: "Application has been created!", applicationId: res.insertedId })
@@ -129,7 +131,7 @@ module.exports = (db) => {
             var applicationObject = new ObjectId(applicationId);
             await db.applications.deleteOne({ _id: applicationObject }, (err, res) => {
                 if(err){
-                    console.log(err);
+                    logger.error(err);
                     return callback({ status: 500, message: 'An internal error occurred.' });
                 }
                 return callback({ status: 200, message: "Application has been deleted!" })
@@ -156,7 +158,7 @@ module.exports = (db) => {
 
             await db.applications.findOneAndUpdate({ _id: applicationObject }, { $set: { latestInteraction: new Date().getTime(), status: status }, $push: { interactions: statusUpdateObj } }, async (err, res) => {
                 if(err){
-                    console.log(err);
+                    logger.error(err);
                     return callback({ status: 500, message: 'An internal error occurred.' });
                 }
                 await webhooks.onStatusUpdate(res.value, statusUpdateObj);
@@ -184,7 +186,7 @@ module.exports = (db) => {
 
             await db.applications.findOneAndUpdate({ _id: applicationObject }, { $set: { latestInteraction: new Date().getTime() }, $push: { interactions: commentObj } }, async (err, res) => {
                 if(err){
-                    console.log(err);
+                    logger.error(err);
                     return callback({ status: 500, message: 'An internal error occurred.' });
                 }
                 await webhooks.onComment(res.value, commentObj);
@@ -192,7 +194,7 @@ module.exports = (db) => {
             });
         }
         catch(err) {
-            console.log(err);
+            logger.error(err);
             return callback({ status: 500, message: 'An internal error occurred.' });
         }
     }
