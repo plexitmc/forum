@@ -1,7 +1,8 @@
-import { Box, Button, Sx, Table, Tooltip } from "@mantine/core";
+import { Badge, Box, Button, Sx, Table, Text, ThemeIcon, Tooltip } from "@mantine/core";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
+import { TbWebhook } from "react-icons/tb";
 import { useQuery } from "react-query";
 import getWebhooks from "../../api/webhooks/getWebhooks";
 import Error from "../../elements/Error";
@@ -14,48 +15,57 @@ export default function WebhookList() {
 
     const { isLoading, isError, data } = useQuery('webhooks', getWebhooks)
     const [isVisible, setVisible] = useState('');
-    const [webhook, setWebhook] = useState<Webhook | undefined>();
+    const [selectedWebhook, setWebhook] = useState<Webhook | undefined>();
 
     return (
         <>
             {(isLoading || !data) ? (isError ? <Error/> : <Loading/>) : 
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                <Table highlightOnHover verticalSpacing={'md'} horizontalSpacing='xl'>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Event</th>
-                            <th>Created</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            isError ? <tr><td colSpan={3}><Error height={'25vh'}/></td></tr> : (isLoading || !data.webhooks ? <></> : 
-                            data.webhooks.map(webhook => (
-                                <Box component="tr" key={webhook._id} onClick={() => {
-                                    setWebhook(webhook);
+
+            <Box>
+                <Text size='xl' weight={600}>Webhooks</Text>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    { isError ? <Error height="25vh"/> 
+                        : isLoading || !data.webhooks ? <></>
+                        : data.webhooks.map((webbook) => (
+                            <Box 
+                                key={webbook._id} 
+                                sx={{ 
+                                    flexGrow: 1, 
+                                    display: 'flex', 
+                                    flexDirection: 'row', 
+                                    alignItems: 'center', 
+                                    borderRadius: '0.25rem',
+                                    gap: '0.5rem',
+                                    padding: '0.5rem',
+                                    cursor: 'pointer',
+                                    '&:hover': {
+                                        backgroundColor: 'rgb(241, 243, 245)'
+                                    }
+                                }}
+                                onClick={() => {
+                                    setWebhook(webbook);
                                     setVisible('view');
-                                }} sx={{ cursor: 'pointer' }}>
-                                    <td>{webhook.name}</td>
-                                    <td>{webhook.event}</td>
-                                    <Box component='td'>
-                                        <Tooltip withArrow label={dayjs(webhook.createdAt).format('DD/MM/YYYY, HH:mm')} transition='fade' transitionDuration={200}>
-                                            {/* @ts-ignore */}
-                                            {`${dayjs(webhook.createdAt).fromNow(true)} ago`}
-                                        </Tooltip>
+                                }}
+                            >
+                                <TbWebhook size={20} color='#0050ff'/>
+                                <Box>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem'}}>
+                                        <Text size='lg' weight={600}>{webbook.name}</Text>
+                                        <Badge variant='dot' sx={{ cursor: 'pointer' }}>{webbook.event}</Badge>
                                     </Box>
+                                    <Text size='sm' color="dimmed">{webbook.url}</Text>
                                 </Box>
-                            )))
-                        }
-                    </tbody>
-                </Table>
-                <Box sx={{ margin: '1rem'}}>
+                            </Box>
+                        ))
+                    }
+                </Box>
+                <Box sx={{ display: 'flex', margin: '1rem', justifyContent: 'center' }}>
                     <Button variant="outline" radius='xl' onClick={() => setVisible('create')} leftIcon={<FaPlus/>}>Create webhook</Button>
                 </Box>
             </Box>
             }
             <CreateWebhookModal isVisible={isVisible == 'create'} setVisible={setVisible} />
-            <WebhookInfoModal webhook={webhook} isVisible={isVisible == 'view'} setVisible={setVisible} />
+            <WebhookInfoModal webhook={selectedWebhook} isVisible={isVisible == 'view'} setVisible={setVisible} />
         </>
     )
 }

@@ -5,9 +5,9 @@ import WebhookList from "../../../components/pages/webhooks/WebhookList";
 export default function Webhooks(){
     return (
         <PageContent admin={true} title="Admin - Webhooks">
-            <Container size={'lg'}>
+            <Container size={'md'}>
                 <Box mt={30}>
-                    <Paper withBorder>
+                    <Paper withBorder p='lg'>
                         <WebhookList/>
                     </Paper>
                 </Box>
