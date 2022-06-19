@@ -10,18 +10,19 @@ module.exports = (db) => {
      * Creates a webhook for a channel
      * @param {string} url - The url to send the webhook to
      * @param {string} name - The name of the webhook
-     * @param {string} type - type of the webhook
+     * @param {string} event - event of the webhook
      * @param {Function} callback - Callback function
      */
-    obj.createWebhook = async (url, name, type, callback) => {
+    obj.createWebhook = async (url, name, event, callback) => {
         try {
             var secretKey = uuid().toString();
 
             await db.webhooks.insertOne({
                 url: url,
                 name: name,
-                type: type,
-                secret: secretKey
+                event: event,
+                secret: secretKey,
+                createdAt: new Date().getTime()
             }, (err, res) => {
                 if(err){
                     console.log(err);
@@ -82,22 +83,21 @@ module.exports = (db) => {
 
     /**
      * Send request to webhooks with data
-     * @param {string} type - The type of the webhook
+     * @param {string} event - The event of the webhook
      * @param {Object} data - The data to send
      */
-    obj.sendWebhook = async (type, data) => {
+    obj.sendWebhook = async (event, data) => {
         try {
-            var webhooks = await db.webhooks.find({ type: type }).toArray();
+            var webhooks = await db.webhooks.find({ $or: [ {event: event, event: 'all'}] }).toArray();
             for(var i = 0; i < webhooks.length; i++){
                 var webhook = webhooks[i];
-                await axios.post(webhook.url, { type: type, secret: webhook.secretKey, data: data }, { headers: { 'Content-Type': 'application/json' } });
+                await axios.post(webhook.url, { event: event, secret: webhook.secret, data: data }, { headers: { 'Content-Type': 'application/json' } });
             }
         } catch(err) {
             console.log(err);
         }
     }
     
-
     /**
      * Send webhook when a comment is created.
      * @param {*} application - The application which the comment was created on
@@ -111,5 +111,18 @@ module.exports = (db) => {
         await obj.sendWebhook('onComment', data);
     }
 
+    /**
+     * Send webhook when a status is changed.
+     * @param {*} application - The application which the status was changed on
+     * @param {*} statusUpdate - The status update object
+     */
+    obj.onStatusUpdate = async (application, statusUpdate) => {
+        var data = {
+            application: application,
+            statusUpdate: statusUpdate
+        }
+        await obj.sendWebhook('onStatusUpdate', data);
+    }
+    
     return obj;
 }

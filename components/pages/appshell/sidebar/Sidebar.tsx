@@ -11,6 +11,7 @@ import LoadingScreen from '../../../elements/LoadingScreen';
 import { useQuery } from 'react-query';
 import getForms from '../../../api/forms/getForms';
 import { IconType } from 'react-icons/lib';
+import { TbWebhook } from 'react-icons/tb';
 
 interface SidebarSection {
     [key: string]: SidebarGroupData[]
@@ -76,6 +77,7 @@ export default function Sidebar({ isExtended, admin }: { isExtended?: boolean, a
                     { link: '/admin/users', label: 'Users', icon: FaUsers },
                     { link: '/admin/roles', label: 'Roles', icon: FaListUl },
                     { link: '/admin/forms', label: 'Forms', icon: FaDatabase },
+                    { link: '/admin/webhooks', label: 'Webhooks', icon: TbWebhook },
                 ]
             }
         ],

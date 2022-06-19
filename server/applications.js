@@ -5,6 +5,8 @@ const { ObjectId } = require('mongodb');
 module.exports = (db) => {
     const obj = {};
 
+    const webhooks = require('./webhooks')(db);
+
     /**
      * Create application
      * @param {String} formId - The form _id
@@ -24,9 +26,15 @@ module.exports = (db) => {
                 status: "pending",
                 interactions: [],
                 answers: answers
-            }, (err, res) => callback({ status: 200, message: "Application has been created!", applicationId: res.insertedId }));
+            }, async (err, res) => {
+                if(err) {
+                    console.log(err);
+                    return callback({ status: 500, message: 'An internal error occurred.' });
+                }
+                return callback({ status: 200, message: "Application has been created!", applicationId: res.insertedId })
+            });
         } catch(err) {
-            callback({ status: 500, message: 'An internal error occurred.' });
+            return callback({ status: 500, message: 'An internal error occurred.' });
         }
     }
 
@@ -143,11 +151,15 @@ module.exports = (db) => {
         try {
             var applicationObject = new ObjectId(applicationId);
             var userObject = new ObjectId(userId);
-            await db.applications.updateOne({ _id: applicationObject }, { $set: { latestInteraction: new Date().getTime(), status: status }, $push: { interactions: { type: 'statusUpdate', user: userObject, status: status, timestamp: new Date().getTime() } } }, (err, res) => {
+
+            var statusUpdateObj = { type: 'statusUpdate', user: userObject, status: status, timestamp: new Date().getTime() }
+
+            await db.applications.findOneAndUpdate({ _id: applicationObject }, { $set: { latestInteraction: new Date().getTime(), status: status }, $push: { interactions: statusUpdateObj } }, async (err, res) => {
                 if(err){
                     console.log(err);
                     return callback({ status: 500, message: 'An internal error occurred.' });
                 }
+                await webhooks.onStatusUpdate(res.value, statusUpdateObj);
                 return callback({ status: 200, message: "Application status has been changed!" })
             });
         }
@@ -167,11 +179,15 @@ module.exports = (db) => {
         try {
             var applicationObject = new ObjectId(applicationId);
             var userObject = new ObjectId(userId);
-            await db.applications.updateOne({ _id: applicationObject }, { $set: { latestInteraction: new Date().getTime() }, $push: { interactions: { type: 'comment', user: userObject, text: comment, timestamp: new Date().getTime() } } }, (err, res) => {
+        
+            var commentObj = { type: 'comment', user: userObject, text: comment, timestamp: new Date().getTime() }
+
+            await db.applications.findOneAndUpdate({ _id: applicationObject }, { $set: { latestInteraction: new Date().getTime() }, $push: { interactions: commentObj } }, async (err, res) => {
                 if(err){
                     console.log(err);
                     return callback({ status: 500, message: 'An internal error occurred.' });
                 }
+                await webhooks.onComment(res.value, commentObj);
                 return callback({ status: 200, message: "Comment has been created!" })
             });
         }

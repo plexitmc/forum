@@ -7,13 +7,13 @@ export interface ICreateWebhookResponse {
 export interface ICreateWebhookData {
     url: string;
     name: string;
-    type: string;
+    event: string;
 }
 
 
-export default ({ url, name, type }: ICreateWebhookData): Promise<ICreateWebhookResponse> => {
+export default ({ url, name, event }: ICreateWebhookData): Promise<ICreateWebhookResponse> => {
     return new Promise((resolve, reject) => {
-        http.post(`/api/webhooks`, { url, name, type })
+        http.post(`/api/webhooks`, { url, name, event })
             .then(response => {
                 if(response.status == 200) return resolve(response.data);
                 return reject(response.data);

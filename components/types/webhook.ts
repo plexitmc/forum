@@ -2,6 +2,7 @@ export default interface Webhook {
     _id: string;  
     name: string;
     url: string;
-    type: 'all' | 'onComment';
+    event: 'all' | 'onComment' | 'onStatusUpdate';
     secret: string;
+    createdAt: number;
 }
