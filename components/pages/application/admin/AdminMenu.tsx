@@ -27,7 +27,7 @@ export default function AdminMenu({ user, application, form }: { user: User, app
                         <Text weight={500} size="sm">Ændre status</Text>
                     </Menu.Item>                
                 }
-                {(user.role === 'admin' || user._id.toString() == viewer._id.toString()) &&
+                {(viewer.role === 'admin' || user._id.toString() == viewer._id.toString()) &&
                     <Menu.Item icon={<MdDeleteForever size={16} />} color='red' onClick={() => setVisibleModal('delete')}>
                         <Text weight={500} size="sm">Slet ansøgning</Text>
                     </Menu.Item>
