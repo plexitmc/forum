@@ -1,6 +1,6 @@
 const { ObjectId } = require('mongodb');
 const { uuid } = require('uuidv4');
-const axios = require('axios')
+const axios = require('axios').default;
 
 // Return module
 module.exports = (db) => {
@@ -91,7 +91,10 @@ module.exports = (db) => {
             var webhooks = await db.webhooks.find({ $or: [ {event: event, event: 'all'}] }).toArray();
             for(var i = 0; i < webhooks.length; i++){
                 var webhook = webhooks[i];
-                await axios.post(webhook.url, { event: event, secret: webhook.secret, data: data }, { headers: { 'Content-Type': 'application/json' } });
+                await axios.post(webhook.url, { event: event, secret: webhook.secret, data: data }, { headers: { 'Content-Type': 'application/json' } })
+                    .catch(err => {
+                        console.log(err);
+                    });
             }
         } catch(err) {
             console.log(err);
