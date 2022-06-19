@@ -108,7 +108,7 @@ module.exports = (db) => {
             application: application,
             comment: comment
         }
-        await obj.sendWebhook('comment', data);
+        await obj.sendWebhook('onComment', data);
     }
 
     return obj;

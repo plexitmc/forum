@@ -32,6 +32,9 @@ module.exports = (db) => {
         const { url, name, type } = req.body;
         if(!url || !name || !type) return res.status(400).json({ status: 400, message: 'Missing required fields.' });
 
+        // check if type is valid
+        if(!['all', 'onComment'].includes(type)) return res.status(400).json({ status: 400, message: 'Invalid type.' });
+
         if(req.user.role !== 'admin') return res.status(403).json({ status: 403, message: 'You are not authorized to perform this action.' });
 
         await webhooks.createWebhook(url, name, type, (response) => {
