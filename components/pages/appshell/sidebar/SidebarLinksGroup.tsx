@@ -14,6 +14,8 @@ const useStyles = createStyles((theme) => ({
     fontSize: theme.fontSizes.sm,
     borderRadius: '0.25rem',
 
+    transition: 'background-color, 0.1s',
+
     '&:hover': {
       backgroundColor: theme.colors.gray[0],
       color: theme.black,
@@ -32,6 +34,8 @@ const useStyles = createStyles((theme) => ({
     borderLeft: `1px solid ${theme.colors.gray[3]}`,
     cursor: 'pointer',
 
+    transition: 'background-color, 0.1s',
+    
     '&:hover': {
       backgroundColor: theme.colors.gray[0],
       color: theme.black,
