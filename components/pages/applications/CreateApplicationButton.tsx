@@ -5,7 +5,7 @@ import { useState } from "react";
 import createApplication from "../../api/applications/createApplication";
 import Form from "../../types/form";
 
-export default function CreateApplicationButton({ form, answers }: { form: Form, answers: {[key: string]: string | boolean} }) {
+export default function CreateApplicationButton({ form, answers, setSaved }: { form: Form, answers: {[key: string]: string | boolean}, setSaved: (saved: boolean) => void }) {
 
     const router = useRouter();
     const [isSubmitting, setSubmitting] = useState(false);
@@ -13,6 +13,7 @@ export default function CreateApplicationButton({ form, answers }: { form: Form,
     const handleCreate = async () => {
         if(isSubmitting) return;
         setSubmitting(true)
+        setSaved(true)
 
         createApplication({ formId: form._id, answers: answers })
             .then((response) => {
