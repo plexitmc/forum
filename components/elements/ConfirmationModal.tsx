@@ -1,4 +1,5 @@
 import { Box, Button, Group, Modal, Text } from "@mantine/core";
+import { useTranslation } from "next-i18next";
 
 interface ConfirmationModalProps {
     opened: boolean;
@@ -10,13 +11,16 @@ interface ConfirmationModalProps {
 }
 
 export default function ConfirmationModal({ opened, setOpened, title, children, buttonText, onConfirm }: ConfirmationModalProps) {
+
+    const { t } = useTranslation('common')
+
     return (
         <Modal title={<Text weight={600} size={'lg'}>{title}</Text>} opened={opened} onClose={() => setOpened(!opened)}>
             <Box>
                 {children}
             </Box>
             <Group position="right" mt="xl">
-                <Button variant='outline' onClick={() => setOpened(!opened)}>Cancel</Button>
+                <Button variant='outline' onClick={() => setOpened(!opened)}>{t("elements.confirmation-modal.cancel")}</Button>
                 <Button color='red' variant="outline" onClick={() => {
                     setOpened(!opened);
                     onConfirm();

@@ -41,5 +41,21 @@
         "user-not-found": "User not found.",
         "form-not-found": "Form not found.",
         "unknown": "Something went wrong."
+    },
+    "elements": {
+        "confirmation-modal": {
+            "cancel": "Cancel"
+        },
+        "role": {
+            "default": "Default"
+        },
+        "status": {
+            "pending": "Pending",
+            "rejected": "Rejected",
+            "accepted": "Accepted"
+        }
+    },
+    "random": {
+        "loading": "Loading..."
     }
 }
