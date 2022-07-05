@@ -1,4 +1,5 @@
 import { Box, Container, Paper } from "@mantine/core";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import PageContent from "../../../components/elements/PageContent";
 import WebhookList from "../../../components/pages/webhooks/WebhookList";
 
@@ -15,3 +16,9 @@ export default function Webhooks(){
         </PageContent>
     )
 }
+
+export const getStaticProps = async ({ locale }: { locale: any }) => ({
+    props: {
+      ...await serverSideTranslations(locale, ['common']),
+    },
+})

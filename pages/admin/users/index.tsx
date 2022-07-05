@@ -1,4 +1,5 @@
 import { Container } from '@mantine/core';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import PageContent from "../../../components/elements/PageContent";
 import UserList from '../../../components/pages/users/UserList';
@@ -13,3 +14,9 @@ export default function Users(){
         </PageContent>
     )
 }
+
+export const getStaticProps = async ({ locale }: { locale: any }) => ({
+    props: {
+      ...await serverSideTranslations(locale, ['common']),
+    },
+})

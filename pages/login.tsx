@@ -1,4 +1,5 @@
 import { Anchor, Box, Center } from '@mantine/core';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -57,3 +58,9 @@ export default function Login() {
         </>
     )
 }
+
+export const getStaticProps = async ({ locale }: { locale: any }) => ({
+    props: {
+      ...await serverSideTranslations(locale, ['common']),
+    },
+})

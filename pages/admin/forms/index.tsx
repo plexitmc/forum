@@ -1,4 +1,5 @@
 import { Box, Container, Paper } from "@mantine/core";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import React, { useState } from "react";
 import PageContent from "../../../components/elements/PageContent";
 import AppFormList from "../../../components/pages/forms/FormList";
@@ -16,3 +17,9 @@ export default function Applications(){
         </PageContent>
     )
 }
+
+export const getStaticProps = async ({ locale }: { locale: any }) => ({
+    props: {
+      ...await serverSideTranslations(locale, ['common']),
+    },
+})

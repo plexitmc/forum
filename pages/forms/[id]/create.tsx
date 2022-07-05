@@ -1,4 +1,5 @@
 import { Box, Container } from "@mantine/core";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useQuery } from "react-query";
@@ -33,3 +34,9 @@ export default function CreateForm(){
         </PageContent>
     )
 }
+
+export const getStaticProps = async ({ locale }: { locale: any }) => ({
+    props: {
+      ...await serverSideTranslations(locale, ['common']),
+    },
+})

@@ -1,6 +1,9 @@
+import { useTranslation } from 'next-i18next';
 import Head from 'next/head'
 
 const Meta = ({ title, keywords, description, icon }: { title: string, keywords: string, description: string, icon: string; }) => {
+
+  const { t } = useTranslation('common')
   return (
     <Head>
       <meta name="theme-color" content="#0050ff"/>
@@ -14,7 +17,7 @@ const Meta = ({ title, keywords, description, icon }: { title: string, keywords:
 
       <meta charSet='utf-8' />
       <link rel='icon' href={icon} />
-      <title>{title} | Centox</title>
+      <title>{t('title', { title: title })}</title>
 
 
       <meta property='og:title' content={title}/>
