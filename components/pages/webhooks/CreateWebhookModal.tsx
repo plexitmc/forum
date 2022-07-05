@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useQueryClient } from "react-query";
 import { showNotification } from "@mantine/notifications";
 import createWebhook from "../../api/webhooks/createWebhook";
+import { useTranslation } from "next-i18next";
 
 
 
@@ -64,38 +65,40 @@ export default function CreateWebhookModal({ isVisible, setVisible }: { isVisibl
         setTimeout(() => setSubmitting(false), 500)
     }
 
+    const { t } = useTranslation('common')
+
     return (
-        <Modal opened={isVisible} onClose={() => setVisible('')} title={<Text weight={600}>Creating new webhook</Text>} size='lg'>
+        <Modal opened={isVisible} onClose={() => setVisible('')} title={<Text weight={600}>{t("webhooks.create.title")}</Text>} size='lg'>
             <form onSubmit={form.onSubmit(async (values) => await onSubmit(values))}>
                 <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', marginBottom: '1rem'}}>
                     <TextInput
                         required
-                        label="Name"
-                        placeholder="The name of the webhook"
+                        label={t("webhooks.create.fields.name.label")}
+                        placeholder={t("webhooks.create.fields.name.placeholder")}
                         {...form.getInputProps('name')}
                         sx={{ flexGrow: 1 }}
                     />
                     <Select
                         required
-                        label="Event"
-                        placeholder="Event which triggers the webhook"
+                        label={t("webhooks.create.fields.event.label")}
+                        placeholder={t("webhooks.create.fields.event.placeholder")}
                         {...form.getInputProps('event')}
                         data={[
-                            { label: 'All events', value: 'all' },
-                            { label: 'Comment is created', value: 'onComment' },
-                            { label: 'Status of application is updated', value: 'onStatusUpdate' },
+                            { label: t("webhooks.create.fields.event.options.all"), value: 'all' },
+                            { label: t("webhooks.create.fields.event.options.comment"), value: 'onComment' },
+                            { label: t("webhooks.create.fields.event.options.status"), value: 'onStatusUpdate' },
                         ]}
                         sx={{ flexGrow: 1 }}
                     />
                 </Box>
                 <TextInput
                     required
-                    label="URL"
-                    placeholder="The url to which the webhook should be sent"
+                    label={t("webhooks.create.fields.url.label")}
+                    placeholder={t("webhooks.create.fields.url.placeholder")}
                     {...form.getInputProps('url')}
                 />
                 <Group position="right" mt="xl">
-                    <Button type="submit" loading={isSubmitting}>Create webhook</Button>
+                    <Button type="submit" loading={isSubmitting}>{t("webhooks.create.button")}</Button>
                 </Group>
             </form>
         </Modal>

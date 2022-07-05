@@ -5,6 +5,7 @@ import { useQueryClient } from "react-query";
 import { showNotification } from "@mantine/notifications";
 import Webhook from "../../types/webhook";
 import deleteWebhook from "../../api/webhooks/deleteWebhook";
+import { useTranslation } from "next-i18next";
 
 
 export default function CreateWebhookModal({ webhook, isVisible, setVisible }: { webhook: Webhook | undefined, isVisible: boolean, setVisible: (visible: string) => void }) {
@@ -39,34 +40,36 @@ export default function CreateWebhookModal({ webhook, isVisible, setVisible }: {
         setTimeout(() => setSubmitting(false), 500)
     }
 
+    const { t } = useTranslation('common')
+
     return (
-        <Modal opened={isVisible && webhook ? true : false} onClose={() => setVisible('')} title={<Text weight={600}>Viewing webhook</Text>} size='lg'>
+        <Modal opened={isVisible && webhook ? true : false} onClose={() => setVisible('')} title={<Text weight={600}>{t("webhooks.view.title")}</Text>} size='lg'>
             <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', marginBottom: '1rem'}}>
                 <TextInput
-                    label="Name"
+                    label={t("webhooks.view.fields.name")}
                     disabled
                     sx={{ flexGrow: 1 }}
                     value={webhook?.name}
                 />
                 <TextInput
-                    label="Event"
+                    label={t("webhooks.view.fields.event")}
                     disabled
                     value={webhook?.event}
                     sx={{ flexGrow: 1 }}
                 />
             </Box>
             <TextInput
-                label="URL"
+                label={t("webhooks.view.fields.url")}
                 disabled
                 value={webhook?.url}
                 sx={{ marginBottom: '1rem' }}
             />
             <PasswordInput
-                label="Secret Key"
+                label={t("webhooks.view.fields.secret-key")}
                 value={webhook?.secret}
             />
             <Group position="right" mt="xl">
-                <Button onClick={handleDeleteWebhook} color='red' loading={isSubmitting}>Delete webhook</Button>
+                <Button onClick={handleDeleteWebhook} color='red' loading={isSubmitting}>{t("webhooks.view.delete")}</Button>
             </Group>
         </Modal>
     )

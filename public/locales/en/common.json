@@ -24,7 +24,41 @@
         "owner": "This user is the owner."
     },
     "webhooks": {
-        "title": "Admin - Webhooks"
+        "title": "Admin - Webhooks",
+        "webhooks": "Webhooks",
+        "create": {
+            "title": "Creating new webhook",
+            "button": "Create new webhook",
+            "fields": {
+                "name": {
+                    "label": "Name",
+                    "placeholder": "The name of the webhook" 
+                },
+                "event": {
+                    "label": "Event",
+                    "placeholder": "Event which triggers the webhook",
+                    "options": {
+                        "all": "All events",
+                        "comment": "Comment is created",
+                        "status": "Status of application is updated"
+                    }
+                },
+                "url": {
+                    "label": "URL",
+                    "placeholder": "The url to which the webhook should be sent"
+                }
+            }
+        },
+        "view": {
+            "title": "Viewing webhook",
+            "delete": "Delete webhook",
+            "fields": {
+                "name": "Name",
+                "event": "Event",
+                "url": "URL",
+                "secret-key": "Secret Key"
+            }
+        }
     },
     "roles": {
         "title": "Admin - Roles"

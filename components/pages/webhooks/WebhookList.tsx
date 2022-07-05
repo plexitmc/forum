@@ -1,5 +1,6 @@
 import { Badge, Box, Button, Sx, Table, Text, ThemeIcon, Tooltip } from "@mantine/core";
 import dayjs from "dayjs";
+import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { TbWebhook } from "react-icons/tb";
@@ -17,12 +18,14 @@ export default function WebhookList() {
     const [isVisible, setVisible] = useState('');
     const [selectedWebhook, setWebhook] = useState<Webhook | undefined>();
 
+    const { t } = useTranslation('common')
+
     return (
         <>
             {(isLoading || !data) ? (isError ? <Error/> : <Loading/>) : 
 
             <Box>
-                <Text size='xl' weight={600}>Webhooks</Text>
+                <Text size='xl' weight={600}>{t("webhooks.webhooks")}</Text>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     { isError ? <Error height="25vh"/> 
                         : isLoading || !data.webhooks ? <></>
@@ -60,7 +63,7 @@ export default function WebhookList() {
                     }
                 </Box>
                 <Box sx={{ display: 'flex', margin: '1rem', justifyContent: 'center' }}>
-                    <Button variant="outline" radius='xl' onClick={() => setVisible('create')} leftIcon={<FaPlus/>}>Create webhook</Button>
+                    <Button variant="outline" radius='xl' onClick={() => setVisible('create')} leftIcon={<FaPlus/>}>{t("webhooks.create.button")}</Button>
                 </Box>
             </Box>
             }
