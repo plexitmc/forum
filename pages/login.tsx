@@ -1,4 +1,5 @@
 import { Anchor, Box, Center } from '@mantine/core';
+import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -16,6 +17,8 @@ export default function Login() {
 
     const router = useRouter();
     var { code, logout } = router.query;
+
+    const { t } = useTranslation('common')
 
     const { user, mutate, isLoading, isError } = useUser({
         redirectTo: "/",
@@ -41,7 +44,7 @@ export default function Login() {
 
     return (
         <>
-            <Meta title="Login with Discord"/>
+            <Meta title={t('login.title')}/>
             <Center style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: 'white', borderRadius: '0.25rem', padding: '1.5rem 2rem 2rem 2rem', marginBottom: '1rem' }}>
                     <Box sx={{ padding: '1.5rem 0' }}>

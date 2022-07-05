@@ -1,7 +1,10 @@
 import { Anchor, Box } from "@mantine/core";
+import { useTranslation } from "next-i18next";
 import { BsDiscord } from "react-icons/bs";
 
 export default function DiscordLoginButton({ clientId, redirectUri }: { clientId: string, redirectUri: string }) {
+    
+    const { t } = useTranslation('common')
     return (
         <Anchor href={`https://discord.com/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=identify&prompt=none`} weight={600}
             sx={{
@@ -20,7 +23,7 @@ export default function DiscordLoginButton({ clientId, redirectUri }: { clientId
                 transition: 'color 0.2s, background-color 0.2s',
             }}
         >
-            <Box sx={{ paddingRight: '0.5rem' }}><BsDiscord/></Box> Login with Discord
+            <Box sx={{ paddingRight: '0.5rem' }}><BsDiscord/></Box> {t('login.button')}
         </Anchor>
     )
 }

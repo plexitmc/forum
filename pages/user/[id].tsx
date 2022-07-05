@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
@@ -14,11 +15,12 @@ export default function UserProfile(){
     if(Array.isArray(id)) id = id[0];
     
     const { isLoading, isError, data } = useQuery(['user', id], async () => await getUser(id));
+    const { t } = useTranslation('common')
 
     return (
-        <PageContent title={(isLoading || isError || !data || !data.user) ? "Profile" : `${data?.user?.username}'s profile`}>
+        <PageContent title={(isLoading || isError || !data || !data.user) ? t("user.title-not-loaded") : t('user.title', { user: data?.user?.username })}>
             { isError 
-            ? <Error error={data?.message ? data?.message : 'User not found'}/> 
+            ? <Error error={data?.message ? data?.message : t('errors.user-not-found')}/> 
             : (isLoading || !data || !data.user 
                 ? <LoadingScreen/>
                 : 
@@ -32,4 +34,9 @@ export const getStaticProps = async ({ locale }: { locale: any }) => ({
     props: {
       ...await serverSideTranslations(locale, ['common']),
     },
+})
+
+export const getStaticPaths = async () => ({
+    paths: [],
+    fallback: true
 })

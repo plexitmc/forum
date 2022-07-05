@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
@@ -16,10 +17,12 @@ export default function OpenApplications(){
 
     const { isLoading, isError, data } = useQuery(['form', id], async () => await getForm(id));
     
+    const { t } = useTranslation('common')
+
     return (
-        <PageContent title={(isLoading || isError || !data || !data.form) ? "Applications" : `Open ${data.form.name} applications`}>
+        <PageContent title={(isLoading || isError || !data || !data.form) ? t("applications.title-not-loaded") : t("applications.title-open", { form: data.form.name })}>
             {
-                isError ? <Error error={data?.message || "Form not found"}/> 
+                isError ? <Error error={data?.message || t("errors.title-not-found")}/> 
                     : isLoading || !data || !data.form ? <LoadingScreen/>
                         : <ApplicationListStatus status={'pending'} form={data.form}/>
             }
@@ -31,4 +34,9 @@ export const getStaticProps = async ({ locale }: { locale: any }) => ({
     props: {
       ...await serverSideTranslations(locale, ['common']),
     },
+})
+
+export const getStaticPaths = async () => ({
+    paths: [],
+    fallback: true
 })

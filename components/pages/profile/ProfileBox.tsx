@@ -5,9 +5,12 @@ import RoleBadge from "../../elements/RoleBadge";
 import ProfileMenu from "./menu/ProfileMenu";
 import ProfileAdminMenu from './menu/admin/ProfileAdminMenu'
 import ApplicationsBox from "./ApplicationsBox";
+import { useTranslation } from "next-i18next";
 
 
 export default function ProfileBox({ user, isAdmin, isViewing }: { user: User, isAdmin?: boolean, isViewing?: boolean }) {
+
+    const { t } = useTranslation('common')
 
     return (
             <Container>
@@ -19,7 +22,7 @@ export default function ProfileBox({ user, isAdmin, isViewing }: { user: User, i
                                 <Box sx={{ display: 'flex', alignItems: 'center'}}>
                                     <Text sx={{ fontSize: 25 }} weight={500}>{user.username}</Text>
                                     {user.owner &&
-                                        <Tooltip withArrow label={'This user is the owner.'} transition='fade' transitionDuration={200}>
+                                        <Tooltip withArrow label={t('user.owner')} transition='fade' transitionDuration={200}>
                                             <ActionIcon color="orange" radius="xs" variant="transparent"><FaCrown/></ActionIcon>
                                         </Tooltip>
                                     }

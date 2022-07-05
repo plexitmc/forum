@@ -1,3 +1,4 @@
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import useUser from "../components/api/swr/useUser";
 import Error from "../components/elements/Error";
@@ -10,8 +11,10 @@ export default function Page() {
         redirectTo: "/login"
     });
 
+    const { t } = useTranslation('common')
+
     return (
-        <PageContent title="Your Profile">
+        <PageContent title={t("profile.title")}>
             { isError 
             ? <Error /> 
             : (isLoading 

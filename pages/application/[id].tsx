@@ -1,4 +1,5 @@
 import { Box, Container } from "@mantine/core";
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -16,10 +17,12 @@ export default function Application(){
     if(Array.isArray(id)) id = id[0];
     const { isLoading, isError, data } = useQuery(['application', id], async () => await getApplication(id));
     
+    const { t } = useTranslation('common')
+
     return (
-        <PageContent title={(isLoading || isError || !data) ? "Application" : `${data.user?.username}'s ${data.form?.name} application`}>
+        <PageContent title={(isLoading || isError || !data) ? t("application.title-not-loaded") : t("application.title", { user: data.user?.username, form: data.form?.name})}>
             { isError 
-            ? <Error error={data?.message ? data?.message : 'Something went wrong'}/> 
+            ? <Error error={data?.message ? data?.message : t("errors.unknown")}/> 
             : (isLoading || !data || !data.user || !data.application || !data.form 
                 ? <LoadingScreen/>
                 : 
@@ -37,4 +40,10 @@ export const getStaticProps = async ({ locale }: { locale: any }) => ({
     props: {
       ...await serverSideTranslations(locale, ['common']),
     },
+})
+
+
+export const getStaticPaths = async () => ({
+    paths: [],
+    fallback: true
 })

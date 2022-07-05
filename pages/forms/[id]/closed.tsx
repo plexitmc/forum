@@ -1,5 +1,7 @@
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
+import { format } from "path";
 import { useQuery } from "react-query";
 import getForm from "../../../components/api/forms/getForm";
 import Error from "../../../components/elements/Error";
@@ -16,10 +18,12 @@ export default function ClosedApplications(){
 
     const { isLoading, isError, data } = useQuery(['form', id], async () => await getForm(id));
     
+    const { t } = useTranslation('common')
+    
     return (
-        <PageContent title={(isLoading || isError || !data || !data.form) ? "Applications" : `Closed ${data.form.name} applications`}>
+        <PageContent title={(isLoading || isError || !data || !data.form) ? t("applications.title-not-loaded") : t("applications.title-closed", { form: data.form.name })}>
             {
-                isError ? <Error error={data?.message || "Form not found"}/> 
+                isError ? <Error error={data?.message || t("errors.form-not-found")}/> 
                     : isLoading || !data || !data.form ? <LoadingScreen/>
                         : <ApplicationListStatus status={['accepted', 'rejected']} form={data.form} full/>
             }
@@ -31,4 +35,10 @@ export const getStaticProps = async ({ locale }: { locale: any }) => ({
     props: {
       ...await serverSideTranslations(locale, ['common']),
     },
+})
+
+
+export const getStaticPaths = async () => ({
+    paths: [],
+    fallback: true
 })

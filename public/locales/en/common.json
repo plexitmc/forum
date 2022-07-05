@@ -1,6 +1,45 @@
 {
-    "title": "{{title}} | CentoxX",
+    "title": "{{title}} | Centox",
     "profile": {
         "title": "Your Profile"
+    },
+    "login": {
+        "title": "Login with Discord",
+        "button": "Login with Discord"
+    },
+    "applications": {
+        "title-not-loaded": "Application",
+        "title-closed": "Closed {{form}} applications",
+        "title-open": "Open {{form}} applications",
+        "title-create": "Create {{form}} application",
+        "title-user": "{{user}}"
+    },
+    "application": {
+        "title-not-loaded": "Application",
+        "title": "{{user}}'s {{form}} application"
+    },
+    "user": {
+        "title-not-loaded": "Profile",
+        "title": "{{user}}'s profile",
+        "owner": "This user is the owner."
+    },
+    "webhooks": {
+        "title": "Admin - Webhooks"
+    },
+    "roles": {
+        "title": "Admin - Roles"
+    },
+    "form": {
+        "title-not-loaded": "Admin - Form",
+        "title": "Admin - {{form}} form"
+    },
+    "forms": {
+        "title": "Admin - Forms"
+    },
+    "errors": {
+        "page-not-found": "Page not found.",
+        "user-not-found": "User not found.",
+        "form-not-found": "Form not found.",
+        "unknown": "Something went wrong."
     }
 }
