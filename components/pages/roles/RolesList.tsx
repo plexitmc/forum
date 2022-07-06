@@ -1,4 +1,5 @@
 import { Box, Button, Table } from "@mantine/core";
+import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { useQuery } from "react-query";
@@ -21,6 +22,8 @@ export default function RolesList() {
         setVisible(true)
     }
 
+    const { t } = useTranslation('common')
+
     return (
         <>
             {(isLoading || !roles) ? (isError ? <Error/> : <Loading/>) : 
@@ -28,9 +31,9 @@ export default function RolesList() {
                 <Table highlightOnHover verticalSpacing={'md'} horizontalSpacing='xl'>
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Badge</th>
-                            <th>Members</th>
+                            <th>{t("roles.name")}</th>
+                            <th>{t("roles.badge")}</th>
+                            <th>{t("roles.members")}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,7 +50,7 @@ export default function RolesList() {
                     </tbody>
                 </Table>
                 <Box sx={{ margin: '1rem'}}>
-                    <Button variant="outline" radius='xl' onClick={() => openRoleModal(undefined)} leftIcon={<FaPlus/>}>Create role</Button>
+                    <Button variant="outline" radius='xl' onClick={() => openRoleModal(undefined)} leftIcon={<FaPlus/>}>{t("roles.button.create")}</Button>
                 </Box>
             </Box>
             }

@@ -8,6 +8,7 @@ import createRole from "../../api/roles/createRole";
 import { useQueryClient } from "react-query";
 import deleteRole from "../../api/roles/deleteRole";
 import { showNotification } from "@mantine/notifications";
+import { useTranslation } from "next-i18next";
 
 
 interface IRolesModalProps {
@@ -21,19 +22,22 @@ interface RolesModalValues {
     id?: string;
 }
 
-const schema = Yup.object().shape({
-    label: Yup.string().required("The label is required."),
-    color: Yup.string().required("The color is required."),
-});
-
 
 export default function RolesModal({ role, setVisible }: IRolesModalProps){
 
     // Hacky fix to ensure the form object is recreated each rerender.
 
+
+    const { t } = useTranslation('common')
+
     const queryClient = useQueryClient()
 
     const [isSubmitting, setSubmitting] = useState(false);
+
+    const schema = Yup.object().shape({
+        label: Yup.string().required(t("roles.fields.label.required")),
+        color: Yup.string().required("roles.fields.color.required"),
+    });
 
     const form = useForm({
         schema: yupResolver(schema),
@@ -52,7 +56,7 @@ export default function RolesModal({ role, setVisible }: IRolesModalProps){
             .then((response) => {
                 showNotification({
                     message: response.message,
-                    title: 'Success',
+                    title: t("random.success"),
                     color: 'teal',
                     radius: 'md'
                 })
@@ -61,7 +65,7 @@ export default function RolesModal({ role, setVisible }: IRolesModalProps){
             .catch((error) => {
                 showNotification({
                     message: error.message,
-                    title: 'Error',
+                    title: t("random.error"),
                     color: 'red',
                     radius: 'md'
                 })
@@ -79,7 +83,7 @@ export default function RolesModal({ role, setVisible }: IRolesModalProps){
             .then((response) => {
                 showNotification({
                     message: response.message,
-                    title: 'Success',
+                    title: t("random.success"),
                     color: 'teal',
                     radius: 'md'
                 })
@@ -88,7 +92,7 @@ export default function RolesModal({ role, setVisible }: IRolesModalProps){
             .catch((error) => {
                 showNotification({
                     message: error.message,
-                    title: 'Error',
+                    title: t("random.error"),
                     color: 'red',
                     radius: 'md'
                 })
@@ -98,38 +102,38 @@ export default function RolesModal({ role, setVisible }: IRolesModalProps){
     }
     
     return (
-        <Modal opened={true} onClose={() => setVisible(false)} title={<Text weight={600}>{role ? `Editing '${role.label}'` : "Creating new role"}</Text>}>
+        <Modal opened={true} onClose={() => setVisible(false)} title={<Text weight={600}>{role ? t("roles.menu.edit", { role: role.label}) : t("roles.menu.create")}</Text>}>
             <form onSubmit={form.onSubmit(async (values) => await onSubmit(values))}>
                 <TextInput
                     required
-                    label="Label"
-                    placeholder="The label of the role"
+                    label={t("roles.fields.label.label")}
+                    placeholder={t("roles.fields.label.placeholder")}
                     {...form.getInputProps('label')}
                 />
                 <Select
                     required
-                    label="Color"
-                    placeholder="The color of the role"
+                    label={t("roles.fields.color.label")}
+                    placeholder={t("roles.fields.color.placeholder")}
                     {...form.getInputProps('color')}
                     data={[
-                        { label: 'Gray', value: 'gray' },
-                        { label: 'Red', value: 'red' },
-                        { label: 'Pink', value: 'pink' },
-                        { label: 'Grape', value: 'grape' },
-                        { label: 'Violet', value: 'violet' },
-                        { label: 'Indigo', value: 'indigo' },
-                        { label: 'Blue', value: 'blue' },
-                        { label: 'Cyan', value: 'cyan' },
-                        { label: 'Green', value: 'green' },
-                        { label: 'Lime', value: 'lime' },
-                        { label: 'Yellow', value: 'yellow' },
-                        { label: 'Orange', value: 'orange' },
-                        { label: 'Teal', value: 'teal' },
+                        { label: t("roles.fields.color.options.gray"), value: 'gray' },
+                        { label: t("roles.fields.color.options.red"), value: 'red' },
+                        { label: t("roles.fields.color.options.pink"), value: 'pink' },
+                        { label: t("roles.fields.color.options.grape"), value: 'grape' },
+                        { label: t("roles.fields.color.options.violet"), value: 'violet' },
+                        { label: t("roles.fields.color.options.indigo"), value: 'indigo' },
+                        { label: t("roles.fields.color.options.blue"), value: 'blue' },
+                        { label: t("roles.fields.color.options.cyan"), value: 'cyan' },
+                        { label: t("roles.fields.color.options.green"), value: 'green' },
+                        { label: t("roles.fields.color.options.lime"), value: 'lime' },
+                        { label: t("roles.fields.color.options.yellow"), value: 'yellow' },
+                        { label: t("roles.fields.color.options.orange"), value: 'orange' },
+                        { label: t("roles.fields.color.options.teal"), value: 'teal' },
                     ]}
                 />
                 <Group position="right" mt="xl">
-                    {role && <Button onClick={() => deleteRoleWithId({ id: role.id })} color='red'>Delete</Button>}
-                    <Button type="submit" loading={isSubmitting}>{role ? 'Save' : 'Create role'}</Button>
+                    {role && <Button onClick={() => deleteRoleWithId({ id: role.id })} color='red'>{t("roles.button.delete")}</Button>}
+                    <Button type="submit" loading={isSubmitting}>{role ? t("roles.button.save") : t("roles.button.create")}</Button>
                 </Group>
             </form>
         </Modal>

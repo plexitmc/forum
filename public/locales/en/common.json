@@ -23,6 +23,11 @@
         "title": "{{user}}'s profile",
         "owner": "This user is the owner."
     },
+    "users": {
+        "username": "Username",
+        "role": "Role",
+        "joined": "Joined"
+    },
     "webhooks": {
         "title": "Admin - Webhooks",
         "webhooks": "Webhooks",
@@ -61,7 +66,46 @@
         }
     },
     "roles": {
-        "title": "Admin - Roles"
+        "title": "Admin - Roles",
+        "menu": {
+            "edit": "Editing '{{role}}'",
+            "create": "Creating new role"
+        },
+        "name": "Name",
+        "badge": "Badge",
+        "members": "Members",
+        "button": {
+            "save": "Save",
+            "create": "Create role",
+            "delete": "Delete"
+        },
+        "fields": {
+            "label": {
+                "label": "Label",
+                "required": "The label is required.",
+                "placeholder": "The label of the role"
+            },
+            "color": {
+                "label": "Color",
+                "required": "The color is required.",
+                "placeholder": "The color of the badge",
+                "options": {
+                    "gray": "Gray",
+                    "red": "Red",
+                    "pink": "Pink",
+                    "grape": "Grape",
+                    "violet": "Violet",
+                    "indigo": "Indigo",
+                    "blue": "Blue",
+                    "cyan": "Cyan",
+                    "green": "Green",
+                    "lime": "Lime",
+                    "yellow": "Yellow",
+                    "orange": "Orange",
+                    "teal": "Teal"
+                }
+            }
+        }
     },
     "form": {
         "title-not-loaded": "Admin - Form",
@@ -90,6 +134,9 @@
         }
     },
     "random": {
-        "loading": "Loading..."
+        "loading": "Loading...",
+        "ago": "ago",
+        "error": "Error",
+        "success": "Success"
     }
 }

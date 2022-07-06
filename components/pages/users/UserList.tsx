@@ -1,4 +1,5 @@
 import { Box, Paper, Sx, Table, Text, Pagination } from "@mantine/core";
+import { useTranslation } from "next-i18next";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import getUsers from "../../api/users/getUsers";
@@ -14,14 +15,16 @@ export default function UserList({ sx }: UserListProps) {
     const [page, setPage] = useState(1);
     const { isLoading, isError, data } = useQuery(['users', page], () => getUsers(page), { keepPreviousData: true })
 
+    const { t } = useTranslation('common')
+
     return (
         <Paper sx={[sx]} withBorder>
             <Table highlightOnHover verticalSpacing={'md'} horizontalSpacing='xl'>
                 <Box component='thead'>
                     <Box component='tr'>
-                        <Text component='th'>Username</Text> 
-                        <th>Role</th> 
-                        <th>Joined</th> 
+                        <Text component='th'>{t("users.username")}</Text> 
+                        <th>{t("users.role")}</th> 
+                        <th>{t("users.joined")}</th> 
                     </Box>
                 </Box>
                 <tbody>
