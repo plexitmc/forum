@@ -8,13 +8,17 @@ import User from "../../types/user";
 import { ImClock } from 'react-icons/im';
 import AdminMenu from "./admin/AdminMenu";
 import UserBadge from "../../elements/UserBadge";
+import { useTranslation } from "next-i18next";
 
 export default function ApplicationInfo({ user, application, form }: { user: User, application: Application, form: Form }) {
+    
+    const { t } = useTranslation('common')
+    
     return (
         <Box>
             <Box sx={{ display: 'flex', justifyContent: 'end'}}><AdminMenu application={application} form={form} user={user}/></Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem'}}>
-                <Text weight={600} sx={{ fontSize: 45 }}>{form.name} application</Text>
+                <Text weight={600} sx={{ fontSize: 45 }}>{t("application.heading", { form: form.name})}</Text>
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: '1rem' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem'}}>

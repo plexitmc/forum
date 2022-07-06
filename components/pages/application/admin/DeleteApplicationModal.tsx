@@ -1,5 +1,6 @@
 import { Menu, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
@@ -11,12 +12,14 @@ export default function DeleteApplicationMenuItem({ application, isVisible, setV
 
     const router = useRouter();
 
+    const { t } = useTranslation('common')
+
     async function handleDeleteApplication() {
         await deleteApplication(application._id)
             .then((response) => {
                 showNotification({
                     message: response?.message,
-                    title: 'Success',
+                    title: t("random.success"),
                     color: 'teal',
                     radius: 'md'
                 })
@@ -25,7 +28,7 @@ export default function DeleteApplicationMenuItem({ application, isVisible, setV
             .catch((error) => {
                 showNotification({
                     message: error?.message,
-                    title: 'Error',
+                    title: t("random.error"),
                     color: 'red',
                     radius: 'md'
                 })
@@ -34,13 +37,13 @@ export default function DeleteApplicationMenuItem({ application, isVisible, setV
 
     return (
         <ConfirmationModal 
-            title="Delete this application?" 
+            title={t("application.delete.title")}
             opened={isVisible} 
             setOpened={setVisible}
-            buttonText="Yes, delete application"
+            buttonText={t("application.delete.confirm")}
             onConfirm={() => handleDeleteApplication()}
         >
-            Hey there, are you sure you want to delete this application? This action cannot be undone.
+            {t("application.delete.text")}
         </ConfirmationModal>
     )
 }

@@ -1,8 +1,12 @@
 import { Box, Checkbox, Textarea, TextInput } from "@mantine/core"
+import { useTranslation } from "next-i18next"
 import Application from "../../types/application"
 import Form from "../../types/form"
 
 export default function ApplicationAnswers({ form, application}: {form: Form, application: Application}) {
+    
+    const { t } = useTranslation('common')
+    
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
             {
@@ -16,7 +20,7 @@ export default function ApplicationAnswers({ form, application}: {form: Form, ap
                                     description={field.description} 
                                     required={field.required}
                                     value={application.answers[field.id]}
-                                    error={field.required && !application.answers[field.id] ? "This question has not been answered" : undefined}
+                                    error={field.required && !application.answers[field.id] ? t("application.not-answered") : undefined}
                                     disabled
                                 />
                             }
@@ -27,7 +31,7 @@ export default function ApplicationAnswers({ form, application}: {form: Form, ap
                                     description={field.description} 
                                     required={field.required} 
                                     value={application.answers[field.id]}
-                                    error={field.required && !application.answers[field.id] ? "This question has not been answered" : undefined}
+                                    error={field.required && !application.answers[field.id] ? t("application.not-answered") : undefined}
                                     disabled
                                     autosize 
                                     minRows={5}

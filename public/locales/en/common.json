@@ -27,7 +27,31 @@
         "title-not-loaded": "Application",
         "title": "{{user}}'s {{form}} application",
         "latest-interaction": "Latest interaction {{time}}",
-        "create": "Create application"
+        "create": "Create application",
+        "heading": "{{form}} application",
+        "answers": "Answers",
+        "not-answered": "This question has not been answered",
+        "comment": {
+            "label": "Create a comment",
+            "placeholder": "Write something constructive here",
+            "button": "Comment"
+        },
+        "status": "changed the status to",
+        "menu": {
+            "update-status": "Update status",
+            "delete": "Delete application"
+        },
+        "delete": {
+            "title": "Delete this application?",
+            "confirm": "Yes, delete application",
+            "text": "Hey there, are you sure you want to delete this application? This action cannot be undone." 
+        },
+        "change-status": {
+            "title": "Change status of application",
+            "label": "Status",
+            "placeholder": "Pending",
+            "confirm": "Confirm"
+        }
     },
     "user": {
         "title-not-loaded": "Profile",

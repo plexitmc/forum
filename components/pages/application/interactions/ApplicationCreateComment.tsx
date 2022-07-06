@@ -7,9 +7,12 @@ import useUser from "../../../api/swr/useUser";
 import Application from "../../../types/application";
 import Form from "../../../types/form";
 import { useState } from "react";
+import { useTranslation } from "next-i18next";
 
 export default function ApplicationCreateComment({ form, application }: { form: Form, application: Application }) {
     const queryClient = useQueryClient()
+
+    const { t } = useTranslation('common')
 
     const { isLoading, isError, user } = useUser();
     const [isSubmitting, setSubmitting] = useState(false);
@@ -25,7 +28,7 @@ export default function ApplicationCreateComment({ form, application }: { form: 
         .then((response) => {
             showNotification({
                 message: response.message,
-                title: 'Success',
+                title: t("random.success"),
                 color: 'teal',
                 radius: 'md'
             })
@@ -34,7 +37,7 @@ export default function ApplicationCreateComment({ form, application }: { form: 
         .catch((error) => {
             showNotification({
                 message: error.message,
-                title: 'Error',
+                title: t("random.error"),
                 color: 'red',
                 radius: 'md'
             })
@@ -45,7 +48,7 @@ export default function ApplicationCreateComment({ form, application }: { form: 
 
     return (
         <Box sx={{ marginBottom: 14, marginLeft: 32, marginTop: 10, marginRight: 32 }}>
-            <Textarea label='Create a comment' placeholder='Write something constructive here' autosize required value={comment} onChange={(event) => setComment(event.currentTarget.value)}/>
+            <Textarea label={t("application.comment.label")} placeholder={t("application.comment.placeholder")} autosize required value={comment} onChange={(event) => setComment(event.currentTarget.value)}/>
             <Group position="right" mt="md">
                 <Button 
                     variant="light"
@@ -59,7 +62,7 @@ export default function ApplicationCreateComment({ form, application }: { form: 
                     onClick={handleCreateComment}
                     loading={isSubmitting}
                 >
-                    Comment
+                    {t("application.comment.button")}
                 </Button>              
             </Group>
         </Box>

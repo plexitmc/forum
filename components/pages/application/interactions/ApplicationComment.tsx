@@ -1,5 +1,6 @@
 import { Box, Text, Tooltip } from "@mantine/core";
 import dayjs from "dayjs";
+import { useTranslation } from "next-i18next";
 import { useQuery } from "react-query";
 import getUser from "../../../api/users/getUser";
 import UserBadge from "../../../elements/UserBadge";
@@ -9,9 +10,11 @@ export default function ApplicationComment({ interaction }: { interaction: Comme
 
     const { isLoading, isError, data } = useQuery(['userByObjectId', interaction.user], async () => await getUser(interaction.user));
 
+    const { t } = useTranslation('common')
+
     return (
         <Box>
-            {isLoading ? <Text>Loading...</Text> : isError || !data?.user ? <Text>Error</Text> : <UserBadge user={data?.user}/>}
+            {isLoading ? <Text>{t("random.loading")}</Text> : isError || !data?.user ? <Text>{t("random.error")}</Text> : <UserBadge user={data?.user}/>}
             <Box sx={{ paddingLeft: 34, paddingRight: 34 }}>
                 {
                     interaction.text.split('\n').map((line, index) =>
@@ -22,7 +25,7 @@ export default function ApplicationComment({ interaction }: { interaction: Comme
                     <Text size="xs" color="dimmed">
                         {new Date().getTime() < interaction.timestamp + 127800000 ?
                             /* @ts-ignore */
-                            `${dayjs(interaction.timestamp).fromNow(true)} ago`
+                            `${dayjs(interaction.timestamp).fromNow(true)} ${t("random.ago")}`
                             :
                             dayjs(interaction.timestamp).format('HH:mm, DD/MM/YYYY')
                         }

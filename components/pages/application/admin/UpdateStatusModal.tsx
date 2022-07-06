@@ -1,5 +1,6 @@
 import { Button, Group, Modal, Select, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { useQueryClient } from "react-query";
 import updateStatus from "../../../api/applications/updateStatus";
@@ -11,13 +12,15 @@ export default function UpdateStatusModal({ application, isVisible, setVisible }
 
     const [status, setStatus] = useState(application.status);
 
+    const { t } = useTranslation('common')
+
     async function onSubmit() {
 
         updateStatus({ applicationId: application._id, status: status })
             .then((response) => {
                 showNotification({
                     message: response.message,
-                    title: 'Success',
+                    title: t("random.success"),
                     color: 'teal',
                     radius: 'md'
                 })
@@ -26,7 +29,7 @@ export default function UpdateStatusModal({ application, isVisible, setVisible }
             .catch((error) => {
                 showNotification({
                     message: error.message,
-                    title: 'Error',
+                    title: t("random.error"),
                     color: 'red',
                     radius: 'md'
                 })
@@ -35,21 +38,21 @@ export default function UpdateStatusModal({ application, isVisible, setVisible }
     }
     
     return (
-        <Modal opened={isVisible} onClose={() => setVisible(false)} title={<Text weight={600}>Change status of application</Text>}>
+        <Modal opened={isVisible} onClose={() => setVisible(false)} title={<Text weight={600}>{t("application.change-status.title")}</Text>}>
             <Select
                 required
-                label="Status"
-                placeholder="Pending"
+                label={t("application.change-status.label")}
+                placeholder={t("application.change-status.placeholder")}
                 value={status}
                 onChange={(value: 'pending' | 'rejected' | 'accepted') => setStatus(value)}
                 data={[
-                    { value: 'pending', label: 'Pending' },
-                    { value: 'rejected', label: 'Rejected' },
-                    { value: 'accepted', label: 'Accepted' },
+                    { value: 'pending', label: t("elements.status.pending") },
+                    { value: 'rejected', label: t("elements.status.rejected") },
+                    { value: 'accepted', label: t("elements.status.accepted") },
                 ]}
             />
             <Group position="right" mt="xl" onClick={onSubmit}>
-                <Button type="submit">Confirm</Button>
+                <Button type="submit">{t("application.change-status.confirm")}</Button>
             </Group>
         </Modal>
     )
