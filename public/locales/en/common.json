@@ -1,7 +1,12 @@
 {
     "title": "{{title}} | Centox",
     "profile": {
-        "title": "Your Profile"
+        "title": "Your Profile",
+        "applications": "Applications",
+        "no-applications": "You have not created any applications.",
+        "menu": {
+            "logout": "Logout"
+        }
     },
     "login": {
         "title": "Login with Discord",
@@ -16,12 +21,27 @@
     },
     "application": {
         "title-not-loaded": "Application",
-        "title": "{{user}}'s {{form}} application"
+        "title": "{{user}}'s {{form}} application",
+        "latest-interaction": "Latest interaction {{time}}"
     },
     "user": {
         "title-not-loaded": "Profile",
         "title": "{{user}}'s profile",
-        "owner": "This user is the owner."
+        "owner": "This user is the owner.",
+        "no-applications": "{{user}} has not created any applications",
+        "menu": {
+            "change-role": "Change role",
+            "delete-user": "Delete user"
+        },
+        "change-role": {
+            "title": "Change {{user}}'s role",
+            "confirm": "Confirm",
+            "role": {
+                "label": "Role",
+                "required": "The role is required.",
+                "placeholder": "The user's role"
+            }
+        }
     },
     "users": {
         "username": "Username",

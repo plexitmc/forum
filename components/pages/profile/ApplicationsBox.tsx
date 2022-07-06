@@ -1,5 +1,6 @@
 import { Divider, Text, Box, ThemeIcon, Tooltip, Alert } from "@mantine/core";
 import dayjs from "dayjs";
+import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { BsQuestionCircle } from "react-icons/bs";
 import { useQuery } from "react-query";
@@ -25,11 +26,13 @@ export default function ApplicationsBox({ isProfile, user }: { isProfile: boolea
         formsObj[form._id] = form
     })
 
+    const { t } = useTranslation('common')
+
     return (
         <Box>
-            <Divider my='md' color='gray' label={<Text color='dark'>Applications</Text>} labelPosition='center'/>
+            <Divider my='md' color='gray' label={<Text color='dark'>{t("profile.applications")}</Text>} labelPosition='center'/>
             { applications.applications.length <= 0 ?
-                <Alert icon={<BsQuestionCircle size={16}/>} color='orange'>{isProfile ? "You have not created any applications" : `${user.username} has not created any applications`}</Alert>
+                <Alert icon={<BsQuestionCircle size={16}/>} color='orange'>{isProfile ? t("profile.no-applications") : t("user.no-applications", { user: user.username })}</Alert>
                 :
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                     { applications.applications.map((application, index) => (
@@ -52,19 +55,19 @@ export default function ApplicationsBox({ isProfile, user }: { isProfile: boolea
                                     </ThemeIcon>
                                 }
                                 <Box>
-                                    <Text sx={{ fontSize: 20 }} weight={500}>Application</Text>
+                                    <Text sx={{ fontSize: 20 }} weight={500}>{t("application-title-not-loaded")}</Text>
                                     <Text sx={{ fontSize: 18 }} color='blue' weight={400}>{formsObj[application.form].name}</Text>
                                 </Box>
                             </Box>
                             <Box sx={{display: 'flex', justifyContent: 'center', flexGrow: 1}}>
-                                <Tooltip withArrow label={`Latest interaction ${dayjs(application.latestInteraction).format('DD/MM/YYYY, HH:mm')}`} transition='fade' transitionDuration={200}>
+                                <Tooltip withArrow label={t("application.latest-interaction", { time: dayjs(application.latestInteraction).format('DD/MM/YYYY, HH:mm')})} transition='fade' transitionDuration={200}>
                                     <StatusBadge status={application.status} sx={{ cursor: 'pointer'}} />
                                 </Tooltip>
                             </Box>
                             <Box>
                                 <Tooltip withArrow label={dayjs(application.createdAt).format('DD/MM/YYYY, HH:mm')} transition='fade' transitionDuration={200}>
                                     {/* @ts-ignore */}
-                                    {`${dayjs(application.createdAt).fromNow(true)} ago`}
+                                    {`${dayjs(application.createdAt).fromNow(true)} ${t("random.ago")}`}
                                 </Tooltip>
                             </Box>
                         </Box>

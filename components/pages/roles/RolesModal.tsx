@@ -25,9 +25,6 @@ interface RolesModalValues {
 
 export default function RolesModal({ role, setVisible }: IRolesModalProps){
 
-    // Hacky fix to ensure the form object is recreated each rerender.
-
-
     const { t } = useTranslation('common')
 
     const queryClient = useQueryClient()

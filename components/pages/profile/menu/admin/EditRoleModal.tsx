@@ -8,6 +8,7 @@ import User from "../../../../types/user";
 import updateUser from "../../../../api/users/updateUser";
 import getRoles from "../../../../api/roles/getRoles";
 import { showNotification } from '@mantine/notifications';
+import { useTranslation } from "next-i18next";
 
 
 interface IEditRoleProps {
@@ -20,18 +21,22 @@ interface EditRoleValues {
     role: string | undefined;
 }
 
-const schema = Yup.object().shape({
-    role: Yup.string().required("The role is required."),
-});
 
 
 export default function RolesModal({ user, isVisible, setVisible }: IEditRoleProps){
 
     // Hacky fix to ensure the form object is recreated each rerender.
 
+    const { t } = useTranslation('common')
+
     const queryClient = useQueryClient()
 
     const [isSubmitting, setSubmitting] = useState(false);
+
+
+    const schema = Yup.object().shape({
+        role: Yup.string().required(t("user.change-role.role.required")),
+    });
 
     const form = useForm({
         schema: yupResolver(schema),
@@ -55,7 +60,7 @@ export default function RolesModal({ user, isVisible, setVisible }: IEditRolePro
             .then((response) => {
                 showNotification({
                     message: response.message,
-                    title: 'Success',
+                    title: t("random.success"),
                     color: 'teal',
                     radius: 'md'
                 })
@@ -64,7 +69,7 @@ export default function RolesModal({ user, isVisible, setVisible }: IEditRolePro
             .catch((error) => {
                 showNotification({
                     message: error.message,
-                    title: 'Error',
+                    title: t("random.error"),
                     color: 'red',
                     radius: 'md'
                 })
@@ -75,17 +80,17 @@ export default function RolesModal({ user, isVisible, setVisible }: IEditRolePro
     }
     
     return (
-        <Modal opened={isVisible} onClose={() => setVisible(false)} title={<Text weight={600}>{`Change ${user.username}'s role`}</Text>}>
+        <Modal opened={isVisible} onClose={() => setVisible(false)} title={<Text weight={600}>{t("user.change-role.title", { user: user.username })}</Text>}>
             <form onSubmit={form.onSubmit(async (values) => await onSubmit(values))}>
                 <Select
                     required
-                    label="Role"
-                    placeholder="The user's role"
+                    label={t("user.change-role.role.label")}
+                    placeholder={t("user.change-role.role.placeholder")}
                     {...form.getInputProps('role')}
                     data={data}
                 />
                 <Group position="right" mt="xl">
-                    <Button type="submit" loading={isSubmitting}>Confirm</Button>
+                    <Button type="submit" loading={isSubmitting}>{t("user.change-role.confirm")}</Button>
                 </Group>
             </form>
         </Modal>
