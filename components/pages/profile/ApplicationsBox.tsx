@@ -55,7 +55,7 @@ export default function ApplicationsBox({ isProfile, user }: { isProfile: boolea
                                     </ThemeIcon>
                                 }
                                 <Box>
-                                    <Text sx={{ fontSize: 20 }} weight={500}>{t("application-title-not-loaded")}</Text>
+                                    <Text sx={{ fontSize: 20 }} weight={500}>{t("application.title-not-loaded")}</Text>
                                     <Text sx={{ fontSize: 18 }} color='blue' weight={400}>{formsObj[application.form].name}</Text>
                                 </Box>
                             </Box>
