@@ -12,6 +12,7 @@ import { useQuery } from 'react-query';
 import getForms from '../../../api/forms/getForms';
 import { IconType } from 'react-icons/lib';
 import { TbWebhook } from 'react-icons/tb';
+import { useTranslation } from 'next-i18next';
 
 interface SidebarSection {
     [key: string]: SidebarGroupData[]
@@ -31,6 +32,8 @@ interface SidebarLink {
 
 export default function Sidebar({ isExtended, admin }: { isExtended?: boolean, admin?: boolean }) {
 
+    const { t } = useTranslation('common')
+
     const matches = useMediaQuery('(min-width: 750px)');
     const [section, setSection] = useState(admin ? 'admin' : 'default');
 
@@ -47,11 +50,11 @@ export default function Sidebar({ isExtended, admin }: { isExtended?: boolean, a
         var permission = form.permissions[user.role];
         if(permission.create || permission.comment || permission.viewOthers || permission.changeStatus) {	
             var links: SidebarLink[] = [];
-            if(permission.create) links.push({ label: 'Create application', link: `/forms/${form._id}/create` });
+            if(permission.create) links.push({ label: t("sidebar.user.create"), link: `/forms/${form._id}/create` });
             if(permission.viewOthers) {
-                links.push({ label: 'Open applications', link: `/forms/${form._id}/open` });
+                links.push({ label: t("sidebar.user.open"), link: `/forms/${form._id}/open` });
                 if(permission.changeStatus)
-                    links.push({ label: 'Closed applications', link: `/forms/${form._id}/closed` });
+                    links.push({ label: t("sidebar.user.closed"), link: `/forms/${form._id}/closed` });
                 
             }
 
@@ -66,18 +69,18 @@ export default function Sidebar({ isExtended, admin }: { isExtended?: boolean, a
     const tabs: SidebarSection = {
         default: [
             {
-                group: 'Forms',
+                group: t("sidebar.user.group"),
                 links: formLinks
             }
         ],
         admin: [
             {
-                group: 'Administration',
+                group: t("sidebar.admin.group"),
                 links: [
-                    { link: '/admin/users', label: 'Users', icon: FaUsers },
-                    { link: '/admin/roles', label: 'Roles', icon: FaListUl },
-                    { link: '/admin/forms', label: 'Forms', icon: FaDatabase },
-                    { link: '/admin/webhooks', label: 'Webhooks', icon: TbWebhook },
+                    { link: '/admin/users', label: t("sidebar.admin.users"), icon: FaUsers },
+                    { link: '/admin/roles', label: t("sidebar.admin.roles"), icon: FaListUl },
+                    { link: '/admin/forms', label: t("sidebar.admin.forms"), icon: FaDatabase },
+                    { link: '/admin/webhooks', label: t("sidebar.admin.webhooks"), icon: TbWebhook },
                 ]
             }
         ],
@@ -108,8 +111,8 @@ export default function Sidebar({ isExtended, admin }: { isExtended?: boolean, a
                                         transitionTimingFunction="ease"
                                         fullWidth
                                         data={[
-                                            { label: 'User', value: 'default' },
-                                            { label: 'Admin', value: 'admin' },
+                                            { label: t("sidebar.user.title"), value: 'default' },
+                                            { label: t("sidebar.admin.title"), value: 'admin' },
                                         ]}
                                     />
                                 }

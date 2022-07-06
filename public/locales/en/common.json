@@ -158,5 +158,22 @@
         "ago": "ago",
         "error": "Error",
         "success": "Success"
+    },
+    "sidebar": {
+        "admin": {
+            "title": "Admin",
+            "group": "Administration",
+            "users": "Users",
+            "roles": "Roles",
+            "forms": "Forms",
+            "webhooks": "Webhooks"
+        },
+        "user": {
+            "title": "User",
+            "group": "Forms",
+            "create": "Create application",
+            "open": "Open applications",
+            "closed": "Closed applications"
+        }
     }
 }
