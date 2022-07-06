@@ -17,12 +17,17 @@
         "title-closed": "Closed {{form}} applications",
         "title-open": "Open {{form}} applications",
         "title-create": "Create {{form}} application",
-        "title-user": "{{user}}"
+        "title-user": "{{user}}",
+        "username": "Username",
+        "status": "Status",
+        "latest-interaction": "Latest interaction",
+        "created": "Created"
     },
     "application": {
         "title-not-loaded": "Application",
         "title": "{{user}}'s {{form}} application",
-        "latest-interaction": "Latest interaction {{time}}"
+        "latest-interaction": "Latest interaction {{time}}",
+        "create": "Create application"
     },
     "user": {
         "title-not-loaded": "Profile",
@@ -129,16 +134,68 @@
     },
     "form": {
         "title-not-loaded": "Admin - Form",
-        "title": "Admin - {{form}} form"
+        "title": "Admin - {{form}} form",
+        "heading": "Editing form",
+        "save": "Save",
+        "delete": {
+            "button": "Delete form",
+            "title": "Delete this form?",
+            "text": "Hey there, are you sure you want to delete this form? All data will be lost. All of users applications will be deleted.",
+            "confirm": "Yes, delete form"
+        },
+        "sections": {
+            "info": {
+                "name": {
+                    "label": "Name",
+                    "description": "The name the user sees"
+                },
+                "icon": {
+                    "label": "Icon",
+                    "description": "Find icons on fontawesome.com"
+                }
+            },
+            "permissions": {
+                "role": "Role",
+                "create": "Can create",
+                "view": "Can view others",
+                "comment": "Can comment",
+                "status": "Can change status"
+            },
+            "fields": {
+                "add": {
+                    "button": "Add field",
+                    "content": "Content",
+                    "text": "Text",
+                    "heading": "Heading",
+                    "input": "Input",
+                    "shorttext": "Short Text",
+                    "longtext": "Long Text",
+                    "select": "Select",
+                    "checkbox": "Checkbox"
+                },
+                "field": {
+                    "required": "Required",
+                    "heading": "Enter a heading",
+                    "question": "Enter a question",
+                    "text": "This is a text block - add some text",
+                    "description": "Enter a description"
+                }
+            }
+        }
     },
     "forms": {
-        "title": "Admin - Forms"
+        "title": "Admin - Forms",
+        "create": "Create form",
+        "name": "Name",
+        "created": "Created at",
+        "updated": "Updated at"
     },
     "errors": {
         "page-not-found": "Page not found.",
         "user-not-found": "User not found.",
         "form-not-found": "Form not found.",
-        "unknown": "Something went wrong."
+        "unknown": "Something went wrong.",
+        "view-no-perm": "You do not have permission to view this list."
     },
     "elements": {
         "confirmation-modal": {
@@ -157,7 +214,8 @@
         "loading": "Loading...",
         "ago": "ago",
         "error": "Error",
-        "success": "Success"
+        "success": "Success",
+        "unsaved": "You have unsaved changes, are you sure?"
     },
     "sidebar": {
         "admin": {

@@ -1,5 +1,6 @@
 import { Button } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import deleteForm from "../../api/forms/deleteForm";
@@ -11,12 +12,14 @@ export default function DeleteFormButton({ isSubmitting, form }: { isSubmitting:
     const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
     const router = useRouter();
 
+    const { t } = useTranslation('common')
+
     async function handleDeleteForm() {
         await deleteForm(form._id)
         .then((response) => {
             showNotification({
                 message: response.message,
-                title: 'Success',
+                title: t("random.success"),
                 color: 'teal',
                 radius: 'md'
             })
@@ -25,7 +28,7 @@ export default function DeleteFormButton({ isSubmitting, form }: { isSubmitting:
         .catch((error) => {
             showNotification({
                 message: error.message,
-                title: 'Error',
+                title: t("random.error"),
                 color: 'red',
                 radius: 'md'
             })
@@ -34,16 +37,15 @@ export default function DeleteFormButton({ isSubmitting, form }: { isSubmitting:
 
     return (
         <>
-            <Button loading={isSubmitting} color='red' variant="outline" onClick={() => setDeleteModalVisible(true)}>Delete form</Button>
+            <Button loading={isSubmitting} color='red' variant="outline" onClick={() => setDeleteModalVisible(true)}>{t("form.delete.button")}</Button>
             <ConfirmationModal 
-                title="Delete this form?" 
+                title={t("form.delete.title")} 
                 opened={isDeleteModalVisible} 
                 setOpened={setDeleteModalVisible}
-                buttonText="Yes, delete form"
+                buttonText={t("form.delete.confirm")}
                 onConfirm={() => handleDeleteForm()}
             >
-                Hey there, are you sure you want to delete this form?<br/>
-                All data will be lost. All of users applications will be deleted.
+                {t("form.delete.text")}
             </ConfirmationModal>
         </>
     )

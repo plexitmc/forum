@@ -1,4 +1,5 @@
 import { Box, Checkbox, Divider, Group, Paper, Text, Textarea, TextInput } from "@mantine/core";
+import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import NavigationPrompt from "../../elements/NavigationPrompt";
 import Form from "../../types/form";
@@ -9,6 +10,8 @@ export default function CreateApplicationBox({ form }: { form: Form }) {
     const [answers, setAnswers] = useState<{[key: string]: string | boolean}>({});
 
     const [isSaved, setSaved] = useState(true);
+
+    const { t } = useTranslation('common')
 
     function updateAnswers(fieldId: string, value: string | boolean) {
         setAnswers({...answers, [fieldId]: value});
@@ -58,7 +61,7 @@ export default function CreateApplicationBox({ form }: { form: Form }) {
             <Group position="right" mt="xl">
                 <CreateApplicationButton form={form} answers={answers} setSaved={setSaved} />
             </Group>
-            <NavigationPrompt when={isSaved == false} message={"You have unsaved changes, are you sure?"}/>
+            <NavigationPrompt when={isSaved == false} message={t("random.unsaved")}/>
         </Paper>
     )
 }

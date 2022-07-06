@@ -1,11 +1,14 @@
 import { Button } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import createApplication from "../../api/applications/createApplication";
 import Form from "../../types/form";
 
 export default function CreateApplicationButton({ form, answers, setSaved }: { form: Form, answers: {[key: string]: string | boolean}, setSaved: (saved: boolean) => void }) {
+
+    const { t } = useTranslation('common')
 
     const router = useRouter();
     const [isSubmitting, setSubmitting] = useState(false);
@@ -38,7 +41,7 @@ export default function CreateApplicationButton({ form, answers, setSaved }: { f
 
     return (
         <Button variant="outline" color="orange" radius="xl" loading={isSubmitting} onClick={handleCreate}>
-            Create application
+            {t("application.create")}
         </Button>
     )
 }

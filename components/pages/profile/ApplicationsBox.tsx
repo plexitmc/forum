@@ -15,6 +15,8 @@ export default function ApplicationsBox({ isProfile, user }: { isProfile: boolea
 
     const router = useRouter();
 
+    const { t } = useTranslation('common')
+    
     const { isLoading: isApplicationsLoading, isError: isApplicationsError, data: applications } = useQuery(['userApplications', user.id], async () => await getApplications(user.id));
     const { isLoading: isFormsLoading, isError: isFromsError, data: forms } = useQuery('forms', getForms);
 
@@ -25,8 +27,6 @@ export default function ApplicationsBox({ isProfile, user }: { isProfile: boolea
     forms.forms.forEach(form => {
         formsObj[form._id] = form
     })
-
-    const { t } = useTranslation('common')
 
     return (
         <Box>

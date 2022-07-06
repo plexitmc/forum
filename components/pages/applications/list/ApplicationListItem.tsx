@@ -1,5 +1,6 @@
 import { Box, Avatar, Tooltip, ActionIcon, Text } from "@mantine/core";
 import dayjs from "dayjs";
+import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { FaCrown } from "react-icons/fa";
 import { useQuery } from "react-query";
@@ -11,6 +12,8 @@ export default function ApplicationListItem({ application, full }: { application
     const router = useRouter()
 
     const { isLoading, isError, data } = useQuery(['userByObjectId', application.user], async () => await getUser(application.user));
+
+    const { t } = useTranslation('common')
 
     return (
         <Box component='tr' sx={{ cursor: 'pointer'}} onClick={() => router.push(`/application/${application._id}`)}>
@@ -24,7 +27,7 @@ export default function ApplicationListItem({ application, full }: { application
                     <Avatar src={data.user.avatar} radius="xl" />
                     <Text weight={500}>{data.user.username}</Text>
                     {data.user.owner &&
-                        <Tooltip withArrow label={'This user is the owner.'} transition='fade' transitionDuration={200} sx={{ marginLeft: '-1rem'}}>
+                        <Tooltip withArrow label={t("user.owner")} transition='fade' transitionDuration={200} sx={{ marginLeft: '-1rem'}}>
                             <ActionIcon color="orange" radius="xs" variant="transparent"><FaCrown/></ActionIcon>
                         </Tooltip>
                     }
@@ -35,14 +38,14 @@ export default function ApplicationListItem({ application, full }: { application
                 <td>
                     <Tooltip withArrow label={dayjs(application.latestInteraction).format('DD/MM/YYYY, HH:mm')} transition='fade' transitionDuration={200}>
                         {/* @ts-ignore */}
-                        {`${dayjs(application.latestInteraction).fromNow(true)} ago`}
+                        {`${dayjs(application.latestInteraction).fromNow(true)} ${t("random.ago")}`}
                     </Tooltip>
                 </td>
             }
             <td>
                 <Tooltip withArrow label={dayjs(application.createdAt).format('DD/MM/YYYY, HH:mm')} transition='fade' transitionDuration={200}>
                     {/* @ts-ignore */}
-                    {`${dayjs(application.createdAt).fromNow(true)} ago`}
+                    {`${dayjs(application.createdAt).fromNow(true)} ${t("random.ago")}`}
                 </Tooltip>
             </td>
         </Box>

@@ -1,4 +1,5 @@
 import { Box, Pagination, Paper, Table } from "@mantine/core";
+import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import getApplications from "../../../api/applications/getApplications";
@@ -11,15 +12,17 @@ export default function ApplicationList({ status, form, full }: { status: string
     const [page, setPage] = useState(1);
     const { isLoading, isError, data } = useQuery(['applications', page, form], () => getApplications({ page, status, formId: form._id }), { keepPreviousData: true })
 
+    const { t } = useTranslation('common')
+
     return (
         <Paper withBorder>
             <Table highlightOnHover verticalSpacing={'md'} horizontalSpacing='xl'>
                 <Box component='thead'>
                     <Box component='tr'>
-                        <th>Username</th>
-                        <th>Status</th> 
-                        { full && <th>Last interaction</th> }
-                        <th>Created</th>
+                        <th>{t("applications.username")}</th>
+                        <th>{t("applications.status")}</th> 
+                        { full && <th>{t("applications.latest-interaction")}</th> }
+                        <th>{t("applications.created")}</th>
                     </Box>
                 </Box>
                 <tbody>
