@@ -47,7 +47,7 @@ export default function Sidebar({ isExtended, admin }: { isExtended?: boolean, a
 
     var formLinks: SidebarLink[] = [];
     data.forms.forEach(form => {
-        var permission = form.permissions[user.role];
+        var permission = form.permissions[user.role] || {};
         if(permission.create || permission.comment || permission.viewOthers || permission.changeStatus) {	
             var links: SidebarLink[] = [];
             if(permission.create) links.push({ label: t("sidebar.user.create"), link: `/forms/${form._id}/create` });
