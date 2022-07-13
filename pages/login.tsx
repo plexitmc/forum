@@ -29,7 +29,6 @@ export default function Login() {
         if(code) {
             login({ code: Array.isArray(code) ? code[0] : code })
             .then((response) => {
-                console.log(response)
                 mutate(response)
                 router.push("/");
             })
