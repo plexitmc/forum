@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 
+console.log(axios)
+
 const http: AxiosInstance = axios.create({
     withCredentials: true,
     timeout: 20000,
