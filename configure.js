@@ -75,12 +75,12 @@ const config = require('./config.example.json');
                     color: 'red',
                     deletable: false
                 });
-                /*await database.collection('roles').insertOne({
+                await database.collection('roles').insertOne({
                     label: 'default',
                     id: 'default',
                     color: 'gray',
                     deletable: false
-                });*/
+                });
 
 
                 var firstUserId = await prompt('* Enter your Discord ID: ');
