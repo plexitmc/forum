@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <MantineProvider withNormalizeCSS emotionOptions={{ key: 'centox' }}>
+      <MantineProvider withNormalizeCSS emotionOptions={{ key: 'plexit' }}>
         <NotificationsProvider position='top-right'>
           <Meta/>
           <Component {...pageProps} />
