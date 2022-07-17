@@ -22,7 +22,7 @@ const Meta = ({ title, keywords, description, icon }: { title: string, keywords:
 
       <meta property='og:title' content={title}/>
       <meta property='og:site_name' content={t('title', { title: title })}/>
-      <meta property="og:url" content="https://centox.dk"/>
+      <meta property="og:url" content="https://plexit.dk"/>
       <meta property='og:description' content={description}/>
       <meta property="og:type" content="website"/>
       <meta property="og:image" content="https://plexit.dk/png/banner.png"/>
@@ -39,8 +39,8 @@ const Meta = ({ title, keywords, description, icon }: { title: string, keywords:
 
 Meta.defaultProps = {
   title: 'Plexit - Forum',
-  keywords: 'Some nice keywords right here.',
-  description: 'Descriptive description',
+  keywords: 'Plexit Forum Dansk Minecraft Server Prison',
+  description: 'Hos Plexit skaber vi oplevelser.',
   icon: '/logo.png'
 }
 
