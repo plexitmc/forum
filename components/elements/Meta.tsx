@@ -25,23 +25,23 @@ const Meta = ({ title, keywords, description, icon }: { title: string, keywords:
       <meta property="og:url" content="https://centox.dk"/>
       <meta property='og:description' content={description}/>
       <meta property="og:type" content="website"/>
-      <meta property="og:image" content="https://centox.dk/png/banner.png"/>
+      <meta property="og:image" content="https://plexit.dk/png/banner.png"/>
 
       <meta property='twitter:card' content='summary_large_image'/>
-      <meta property='twitter:url' content="https://centox.dk"/>
+      <meta property='twitter:url' content="https://plexit.dk"/>
       <meta property='twitter:title' content={title}/>
       <meta property="twitter:description" content={description}/>
-      <meta property='twitter:image' content="https://centox.dk/png/banner.png"/>
+      <meta property='twitter:image' content="https://plexit.dk/png/banner.png"/>
 
     </Head>
   )
 }
 
 Meta.defaultProps = {
-  title: 'Centox - Free Forum Software',
+  title: 'Plexit - Forum',
   keywords: 'Some nice keywords right here.',
   description: 'Descriptive description',
-  icon: '/favicon.svg'
+  icon: '/logo.png'
 }
 
 export default Meta
