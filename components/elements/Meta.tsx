@@ -21,7 +21,7 @@ const Meta = ({ title, keywords, description, icon }: { title: string, keywords:
 
 
       <meta property='og:title' content={title}/>
-      <meta property='og:site_name' content="Centox"/>
+      <meta property='og:site_name' content={t('title', { title: title })}/>
       <meta property="og:url" content="https://centox.dk"/>
       <meta property='og:description' content={description}/>
       <meta property="og:type" content="website"/>
