@@ -15,6 +15,7 @@ dayjs.locale('en')
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools'
+import Meta from '../components/elements/Meta';
 
 // Query client
 const queryClient = new QueryClient({
@@ -31,6 +32,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <MantineProvider withNormalizeCSS emotionOptions={{ key: 'centox' }}>
         <NotificationsProvider position='top-right'>
+          <Meta/>
           <Component {...pageProps} />
         </NotificationsProvider>
       </MantineProvider>
