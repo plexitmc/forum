@@ -19,7 +19,7 @@ export default function ApplicationCreateComment({ form, application }: { form: 
     const [comment, setComment] = useState('');
 
     if(isLoading || isError || !user) return <></>
-    if(!form.permissions[user.role]?.comment) return <></>
+    if(user._id != application.user && !form.permissions[user.role]?.comment) return <></>
 
     function handleCreateComment(){
         if(isSubmitting) return;
