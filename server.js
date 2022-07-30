@@ -38,6 +38,7 @@ server.use((req, res, next) => {
 })
 
 app.prepare().then(() => {
+    console.log('Preparing server...');
     connectToDatabase(config.mongodb, async (err, client) => {
 
         if (err) throw err;
