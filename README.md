@@ -22,6 +22,11 @@ It is a self-hosted solution for creating/managing forms and applications. Users
 - Create webhooks to be able to send messages to your own application!
 - And much more!
 
+## Websites using Centox
+- [forum.plexit.dk](https://forum.plexit.dk)
+- [forum.envy-mc.dk](https://forum.envy-mc.dk)
+- [forum.unicmc.net](https://forum.unicmc.net)
+
 ## Installation
 
 1. Install `Node 12.4.0+` and `Yarn 1.12.17+`
